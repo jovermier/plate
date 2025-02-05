@@ -1,9 +1,8 @@
 'use client';
 
+import { withRef } from '@udecode/cn';
 import { useExcalidrawElement } from '@udecode/plate-excalidraw/react';
 import React from 'react';
-
-import { withRef } from '@udecode/cn';
 
 import { PlateElement } from './plate-element';
 

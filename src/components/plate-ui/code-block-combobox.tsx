@@ -1,15 +1,14 @@
 'use client';
 
+import { cn } from '@udecode/cn';
 import {
   useCodeBlockCombobox,
   useCodeBlockComboboxState,
 } from '@udecode/plate-code-block/react';
 import { Check, ChevronsUpDown } from 'lucide-react';
-import React, { useState } from 'react';
-
-import { cn } from '@udecode/cn';
 // Prism must be imported before all language files
 import Prism from 'prismjs';
+import React, { useState } from 'react';
 
 import { Button } from './button';
 import {
@@ -149,10 +148,10 @@ export function CodeBlockCombobox() {
     <Popover onOpenChange={setOpen} open={open}>
       <PopoverTrigger asChild>
         <Button
-          size="xs"
+          aria-expanded={open}
           className="h-5 justify-between px-1 text-xs"
           role="combobox"
-          aria-expanded={open}
+          size="xs"
           variant="ghost"
         >
           {state.value
@@ -165,22 +164,22 @@ export function CodeBlockCombobox() {
       <PopoverContent className="w-[200px] p-0">
         <Command shouldFilter={false}>
           <CommandInput
-            value={value}
             onValueChange={(value) => setValue(value)}
             placeholder="Search language..."
+            value={value}
           />
           <CommandEmpty>No language found.</CommandEmpty>
 
           <CommandList>
             {items.map((language) => (
               <CommandItem
-                key={language.value}
                 className="cursor-pointer"
-                value={language.value}
+                key={language.value}
                 onSelect={(_value) => {
                   commandItemProps.onSelect(_value);
                   setOpen(false);
                 }}
+                value={language.value}
               >
                 <Check
                   className={cn(

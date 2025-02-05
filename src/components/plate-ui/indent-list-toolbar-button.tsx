@@ -1,14 +1,13 @@
 'use client';
 
-import { useEditorRef, useEditorSelector } from '@udecode/plate/react';
-import { List, ListOrdered } from 'lucide-react';
-import React from 'react';
-
 import {
   ListStyleType,
   someIndentList,
   toggleIndentList,
 } from '@udecode/plate-indent-list';
+import { useEditorRef, useEditorSelector } from '@udecode/plate/react';
+import { List, ListOrdered } from 'lucide-react';
+import React from 'react';
 
 import {
   DropdownMenu,
@@ -42,13 +41,13 @@ export function BulletedIndentListToolbarButton() {
     <ToolbarSplitButton pressed={openState.open}>
       <ToolbarSplitButtonPrimary
         className="data-[state=on]:bg-accent data-[state=on]:text-accent-foreground"
+        data-state={pressed ? 'on' : 'off'}
         onClick={() => {
           toggleIndentList(editor, {
             listStyleType: ListStyleType.Disc,
           });
         }}
         tooltip="Bulleted List"
-        data-state={pressed ? 'on' : 'off'}
       >
         <List className="size-4" />
       </ToolbarSplitButtonPrimary>
@@ -123,13 +122,13 @@ export function NumberedIndentListToolbarButton() {
     <ToolbarSplitButton pressed={openState.open}>
       <ToolbarSplitButtonPrimary
         className="data-[state=on]:bg-accent data-[state=on]:text-accent-foreground"
+        data-state={pressed ? 'on' : 'off'}
         onClick={() =>
           toggleIndentList(editor, {
             listStyleType: ListStyleType.Decimal,
           })
         }
         tooltip="Numbered List"
-        data-state={pressed ? 'on' : 'off'}
       >
         <ListOrdered className="size-4" />
       </ToolbarSplitButtonPrimary>

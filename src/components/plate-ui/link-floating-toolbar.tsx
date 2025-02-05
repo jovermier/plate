@@ -1,8 +1,14 @@
 'use client';
 
+import { cn } from '@udecode/cn';
 import {
-  type LinkFloatingToolbarState,
+  flip,
+  offset,
+  type UseVirtualFloatingOptions,
+} from '@udecode/plate-floating';
+import {
   FloatingLinkUrlInput,
+  type LinkFloatingToolbarState,
   LinkOpenButton,
   useFloatingLinkEdit,
   useFloatingLinkEditState,
@@ -12,13 +18,6 @@ import {
 import { useFormInputProps } from '@udecode/plate/react';
 import { ExternalLink, Link, Text, Unlink } from 'lucide-react';
 import React from 'react';
-
-import { cn } from '@udecode/cn';
-import {
-  type UseVirtualFloatingOptions,
-  flip,
-  offset,
-} from '@udecode/plate-floating';
 
 import { buttonVariants } from './button';
 import { inputVariants } from './input';
@@ -50,8 +49,8 @@ export function LinkFloatingToolbar({ state }: LinkFloatingToolbarProps) {
   });
   const {
     hidden,
-    ref: insertRef,
     props: insertProps,
+    ref: insertRef,
     textInputProps,
   } = useFloatingLinkInsert(insertState);
 
@@ -63,9 +62,9 @@ export function LinkFloatingToolbar({ state }: LinkFloatingToolbarProps) {
     },
   });
   const {
-    ref: editRef,
     editButtonProps,
     props: editProps,
+    ref: editRef,
     unlinkButtonProps,
   } = useFloatingLinkEdit(editState);
   const inputProps = useFormInputProps({
@@ -143,16 +142,16 @@ export function LinkFloatingToolbar({ state }: LinkFloatingToolbarProps) {
   return (
     <>
       <div
-        ref={insertRef}
         className={cn(popoverVariants(), 'w-auto p-1')}
+        ref={insertRef}
         {...insertProps}
       >
         {input}
       </div>
 
       <div
-        ref={editRef}
         className={cn(popoverVariants(), 'w-auto p-1')}
+        ref={editRef}
         {...editProps}
       >
         {editContent}

@@ -25,20 +25,20 @@ import { ToolbarButton } from './toolbar';
 
 const items = [
   {
-    value: 'left',
     icon: AlignLeftIcon,
+    value: 'left',
   },
   {
-    value: 'center',
     icon: AlignCenterIcon,
+    value: 'center',
   },
   {
-    value: 'right',
     icon: AlignRightIcon,
+    value: 'right',
   },
   {
-    value: 'justify',
     icon: AlignJustifyIcon,
+    value: 'justify',
   },
 ];
 
@@ -54,14 +54,14 @@ export function AlignDropdownMenu({ children, ...props }: DropdownMenuProps) {
   return (
     <DropdownMenu modal={false} {...openState} {...props}>
       <DropdownMenuTrigger asChild>
-        <ToolbarButton isDropdown tooltip="Align" pressed={openState.open}>
+        <ToolbarButton isDropdown pressed={openState.open} tooltip="Align">
           <IconValue />
         </ToolbarButton>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="min-w-0" align="start">
+      <DropdownMenuContent align="start" className="min-w-0">
         <DropdownMenuRadioGroup {...radioGroupProps}>
-          {items.map(({ value: itemValue, icon: Icon }) => (
+          {items.map(({ icon: Icon, value: itemValue }) => (
             <DropdownMenuRadioItem hideIcon key={itemValue} value={itemValue}>
               <Icon />
             </DropdownMenuRadioItem>

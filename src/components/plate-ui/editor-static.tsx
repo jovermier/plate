@@ -1,10 +1,8 @@
-import React from 'react';
-
-import type { VariantProps } from 'class-variance-authority';
-
 import { cn } from '@udecode/cn';
-import { type PlateStaticProps, PlateStatic } from '@udecode/plate';
+import { PlateStatic, type PlateStaticProps } from '@udecode/plate';
+import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
+import React from 'react';
 
 export const editorVariants = cva(
   cn(
@@ -22,19 +20,19 @@ export const editorVariants = cva(
       disabled: {
         true: 'cursor-not-allowed opacity-50',
       },
+      focused: {
+        true: 'ring-2 ring-ring ring-offset-2',
+      },
       variant: {
-        fullWidth: 'size-full px-16 pb-72 pt-4 text-base sm:px-24',
         ai: 'w-full px-0 text-base md:text-sm',
         aiChat:
           'max-h-[min(70vh,320px)] w-full max-w-[700px] overflow-y-auto px-5 py-3 text-base md:text-sm',
         default:
           'size-full px-16 pb-72 pt-4 text-base sm:px-[max(64px,calc(50%-350px))]',
-        select: 'px-3 py-2 text-base data-[readonly]:w-fit',
         demo: 'size-full px-16 pb-72 pt-4 text-base sm:px-[max(64px,calc(50%-350px))]',
+        fullWidth: 'size-full px-16 pb-72 pt-4 text-base sm:px-24',
         none: '',
-      },
-      focused: {
-        true: 'ring-2 ring-ring ring-offset-2',
+        select: 'px-3 py-2 text-base data-[readonly]:w-fit',
       },
     },
   }

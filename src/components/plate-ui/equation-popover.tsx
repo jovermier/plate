@@ -1,5 +1,7 @@
 'use client';
 
+import { cn } from '@udecode/cn';
+import type { TEquationElement } from '@udecode/plate-math';
 import { useEquationInput } from '@udecode/plate-math/react';
 import { BlockSelectionPlugin } from '@udecode/plate-selection/react';
 import {
@@ -15,10 +17,6 @@ import TextareaAutosize, {
   type TextareaAutosizeProps,
 } from 'react-textarea-autosize';
 
-import type { TEquationElement } from '@udecode/plate-math';
-
-import { cn } from '@udecode/cn';
-
 import { Button } from './button';
 import { PopoverContent } from './popover';
 
@@ -29,8 +27,8 @@ const EquationInput = createPrimitiveComponent(TextareaAutosize)({
 const EquationPopoverContent = ({
   className,
   isInline,
-  setOpen,
   open,
+  setOpen,
   ...props
 }: {
   isInline: boolean;
@@ -71,8 +69,8 @@ const EquationPopoverContent = ({
       }}
     >
       <EquationInput
-        className={cn('max-h-[50vh] grow resize-none p-2 text-sm', className)}
         autoFocus
+        className={cn('max-h-[50vh] grow resize-none p-2 text-sm', className)}
         state={{ isInline, onClose, open }}
         {...props}
       />

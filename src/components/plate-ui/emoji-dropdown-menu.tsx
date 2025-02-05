@@ -19,13 +19,13 @@ export function EmojiDropdownMenu({
   options,
   ...props
 }: EmojiDropdownMenuProps) {
-  const { isOpen, setIsOpen, emojiPickerState } =
+  const { emojiPickerState, isOpen, setIsOpen } =
     useEmojiDropdownMenuState(options);
 
   return (
     <EmojiToolbarDropdown
       control={
-        <ToolbarButton isDropdown tooltip="Emoji" pressed={isOpen} {...props}>
+        <ToolbarButton isDropdown pressed={isOpen} tooltip="Emoji" {...props}>
           <Smile />
         </ToolbarButton>
       }
@@ -35,8 +35,8 @@ export function EmojiDropdownMenu({
       <EmojiPicker
         {...emojiPickerState}
         icons={{
-          search: emojiSearchIcons,
           categories: emojiCategoryIcons,
+          search: emojiSearchIcons,
         }}
         isOpen={isOpen}
         setIsOpen={setIsOpen}

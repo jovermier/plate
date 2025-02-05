@@ -2,6 +2,8 @@
 
 import type * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import { PopoverAnchor } from '@radix-ui/react-popover';
+import { cn, withRef } from '@udecode/cn';
+import type { TTableElement } from '@udecode/plate-table';
 import {
   TablePlugin,
   TableProvider,
@@ -30,10 +32,6 @@ import {
   XIcon,
 } from 'lucide-react';
 import React from 'react';
-
-import type { TTableElement } from '@udecode/plate-table';
-
-import { cn, withRef } from '@udecode/cn';
 
 import {
   DropdownMenu,
@@ -74,11 +72,11 @@ export const TableElement = withHOC(
       >
         <div className="group/table relative w-fit">
           <table
-            ref={ref}
             className={cn(
               'ml-px mr-0 table h-px table-fixed border-collapse',
               isSelectingCell && 'selection:bg-transparent'
             )}
+            ref={ref}
             {...tableProps}
           >
             <tbody className="min-w-full">{children}</tbody>
@@ -111,9 +109,9 @@ export const TableFloatingToolbar = withRef<typeof PopoverContent>(
       <Popover modal={false} open={canMerge || canSplit || collapsed}>
         <PopoverAnchor asChild>{children}</PopoverAnchor>
         <PopoverContent
-          ref={ref}
           asChild
           onOpenAutoFocus={(e) => e.preventDefault()}
+          ref={ref}
           {...props}
         >
           <Toolbar
@@ -248,11 +246,11 @@ export const TableBordersDropdownMenuContent = withRef<
 
   return (
     <DropdownMenuContent
+      align="start"
+      className={cn('min-w-[220px]')}
+      ref={ref}
       side="right"
       sideOffset={0}
-      ref={ref}
-      className={cn('min-w-[220px]')}
-      align="start"
       {...props}
     >
       <DropdownMenuGroup>

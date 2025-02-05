@@ -14,10 +14,10 @@ export type NoEmojiPreviewProps = Pick<UseEmojiPickerType, 'i18n'>;
 export type PickAnEmojiPreviewProps = NoEmojiPreviewProps;
 
 export function EmojiPickerPreview({
-  i18n,
-  isSearching = false,
   emoji,
   hasFound = true,
+  i18n,
+  isSearching = false,
   ...props
 }: EmojiPickerPreviewProps) {
   const showPickEmoji = !emoji && (!isSearching || hasFound);

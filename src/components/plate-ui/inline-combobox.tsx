@@ -1,11 +1,11 @@
 'use client';
 
 import {
-  type ComboboxItemProps,
   Combobox,
   ComboboxGroup,
   ComboboxGroupLabel,
   ComboboxItem,
+  type ComboboxItemProps,
   ComboboxPopover,
   ComboboxProvider,
   ComboboxRow,
@@ -13,18 +13,22 @@ import {
   useComboboxContext,
   useComboboxStore,
 } from '@ariakit/react';
+import { cn, withCn } from '@udecode/cn';
+import type { PointRef, TElement } from '@udecode/plate';
+import { filterWords } from '@udecode/plate-combobox';
 import {
-  type UseComboboxInputResult,
   useComboboxInput,
+  type UseComboboxInputResult,
   useHTMLInputCursorState,
 } from '@udecode/plate-combobox/react';
 import { useComposedRef, useEditorRef } from '@udecode/plate/react';
+import { cva } from 'class-variance-authority';
 import React, {
+  createContext,
+  forwardRef,
   type HTMLAttributes,
   type ReactNode,
   type RefObject,
-  createContext,
-  forwardRef,
   startTransition,
   useCallback,
   useContext,
@@ -32,12 +36,6 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-
-import type { PointRef, TElement } from '@udecode/plate';
-
-import { cn, withCn } from '@udecode/cn';
-import { filterWords } from '@udecode/plate-combobox';
-import { cva } from 'class-variance-authority';
 
 type FilterFn = (
   item: { value: string; label?: string; group?: string; keywords?: string[] },
@@ -59,7 +57,7 @@ const InlineComboboxContext = createContext<InlineComboboxContextValue>(
 );
 
 export const defaultFilter: FilterFn = (
-  { label, value, group, keywords = [] },
+  { group, keywords = [], label, value },
   search
 ) => {
   const uniqueTerms = new Set(
@@ -74,11 +72,11 @@ export const defaultFilter: FilterFn = (
 interface InlineComboboxProps {
   children: ReactNode;
   element: TElement;
-  trigger: string;
-  hideWhenNoValue?: boolean;
   filter?: FilterFn | false;
+  hideWhenNoValue?: boolean;
   setValue?: (value: string) => void;
   showTrigger?: boolean;
+  trigger: string;
   value?: string;
 }
 
@@ -86,11 +84,11 @@ const InlineCombobox = ({
   children,
   element,
   filter = defaultFilter,
+  hideWhenNoValue = false,
   setValue: setValueProp,
+  showTrigger = true,
   trigger,
   value: valueProp,
-  hideWhenNoValue = false,
-  showTrigger = true,
 }: InlineComboboxProps) => {
   const editor = useEditorRef();
   const inputRef = React.useRef<HTMLInputElement>(null!);
@@ -136,7 +134,6 @@ const InlineCombobox = ({
 
   const { props: inputProps, removeInput } = useComboboxInput({
     cancelInputOnBlur: false,
-    ref: inputRef,
     cursorState,
     onCancelInput: (cause) => {
       if (cause !== 'backspace') {
@@ -151,6 +148,7 @@ const InlineCombobox = ({
         });
       }
     },
+    ref: inputRef,
   });
 
   const [hasEmpty, setHasEmpty] = useState(false);
@@ -158,12 +156,12 @@ const InlineCombobox = ({
   const contextValue: InlineComboboxContextValue = useMemo(
     () => ({
       filter,
-      inputRef,
-      setHasEmpty,
-      trigger,
       inputProps,
+      inputRef,
       removeInput,
+      setHasEmpty,
       showTrigger,
+      trigger,
     }),
     [
       trigger,
@@ -191,7 +189,6 @@ const InlineCombobox = ({
     if (!store.getState().activeId) {
       store.setActiveId(store.first());
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items, store]);
 
   return (
@@ -216,10 +213,10 @@ const InlineComboboxInput = forwardRef<
   HTMLAttributes<HTMLInputElement>
 >(({ className, ...props }, propRef) => {
   const {
-    inputRef: contextRef,
-    trigger,
     inputProps,
+    inputRef: contextRef,
     showTrigger,
+    trigger,
   } = useContext(InlineComboboxContext);
 
   const store = useComboboxContext()!;
@@ -247,13 +244,13 @@ const InlineComboboxInput = forwardRef<
         </span>
 
         <Combobox
-          ref={ref}
+          autoSelect
           className={cn(
             'absolute left-0 top-0 size-full bg-transparent outline-none',
             className
           )}
+          ref={ref}
           value={value}
-          autoSelect
           {...inputProps}
           {...props}
         />
@@ -307,10 +304,10 @@ export type InlineComboboxItemProps = {
 
 const InlineComboboxItem = ({
   className,
-  label,
   focusEditor = true,
   group,
   keywords,
+  label,
   onClick,
   ...props
 }: InlineComboboxItemProps) => {
@@ -325,7 +322,7 @@ const InlineComboboxItem = ({
 
   const visible = useMemo(
     () =>
-      !filter || filter({ label, value, group, keywords }, search as string),
+      !filter || filter({ group, keywords, label, value }, search as string),
     [filter, group, keywords, label, value, search]
   );
 

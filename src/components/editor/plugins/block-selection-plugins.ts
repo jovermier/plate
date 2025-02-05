@@ -5,22 +5,22 @@ import { BlockSelectionPlugin } from '@udecode/plate-selection/react';
 export const blockSelectionPlugins = [
   BlockSelectionPlugin.configure(({ editor }) => ({
     options: {
+      enableContextMenu: true,
       isSelectable: (element, path) => {
         return (
           !['code_line', 'column', 'td'].includes(element.type) &&
-          !editor.api.block({ at: path, match: { type: 'tr' }, above: true })
+          !editor.api.block({ above: true, at: path, match: { type: 'tr' } })
         );
       },
-      enableContextMenu: true,
     },
   })),
 ] as const;
 
 export const blockSelectionReadOnlyPlugin = BlockSelectionPlugin.configure({
   api: {},
-  render: {},
   extendEditor: null,
   handlers: {},
   options: {},
+  render: {},
   useHooks: null,
 });

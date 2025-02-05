@@ -1,15 +1,14 @@
 'use client';
 
+import { cn, withRef } from '@udecode/cn';
+import { useDraggable } from '@udecode/plate-dnd';
+import { parseTwitterUrl, parseVideoUrl } from '@udecode/plate-media';
 import { useMediaState } from '@udecode/plate-media/react';
+import { ResizableProvider, useResizableStore } from '@udecode/plate-resizable';
 import { useEditorMounted, withHOC } from '@udecode/plate/react';
 import React from 'react';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import ReactPlayer from 'react-player';
-
-import { cn, withRef } from '@udecode/cn';
-import { useDraggable } from '@udecode/plate-dnd';
-import { parseTwitterUrl, parseVideoUrl } from '@udecode/plate-media';
-import { ResizableProvider, useResizableStore } from '@udecode/plate-resizable';
 
 import { Caption, CaptionTextarea } from './caption';
 import { PlateElement } from './plate-element';
@@ -26,10 +25,10 @@ export const MediaVideoElement = withHOC(
       const {
         align = 'center',
         embed,
-        readOnly,
-        unsafeUrl,
         isUpload,
         isYoutube,
+        readOnly,
+        unsafeUrl,
       } = useMediaState({
         urlParsers: [parseTwitterUrl, parseVideoUrl],
       });
@@ -39,25 +38,25 @@ export const MediaVideoElement = withHOC(
 
       const isTweet = true;
 
-      const { isDragging, handleRef } = useDraggable({
+      const { handleRef, isDragging } = useDraggable({
         element: props.element,
       });
 
       return (
-        <PlateElement ref={ref} className={cn(className, 'py-2.5')} {...props}>
+        <PlateElement className={cn(className, 'py-2.5')} ref={ref} {...props}>
           <figure
             className="relative m-0 cursor-default"
             contentEditable={false}
           >
             <Resizable
+              align={align}
               className={cn(isDragging && 'opacity-50')}
               options={{
+                align,
                 maxWidth: isTweet ? 550 : '100%',
                 minWidth: isTweet ? 300 : 100,
-                align,
                 readOnly,
               }}
-              align={align}
             >
               <div className="group/media">
                 <ResizeHandle
@@ -74,6 +73,7 @@ export const MediaVideoElement = withHOC(
                   <div ref={handleRef}>
                     <LiteYouTubeEmbed
                       id={embed!.id!}
+                      title="youtube"
                       wrapperClass={cn(
                         'aspect-video rounded-sm',
                         // focused && selected && 'ring-2 ring-ring ring-offset-2',
@@ -91,7 +91,6 @@ export const MediaVideoElement = withHOC(
                         '[&.lyt-activated]:before:pointer-events-none [&.lyt-activated]:before:opacity-0',
                         '[&.lyt-activated_>_.lty-playbtn]:pointer-events-none [&.lyt-activated_>_.lty-playbtn]:!opacity-0'
                       )}
-                      title="youtube"
                     />
                   </div>
                 )}
@@ -100,20 +99,20 @@ export const MediaVideoElement = withHOC(
                 {isUpload && isEditorMounted && (
                   <div ref={handleRef}>
                     <ReactPlayer
-                      width="100%"
                       controls
                       height="100%"
                       url={unsafeUrl}
+                      width="100%"
                     />
                   </div>
                 )}
               </div>
             </Resizable>
 
-            <Caption style={{ width }} align={align}>
+            <Caption align={align} style={{ width }}>
               <CaptionTextarea
-                readOnly={readOnly}
                 placeholder="Write a caption..."
+                readOnly={readOnly}
               />
             </Caption>
           </figure>

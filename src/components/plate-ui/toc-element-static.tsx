@@ -1,16 +1,14 @@
-import React from 'react';
-
-import type { SlateEditor, SlateElementProps, TElement } from '@udecode/plate';
-
 import { cn } from '@udecode/cn';
+import type { SlateEditor, SlateElementProps, TElement } from '@udecode/plate';
 import { NodeApi, SlateElement } from '@udecode/plate';
 import {
-  type Heading,
   BaseTocPlugin,
+  type Heading,
   HEADING_KEYS,
   isHeading,
 } from '@udecode/plate-heading';
 import { cva } from 'class-variance-authority';
+import React from 'react';
 
 import { Button } from './button';
 
@@ -41,8 +39,8 @@ export function TocElementStatic({
         {headingList.length > 0 ? (
           headingList.map((item) => (
             <Button
-              key={item.title}
               className={cn(headingItemVariants({ depth: item.depth as any }))}
+              key={item.title}
               variant="ghost"
             >
               {item.title}
@@ -91,7 +89,7 @@ const getHeadingList = (editor?: SlateEditor) => {
     const title = NodeApi.string(node);
     const depth = headingDepth[type];
     const id = node.id as string;
-    title && headingList.push({ id, depth, path, title, type });
+    title && headingList.push({ depth, id, path, title, type });
   });
 
   return headingList;

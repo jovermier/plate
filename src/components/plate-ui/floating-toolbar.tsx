@@ -1,5 +1,13 @@
 'use client';
 
+import { cn, withRef } from '@udecode/cn';
+import {
+  flip,
+  type FloatingToolbarState,
+  offset,
+  useFloatingToolbar,
+  useFloatingToolbarState,
+} from '@udecode/plate-floating';
 import {
   useComposedRef,
   useEditorId,
@@ -7,15 +15,6 @@ import {
   useEventEditorSelectors,
 } from '@udecode/plate/react';
 import React from 'react';
-
-import { cn, withRef } from '@udecode/cn';
-import {
-  type FloatingToolbarState,
-  flip,
-  offset,
-  useFloatingToolbar,
-  useFloatingToolbarState,
-} from '@udecode/plate-floating';
 
 import { Toolbar } from './toolbar';
 
@@ -57,8 +56,8 @@ export const FloatingToolbar = withRef<
   const {
     clickOutsideRef,
     hidden,
-    ref: floatingRef,
     props: rootProps,
+    ref: floatingRef,
   } = useFloatingToolbar(floatingToolbarState);
 
   const ref = useComposedRef<HTMLDivElement>(componentRef, floatingRef);
@@ -68,11 +67,11 @@ export const FloatingToolbar = withRef<
   return (
     <div ref={clickOutsideRef}>
       <Toolbar
-        ref={ref}
         className={cn(
           'absolute z-50 overflow-x-auto whitespace-nowrap rounded-md border bg-popover p-1 opacity-100 shadow-md scrollbar-hide print:hidden',
           'max-w-[80vw]'
         )}
+        ref={ref}
         {...rootProps}
         {...props}
       >

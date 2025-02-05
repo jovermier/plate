@@ -1,15 +1,14 @@
 'use client';
 
-import React from 'react';
-
 import { cn, createPrimitiveElement, withRef, withVariants } from '@udecode/cn';
 import {
-  type ResizeHandle as ResizeHandlePrimitive,
   Resizable as ResizablePrimitive,
+  type ResizeHandle as ResizeHandlePrimitive,
   useResizeHandle,
   useResizeHandleState,
 } from '@udecode/plate-resizable';
 import { cva } from 'class-variance-authority';
+import React from 'react';
 
 export const mediaResizeHandleVariants = cva(
   cn(
@@ -29,9 +28,9 @@ export const mediaResizeHandleVariants = cva(
 const resizeHandleVariants = cva(cn('absolute z-40'), {
   variants: {
     direction: {
+      bottom: 'w-full cursor-row-resize',
       left: 'h-full cursor-col-resize',
       right: 'h-full cursor-col-resize',
-      bottom: 'w-full cursor-row-resize',
       top: 'w-full cursor-row-resize',
     },
   },
@@ -52,9 +51,9 @@ export const ResizeHandle = withRef<typeof ResizeHandlePrimitive>(
 
     return (
       <ResizeHandleVariants
-        ref={ref}
-        direction={options?.direction}
         data-resizing={state.isResizing}
+        direction={options?.direction}
+        ref={ref}
         {...resizeHandle.props}
         {...props}
       />

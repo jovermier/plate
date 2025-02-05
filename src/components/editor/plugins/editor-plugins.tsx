@@ -1,7 +1,11 @@
 'use client';
 
+import { FixedToolbarPlugin } from '@/components/editor/plugins/fixed-toolbar-plugin';
+import { FloatingToolbarPlugin } from '@/components/editor/plugins/floating-toolbar-plugin';
+import emojiMartData from '@emoji-mart/data';
 import { CalloutPlugin } from '@udecode/plate-callout/react';
 import { DatePlugin } from '@udecode/plate-date/react';
+import { DocxPlugin } from '@udecode/plate-docx';
 import { EmojiPlugin } from '@udecode/plate-emoji/react';
 import {
   FontBackgroundColorPlugin,
@@ -10,20 +14,14 @@ import {
 } from '@udecode/plate-font/react';
 import { HighlightPlugin } from '@udecode/plate-highlight/react';
 import { HorizontalRulePlugin } from '@udecode/plate-horizontal-rule/react';
+import { JuicePlugin } from '@udecode/plate-juice';
 import { KbdPlugin } from '@udecode/plate-kbd/react';
 import { ColumnPlugin } from '@udecode/plate-layout/react';
+import { MarkdownPlugin } from '@udecode/plate-markdown';
 import { SlashPlugin } from '@udecode/plate-slash-command/react';
 import { TogglePlugin } from '@udecode/plate-toggle/react';
-import { ParagraphPlugin } from '@udecode/plate/react';
-
-import emojiMartData from '@emoji-mart/data';
-import { DocxPlugin } from '@udecode/plate-docx';
-import { JuicePlugin } from '@udecode/plate-juice';
-import { MarkdownPlugin } from '@udecode/plate-markdown';
 import { TrailingBlockPlugin } from '@udecode/plate-trailing-block';
-
-import { FixedToolbarPlugin } from '@/components/editor/plugins/fixed-toolbar-plugin';
-import { FloatingToolbarPlugin } from '@/components/editor/plugins/floating-toolbar-plugin';
+import { ParagraphPlugin } from '@udecode/plate/react';
 
 import { aiPlugins } from './ai-plugins';
 import { alignPlugin } from './align-plugin';

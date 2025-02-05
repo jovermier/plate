@@ -1,10 +1,8 @@
-import React from 'react';
-
-import type { TEquationElement } from '@udecode/plate-math';
-
 import { cn } from '@udecode/cn';
-import { type SlateElementProps, SlateElement } from '@udecode/plate';
+import { SlateElement, type SlateElementProps } from '@udecode/plate';
+import type { TEquationElement } from '@udecode/plate-math';
 import { getEquationHtml } from '@udecode/plate-math';
+import React from 'react';
 
 export function InlineEquationElementStatic({
   children,
@@ -16,15 +14,15 @@ export function InlineEquationElementStatic({
   const html = getEquationHtml({
     element,
     options: {
-      fleqn: false,
-      strict: 'warn',
-      trust: false,
       displayMode: true,
       errorColor: '#cc0000',
+      fleqn: false,
       leqno: false,
       macros: { '\\f': '#1f(#2)' },
       output: 'htmlAndMathml',
+      strict: 'warn',
       throwOnError: false,
+      trust: false,
     },
   });
 

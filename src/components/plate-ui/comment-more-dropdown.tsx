@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@udecode/cn';
 import {
   useCommentDeleteButton,
   useCommentDeleteButtonState,
@@ -8,8 +9,6 @@ import {
 } from '@udecode/plate-comments/react';
 import { MoreHorizontal } from 'lucide-react';
 import React from 'react';
-
-import { cn } from '@udecode/cn';
 
 import { Button } from './button';
 import {

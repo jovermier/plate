@@ -1,8 +1,5 @@
 /** @type {import('prettier').Config} */
-module.exports = {
-  // https://prettier.io/docs/en/options.html#tab-width
-  tabWidth: 2,
-
+export default {
   // Set the line ending to `lf`.
   // https://prettier.io/docs/en/options.html#end-of-line
   endOfLine: 'lf',
@@ -16,6 +13,9 @@ module.exports = {
 
   // https://prettier.io/docs/en/options.html#quotes
   singleQuote: true,
+
+  // https://prettier.io/docs/en/options.html#tab-width
+  tabWidth: 2,
 
   // https://prettier.io/docs/en/options.html#trailing-commas
   trailingComma: 'es5',

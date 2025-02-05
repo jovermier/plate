@@ -1,10 +1,8 @@
-import React from 'react';
-
-import type { SlateElementProps } from '@udecode/plate';
-
 import { cn } from '@udecode/cn';
+import type { SlateElementProps } from '@udecode/plate';
 import { SlateElement } from '@udecode/plate';
-import { type TTableCellElement, BaseTablePlugin } from '@udecode/plate-table';
+import { BaseTablePlugin, type TTableCellElement } from '@udecode/plate-table';
+import React from 'react';
 
 export function TableCellElementStatic({
   children,
@@ -15,10 +13,10 @@ export function TableCellElementStatic({
 }: SlateElementProps<TTableCellElement> & {
   isHeader?: boolean;
 }) {
-  const { element, editor } = props;
+  const { editor, element } = props;
   const { api } = editor.getPlugin(BaseTablePlugin);
 
-  const { width, minHeight } = api.table.getCellSize({ element });
+  const { minHeight, width } = api.table.getCellSize({ element });
   const borders = api.table.getCellBorders({ element });
 
   return (
@@ -43,9 +41,9 @@ export function TableCellElementStatic({
       )}
       style={
         {
+          '--cellBackground': element.background,
           maxWidth: width || 240,
           minWidth: width || 120,
-          '--cellBackground': element.background,
           ...style,
         } as React.CSSProperties
       }

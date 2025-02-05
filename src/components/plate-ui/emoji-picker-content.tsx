@@ -1,10 +1,9 @@
 'use client';
 
+import { cn } from '@udecode/cn';
+import { type Emoji, EmojiSettings, type GridRow } from '@udecode/plate-emoji';
 import type { UseEmojiPickerType } from '@udecode/plate-emoji/react';
 import { memo, useCallback } from 'react';
-
-import { cn } from '@udecode/cn';
-import { type Emoji, type GridRow, EmojiSettings } from '@udecode/plate-emoji';
 
 export type EmojiButtonProps = {
   index: number;
@@ -31,15 +30,15 @@ export type RowOfButtonsProps = {
 } & Pick<UseEmojiPickerType, 'emojiLibrary' | 'onMouseOver' | 'onSelectEmoji'>;
 
 const Button = memo(
-  ({ index, emoji, onMouseOver, onSelect }: EmojiButtonProps) => {
+  ({ emoji, index, onMouseOver, onSelect }: EmojiButtonProps) => {
     return (
       <button
+        aria-label={emoji.skins[0].native}
         className="group relative flex size-9 cursor-pointer items-center justify-center border-none bg-transparent text-2xl leading-none"
+        data-index={index}
         onClick={() => onSelect(emoji)}
         onMouseEnter={() => onMouseOver(emoji)}
         onMouseLeave={() => onMouseOver()}
-        aria-label={emoji.skins[0].native}
-        data-index={index}
         tabIndex={-1}
         type="button"
       >
@@ -49,11 +48,11 @@ const Button = memo(
         />
         <span
           className="relative"
+          data-emoji-set="native"
           style={{
             fontFamily:
               '"Apple Color Emoji", "Segoe UI Emoji", NotoColorEmoji, "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", EmojiSymbols',
           }}
-          data-emoji-set="native"
         >
           {emoji.skins[0].native}
         </span>
@@ -65,14 +64,14 @@ Button.displayName = 'Button';
 
 const RowOfButtons = memo(
   ({ emojiLibrary, onMouseOver, onSelectEmoji, row }: RowOfButtonsProps) => (
-    <div key={row.id} className="flex" data-index={row.id}>
+    <div className="flex" data-index={row.id} key={row.id}>
       {row.elements.map((emojiId, index) => (
         <Button
-          key={emojiId}
           emoji={emojiLibrary.getEmoji(emojiId)}
+          index={index}
+          key={emojiId}
           onMouseOver={onMouseOver}
           onSelect={onSelectEmoji}
-          index={index}
         />
       ))}
     </div>
@@ -81,14 +80,14 @@ const RowOfButtons = memo(
 RowOfButtons.displayName = 'RowOfButtons';
 
 export function EmojiPickerContent({
+  emojiLibrary,
   i18n,
   isSearching = false,
+  onMouseOver,
+  onSelectEmoji,
   refs,
   searchResult,
   settings = EmojiSettings,
-  emojiLibrary,
-  onMouseOver,
-  onSelectEmoji,
   visibleCategories,
 }: EmojiPickerContentProps) {
   const getRowWidth = settings.perLine.value * settings.buttonSize.value;
@@ -129,8 +128,8 @@ export function EmojiPickerContent({
                   .getRows()
                   .map((row: GridRow) => (
                     <RowOfButtons
-                      key={row.id}
                       emojiLibrary={emojiLibrary}
+                      key={row.id}
                       onMouseOver={onMouseOver}
                       onSelectEmoji={onSelectEmoji}
                       row={row}
@@ -159,11 +158,11 @@ export function EmojiPickerContent({
         <div className="relative flex flex-wrap">
           {searchResult.map((emoji: Emoji, index: number) => (
             <Button
-              key={emoji.id}
               emoji={emojiLibrary.getEmoji(emoji.id)}
+              index={index}
+              key={emoji.id}
               onMouseOver={onMouseOver}
               onSelect={onSelectEmoji}
-              index={index}
             />
           ))}
         </div>
@@ -180,8 +179,6 @@ export function EmojiPickerContent({
 
   return (
     <div
-      data-id="scroll"
-      ref={refs.current.contentRoot}
       className={cn(
         'h-full min-h-[50%] overflow-y-auto overflow-x-hidden px-2',
         '[&::-webkit-scrollbar]:w-4',
@@ -189,8 +186,10 @@ export function EmojiPickerContent({
         '[&::-webkit-scrollbar-thumb]:min-h-11 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-muted [&::-webkit-scrollbar-thumb]:hover:bg-muted-foreground/25',
         '[&::-webkit-scrollbar-thumb]:border-4 [&::-webkit-scrollbar-thumb]:border-solid [&::-webkit-scrollbar-thumb]:border-popover [&::-webkit-scrollbar-thumb]:bg-clip-padding'
       )}
+      data-id="scroll"
+      ref={refs.current.contentRoot}
     >
-      <div ref={refs.current.content} className="h-full">
+      <div className="h-full" ref={refs.current.content}>
         {isSearching ? SearchList() : EmojiList()}
       </div>
     </div>

@@ -6,9 +6,8 @@ import {
   useCommentItemContentState,
 } from '@udecode/plate-comments/react';
 import { useEditorPlugin } from '@udecode/plate/react';
-import React from 'react';
-
 import { formatDistance } from 'date-fns';
+import React from 'react';
 
 import { CommentAvatar } from './comment-avatar';
 import { CommentMoreDropdown } from './comment-more-dropdown';
@@ -34,12 +33,12 @@ export function CommentItem({ commentId }: PlateCommentProps) {
 
 function CommentItemContent() {
   const {
-    editingValue,
-    user,
     comment,
     commentText,
+    editingValue,
     isMyComment,
     isReplyComment,
+    user,
   } = useCommentItemContentState();
 
   return (

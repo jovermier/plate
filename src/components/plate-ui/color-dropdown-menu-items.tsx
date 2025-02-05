@@ -1,10 +1,9 @@
 'use client';
 
 import type { DropdownMenuItemProps } from '@radix-ui/react-dropdown-menu';
+import { cn } from '@udecode/cn';
 import { Check } from 'lucide-react';
 import React from 'react';
-
-import { cn } from '@udecode/cn';
 
 import { buttonVariants } from './button';
 import { DropdownMenuItem } from './dropdown-menu';
@@ -37,11 +36,11 @@ type ColorDropdownMenuItemsProps = {
 
 export function ColorDropdownMenuItem({
   className,
+  isBrightColor,
   isSelected,
   name,
-  value,
-  isBrightColor,
   updateColor,
+  value,
   ...props
 }: ColorDropdownMenuItemProps) {
   const content = (
@@ -56,11 +55,11 @@ export function ColorDropdownMenuItem({
         !isBrightColor && 'border-transparent text-white hover:!text-white',
         className
       )}
-      style={{ backgroundColor: value }}
       onSelect={(e) => {
         e.preventDefault();
         updateColor(value);
       }}
+      style={{ backgroundColor: value }}
       {...props}
     >
       {isSelected ? <Check className="!size-3" /> : null}
@@ -93,14 +92,14 @@ export function ColorDropdownMenuItems({
       {...props}
     >
       <TooltipProvider>
-        {colors.map(({ name, value, isBrightColor }) => (
+        {colors.map(({ isBrightColor, name, value }) => (
           <ColorDropdownMenuItem
-            name={name}
-            key={name ?? value}
-            value={value}
             isBrightColor={isBrightColor}
-            updateColor={updateColor}
             isSelected={color === value}
+            key={name ?? value}
+            name={name}
+            updateColor={updateColor}
+            value={value}
           />
         ))}
         {props.children}

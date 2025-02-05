@@ -1,5 +1,6 @@
 'use client';
 
+import { NodeApi, type SlateEditor } from '@udecode/plate';
 import { AIChatPlugin, AIPlugin } from '@udecode/plate-ai/react';
 import { useIsSelecting } from '@udecode/plate-selection/react';
 import { type PlateEditor, useEditorPlugin } from '@udecode/plate/react';
@@ -19,8 +20,6 @@ import {
 } from 'lucide-react';
 import { useEffect, useMemo } from 'react';
 
-import { type SlateEditor, NodeApi } from '@udecode/plate';
-
 import { CommandGroup, CommandItem } from './command';
 
 export type EditorChatState =
@@ -31,91 +30,17 @@ export type EditorChatState =
 
 export const aiChatItems = {
   accept: {
-    label: 'Accept',
-    value: 'accept',
     icon: <Check />,
+    label: 'Accept',
     onSelect: ({ editor }) => {
       editor.getTransforms(AIChatPlugin).aiChat.accept();
       editor.tf.focus({ edge: 'end' });
     },
-  },
-  discard: {
-    label: 'Discard',
-    value: 'discard',
-    icon: <X />,
-    onSelect: ({ editor }) => {
-      editor.getTransforms(AIPlugin).ai.undo();
-      editor.getApi(AIChatPlugin).aiChat.hide();
-    },
-    shortcut: 'Escape',
-  },
-  explain: {
-    label: 'Explain',
-    value: 'explain',
-    icon: <BadgeHelp />,
-    onSelect: ({ editor }) => {
-      void editor.getApi(AIChatPlugin).aiChat.submit({
-        prompt: {
-          default: 'Explain {editor}',
-          selecting: 'Explain',
-        },
-      });
-    },
-  },
-  fixSpelling: {
-    label: 'Fix spelling & grammar',
-    value: 'fixSpelling',
-    icon: <Check />,
-    onSelect: ({ editor }) => {
-      void editor.getApi(AIChatPlugin).aiChat.submit({
-        prompt: 'Fix spelling and grammar',
-      });
-    },
-  },
-  replace: {
-    label: 'Replace selection',
-    value: 'replace',
-    icon: <Check />,
-    onSelect: ({ aiEditor, editor }) => {
-      void editor.getTransforms(AIChatPlugin).aiChat.replaceSelection(aiEditor);
-    },
-  },
-  simplifyLanguage: {
-    label: 'Simplify language',
-    value: 'simplifyLanguage',
-    icon: <FeatherIcon />,
-    onSelect: ({ editor }) => {
-      void editor.getApi(AIChatPlugin).aiChat.submit({
-        prompt: 'Simplify the language',
-      });
-    },
-  },
-  summarize: {
-    label: 'Add a summary',
-    value: 'summarize',
-    icon: <Album />,
-    onSelect: ({ editor }) => {
-      void editor.getApi(AIChatPlugin).aiChat.submit({
-        mode: 'insert',
-        prompt: {
-          default: 'Summarize {editor}',
-          selecting: 'Summarize',
-        },
-      });
-    },
-  },
-  tryAgain: {
-    label: 'Try again',
-    value: 'tryAgain',
-    icon: <CornerUpLeft />,
-    onSelect: ({ editor }) => {
-      void editor.getApi(AIChatPlugin).aiChat.reload();
-    },
+    value: 'accept',
   },
   continueWrite: {
-    label: 'Continue writing',
-    value: 'continueWrite',
     icon: <PenLine />,
+    label: 'Continue writing',
     onSelect: ({ editor }) => {
       const ancestorNode = editor.api.block({ highest: true });
 
@@ -133,54 +58,128 @@ Start writing a new paragraph AFTER <Document> ONLY ONE SENTENCE`
           : 'Continue writing AFTER <Block> ONLY ONE SENTENCE. DONT REPEAT THE TEXT.',
       });
     },
+    value: 'continueWrite',
+  },
+  discard: {
+    icon: <X />,
+    label: 'Discard',
+    onSelect: ({ editor }) => {
+      editor.getTransforms(AIPlugin).ai.undo();
+      editor.getApi(AIChatPlugin).aiChat.hide();
+    },
+    shortcut: 'Escape',
+    value: 'discard',
   },
   emojify: {
-    label: 'Emojify',
-    value: 'emojify',
     icon: <SmileIcon />,
+    label: 'Emojify',
     onSelect: ({ editor }) => {
       void editor.getApi(AIChatPlugin).aiChat.submit({
         prompt: 'Emojify',
       });
     },
+    value: 'emojify',
+  },
+  explain: {
+    icon: <BadgeHelp />,
+    label: 'Explain',
+    onSelect: ({ editor }) => {
+      void editor.getApi(AIChatPlugin).aiChat.submit({
+        prompt: {
+          default: 'Explain {editor}',
+          selecting: 'Explain',
+        },
+      });
+    },
+    value: 'explain',
+  },
+  fixSpelling: {
+    icon: <Check />,
+    label: 'Fix spelling & grammar',
+    onSelect: ({ editor }) => {
+      void editor.getApi(AIChatPlugin).aiChat.submit({
+        prompt: 'Fix spelling and grammar',
+      });
+    },
+    value: 'fixSpelling',
   },
   improveWriting: {
-    label: 'Improve writing',
-    value: 'improveWriting',
     icon: <Wand />,
+    label: 'Improve writing',
     onSelect: ({ editor }) => {
       void editor.getApi(AIChatPlugin).aiChat.submit({
         prompt: 'Improve the writing',
       });
     },
+    value: 'improveWriting',
   },
   insertBelow: {
-    label: 'Insert below',
-    value: 'insertBelow',
     icon: <ListEnd />,
+    label: 'Insert below',
     onSelect: ({ aiEditor, editor }) => {
       void editor.getTransforms(AIChatPlugin).aiChat.insertBelow(aiEditor);
     },
+    value: 'insertBelow',
   },
   makeLonger: {
-    label: 'Make longer',
-    value: 'makeLonger',
     icon: <ListPlus />,
+    label: 'Make longer',
     onSelect: ({ editor }) => {
       void editor.getApi(AIChatPlugin).aiChat.submit({
         prompt: 'Make longer',
       });
     },
+    value: 'makeLonger',
   },
   makeShorter: {
-    label: 'Make shorter',
-    value: 'makeShorter',
     icon: <ListMinus />,
+    label: 'Make shorter',
     onSelect: ({ editor }) => {
       void editor.getApi(AIChatPlugin).aiChat.submit({
         prompt: 'Make shorter',
       });
     },
+    value: 'makeShorter',
+  },
+  replace: {
+    icon: <Check />,
+    label: 'Replace selection',
+    onSelect: ({ aiEditor, editor }) => {
+      void editor.getTransforms(AIChatPlugin).aiChat.replaceSelection(aiEditor);
+    },
+    value: 'replace',
+  },
+  simplifyLanguage: {
+    icon: <FeatherIcon />,
+    label: 'Simplify language',
+    onSelect: ({ editor }) => {
+      void editor.getApi(AIChatPlugin).aiChat.submit({
+        prompt: 'Simplify the language',
+      });
+    },
+    value: 'simplifyLanguage',
+  },
+  summarize: {
+    icon: <Album />,
+    label: 'Add a summary',
+    onSelect: ({ editor }) => {
+      void editor.getApi(AIChatPlugin).aiChat.submit({
+        mode: 'insert',
+        prompt: {
+          default: 'Summarize {editor}',
+          selecting: 'Summarize',
+        },
+      });
+    },
+    value: 'summarize',
+  },
+  tryAgain: {
+    icon: <CornerUpLeft />,
+    label: 'Try again',
+    onSelect: ({ editor }) => {
+      void editor.getApi(AIChatPlugin).aiChat.reload();
+    },
+    value: 'tryAgain',
   },
 } satisfies Record<
   string,
@@ -280,18 +279,18 @@ export const AIMenuItems = ({
   return (
     <>
       {menuGroups.map((group, index) => (
-        <CommandGroup key={index} heading={group.heading}>
+        <CommandGroup heading={group.heading} key={index}>
           {group.items.map((menuItem) => (
             <CommandItem
-              key={menuItem.value}
               className="[&_svg]:text-muted-foreground"
-              value={menuItem.value}
+              key={menuItem.value}
               onSelect={() => {
                 menuItem.onSelect?.({
                   aiEditor,
                   editor: editor,
                 });
               }}
+              value={menuItem.value}
             >
               {menuItem.icon}
               <span>{menuItem.label}</span>

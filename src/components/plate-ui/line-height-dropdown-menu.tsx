@@ -28,19 +28,19 @@ export function LineHeightDropdownMenu({ ...props }: DropdownMenuProps) {
       <DropdownMenuTrigger asChild>
         <ToolbarButton
           isDropdown
-          tooltip="Line height"
           pressed={openState.open}
+          tooltip="Line height"
         >
           <WrapText />
         </ToolbarButton>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="min-w-0" align="start">
+      <DropdownMenuContent align="start" className="min-w-0">
         <DropdownMenuRadioGroup {...radioGroupProps}>
           {state.values.map((_value) => (
             <DropdownMenuRadioItem
-              key={_value}
               className="min-w-[180px]"
+              key={_value}
               value={_value}
             >
               {_value}

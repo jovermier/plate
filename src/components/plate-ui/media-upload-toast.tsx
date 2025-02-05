@@ -3,7 +3,6 @@
 import { PlaceholderPlugin, UploadErrorCode } from '@udecode/plate-media/react';
 import { useEditorRef } from '@udecode/plate/react';
 import { useEffect } from 'react';
-
 import { toast } from 'sonner';
 
 export const useUploadErrorToast = () => {
@@ -14,7 +13,7 @@ export const useUploadErrorToast = () => {
   useEffect(() => {
     if (!uploadError) return;
 
-    const { data, code } = uploadError;
+    const { code, data } = uploadError;
 
     switch (code) {
       case UploadErrorCode.INVALID_FILE_SIZE: {

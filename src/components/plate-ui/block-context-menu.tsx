@@ -1,7 +1,9 @@
 'use client';
 
+import { useIsTouchDevice } from '@/hooks/use-is-touch-device';
 import { AIChatPlugin } from '@udecode/plate-ai/react';
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react';
+import { HEADING_KEYS } from '@udecode/plate-heading';
 import { IndentListPlugin } from '@udecode/plate-indent-list/react';
 import {
   BLOCK_CONTEXT_MENU_ID,
@@ -10,10 +12,6 @@ import {
 } from '@udecode/plate-selection/react';
 import { ParagraphPlugin, useEditorPlugin } from '@udecode/plate/react';
 import { useCallback, useState } from 'react';
-
-import { HEADING_KEYS } from '@udecode/plate-heading';
-
-import { useIsTouchDevice } from '@/hooks/use-is-touch-device';
 
 import {
   ContextMenu,

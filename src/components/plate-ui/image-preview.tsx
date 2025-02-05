@@ -1,5 +1,6 @@
 'use client';
 
+import { cn, createPrimitiveComponent } from '@udecode/cn';
 import {
   PreviewImage,
   useImagePreview,
@@ -7,10 +8,8 @@ import {
   useScaleInput,
   useScaleInputState,
 } from '@udecode/plate-media/react';
-import { ArrowLeft, ArrowRight, Download, Minus, Plus, X } from 'lucide-react';
-
-import { cn, createPrimitiveComponent } from '@udecode/cn';
 import { cva } from 'class-variance-authority';
+import { ArrowLeft, ArrowRight, Download, Minus, Plus, X } from 'lucide-react';
 
 const toolButtonVariants = cva('rounded bg-[rgba(0,0,0,0.5)] px-1', {
   defaultVariants: {
@@ -35,12 +34,12 @@ export const ImagePreview = () => {
   const state = useImagePreviewState({ scrollSpeed: SCROLL_SPEED });
 
   const {
-    currentUrlIndex,
-    nextDisabled,
-    prevDisabled,
     closeProps,
+    currentUrlIndex,
     maskLayerProps,
+    nextDisabled,
     nextProps,
+    prevDisabled,
     prevProps,
     scaleTextProps,
     zommOutProps,

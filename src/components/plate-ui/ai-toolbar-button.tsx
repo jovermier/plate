@@ -1,10 +1,9 @@
 'use client';
 
+import { withRef } from '@udecode/cn';
 import { AIChatPlugin } from '@udecode/plate-ai/react';
 import { useEditorPlugin } from '@udecode/plate/react';
 import React from 'react';
-
-import { withRef } from '@udecode/cn';
 
 import { ToolbarButton } from './toolbar';
 

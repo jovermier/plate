@@ -1,8 +1,15 @@
 'use client';
 
+import {
+  getBlockType,
+  setBlockType,
+  STRUCTURAL_TYPES,
+} from '@/components/editor/transforms';
 import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react';
 import { CodeBlockPlugin } from '@udecode/plate-code-block/react';
+import { HEADING_KEYS } from '@udecode/plate-heading';
+import { INDENT_LIST_KEYS, ListStyleType } from '@udecode/plate-indent-list';
 import { TogglePlugin } from '@udecode/plate-toggle/react';
 import {
   ParagraphPlugin,
@@ -24,15 +31,6 @@ import {
 } from 'lucide-react';
 import React from 'react';
 
-import { HEADING_KEYS } from '@udecode/plate-heading';
-import { INDENT_LIST_KEYS, ListStyleType } from '@udecode/plate-indent-list';
-
-import {
-  getBlockType,
-  setBlockType,
-  STRUCTURAL_TYPES,
-} from '@/components/editor/transforms';
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -45,69 +43,69 @@ import { ToolbarButton } from './toolbar';
 
 const turnIntoItems = [
   {
-    label: 'Text',
-    value: ParagraphPlugin.key,
     icon: <PilcrowIcon />,
     keywords: ['paragraph'],
+    label: 'Text',
+    value: ParagraphPlugin.key,
   },
   {
-    label: 'Heading 1',
-    value: HEADING_KEYS.h1,
     icon: <Heading1Icon />,
     keywords: ['title', 'h1'],
+    label: 'Heading 1',
+    value: HEADING_KEYS.h1,
   },
   {
-    label: 'Heading 2',
-    value: HEADING_KEYS.h2,
     icon: <Heading2Icon />,
     keywords: ['subtitle', 'h2'],
+    label: 'Heading 2',
+    value: HEADING_KEYS.h2,
   },
   {
-    label: 'Heading 3',
-    value: HEADING_KEYS.h3,
     icon: <Heading3Icon />,
     keywords: ['subtitle', 'h3'],
+    label: 'Heading 3',
+    value: HEADING_KEYS.h3,
   },
   {
-    label: 'Bulleted list',
-    value: ListStyleType.Disc,
     icon: <ListIcon />,
     keywords: ['unordered', 'ul', '-'],
+    label: 'Bulleted list',
+    value: ListStyleType.Disc,
   },
   {
-    label: 'Numbered list',
-    value: ListStyleType.Decimal,
     icon: <ListOrderedIcon />,
     keywords: ['ordered', 'ol', '1'],
+    label: 'Numbered list',
+    value: ListStyleType.Decimal,
   },
   {
-    label: 'To-do list',
-    value: INDENT_LIST_KEYS.todo,
     icon: <SquareIcon />,
     keywords: ['checklist', 'task', 'checkbox', '[]'],
+    label: 'To-do list',
+    value: INDENT_LIST_KEYS.todo,
   },
   {
-    label: 'Toggle list',
-    value: TogglePlugin.key,
     icon: <ChevronRightIcon />,
     keywords: ['collapsible', 'expandable'],
+    label: 'Toggle list',
+    value: TogglePlugin.key,
   },
   {
-    label: 'Code',
-    value: CodeBlockPlugin.key,
     icon: <FileCodeIcon />,
     keywords: ['```'],
+    label: 'Code',
+    value: CodeBlockPlugin.key,
   },
   {
-    label: 'Quote',
-    value: BlockquotePlugin.key,
     icon: <QuoteIcon />,
     keywords: ['citation', 'blockquote', '>'],
+    label: 'Quote',
+    value: BlockquotePlugin.key,
   },
   {
+    icon: <Columns3Icon />,
     label: '3 columns',
     value: 'action_three_columns',
-    icon: <Columns3Icon />,
   },
 ];
 
@@ -117,8 +115,8 @@ export function TurnIntoDropdownMenu(props: DropdownMenuProps) {
 
   const value = useSelectionFragmentProp({
     defaultValue: ParagraphPlugin.key,
-    structuralTypes: STRUCTURAL_TYPES,
     getProp: (node) => getBlockType(node as any),
+    structuralTypes: STRUCTURAL_TYPES,
   });
   const selectedItem = React.useMemo(
     () =>
@@ -131,30 +129,30 @@ export function TurnIntoDropdownMenu(props: DropdownMenuProps) {
   return (
     <DropdownMenu modal={false} {...openState} {...props}>
       <DropdownMenuTrigger asChild>
-        <ToolbarButton isDropdown tooltip="Turn into" pressed={openState.open}>
+        <ToolbarButton isDropdown pressed={openState.open} tooltip="Turn into">
           {selectedItem.label}
         </ToolbarButton>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent
+        align="start"
         className="ignore-click-outside/toolbar min-w-0"
         onCloseAutoFocus={(e) => {
           e.preventDefault();
           editor.tf.focus();
         }}
-        align="start"
       >
         <DropdownMenuRadioGroup
-          value={value}
+          label="Turn into"
           onValueChange={(type) => {
             setBlockType(editor, type);
           }}
-          label="Turn into"
+          value={value}
         >
-          {turnIntoItems.map(({ label, value: itemValue, icon }) => (
+          {turnIntoItems.map(({ icon, label, value: itemValue }) => (
             <DropdownMenuRadioItem
-              key={itemValue}
               className="min-w-[180px]"
+              key={itemValue}
               value={itemValue}
             >
               {icon}

@@ -1,8 +1,6 @@
-import type { UseEmojiPickerType } from '@udecode/plate-emoji/react';
-
-import type { EmojiCategoryList } from '@udecode/plate-emoji';
-
 import { cn } from '@udecode/cn';
+import type { EmojiCategoryList } from '@udecode/plate-emoji';
+import type { UseEmojiPickerType } from '@udecode/plate-emoji/react';
 
 import { Button } from './button';
 import {
@@ -38,9 +36,9 @@ export type EmojiPickerNavigationProps = {
 // };
 
 export function EmojiPickerNavigation({
-  i18n,
   emojiLibrary,
   focusedCategory,
+  i18n,
   icons,
   onClick,
 }: EmojiPickerNavigationProps) {
@@ -53,8 +51,8 @@ export function EmojiPickerNavigation({
   return (
     <TooltipProvider delayDuration={500}>
       <nav
-        id="emoji-nav"
         className="mb-2.5 border-0 border-b border-solid border-b-border p-1.5"
+        id="emoji-nav"
       >
         <div className="relative flex items-center justify-evenly">
           {emojiLibrary
@@ -64,7 +62,7 @@ export function EmojiPickerNavigation({
               <Tooltip key={id}>
                 <TooltipTrigger asChild>
                   <Button
-                    size="sm"
+                    aria-label={i18n.categories[id]}
                     className={cn(
                       'h-fit rounded-full fill-current p-1.5 text-muted-foreground hover:bg-muted hover:text-muted-foreground',
                       id === focusedCategory &&
@@ -73,9 +71,9 @@ export function EmojiPickerNavigation({
                     onClick={() => {
                       onClick(id);
                     }}
-                    aria-label={i18n.categories[id]}
-                    variant="ghost"
+                    size="sm"
                     type="button"
+                    variant="ghost"
                   >
                     <span className="inline-flex size-5 items-center justify-center">
                       {icons.categories[id].outline}

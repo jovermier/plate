@@ -1,5 +1,7 @@
 'use client';
 
+import { useChat } from '@/components/editor/use-chat';
+import { isHotkey, type NodeEntry } from '@udecode/plate';
 import {
   AIChatPlugin,
   useEditorChat,
@@ -12,10 +14,6 @@ import {
 import { useEditorPlugin, useHotkeys } from '@udecode/plate/react';
 import { Loader2Icon } from 'lucide-react';
 import * as React from 'react';
-
-import { type NodeEntry, isHotkey } from '@udecode/plate';
-
-import { useChat } from '@/components/editor/use-chat';
 
 import { AIChatEditor } from './ai-chat-editor';
 import { AIMenuItems } from './ai-menu-items';
@@ -32,7 +30,7 @@ export function AIMenu() {
 
   const chat = useChat();
 
-  const { input, messages, setInput, isLoading } = chat;
+  const { input, isLoading, messages, setInput } = chat;
   const [anchorElement, setAnchorElement] = React.useState<HTMLElement | null>(
     null
   );
@@ -94,12 +92,8 @@ export function AIMenu() {
       )}
 
       <PopoverContent
-        // avoidCollisions={false}
-        side="bottom"
+        align="center"
         className="border-none bg-transparent p-0 shadow-none"
-        style={{
-          width: anchorElement?.offsetWidth,
-        }}
         onEscapeKeyDown={(e) => {
           e.preventDefault();
 
@@ -109,12 +103,16 @@ export function AIMenu() {
             api.aiChat.hide();
           }
         }}
-        align="center"
+        // avoidCollisions={false}
+        side="bottom"
+        style={{
+          width: anchorElement?.offsetWidth,
+        }}
       >
         <Command
           className="w-full rounded-lg border shadow-md"
-          value={value}
           onValueChange={setValue}
+          value={value}
         >
           {mode === 'chat' && isSelecting && content && (
             <AIChatEditor content={content} />
@@ -127,9 +125,8 @@ export function AIMenu() {
             </div>
           ) : (
             <InputCommand
-              className="rounded-none border-b border-solid border-border [&_svg]:hidden"
-              value={input}
               autoFocus
+              className="rounded-none border-b border-solid border-border [&_svg]:hidden"
               data-plate-focus
               onKeyDown={(e) => {
                 if (isHotkey('backspace')(e) && input.length === 0) {
@@ -143,6 +140,7 @@ export function AIMenu() {
               }}
               onValueChange={setInput}
               placeholder="Ask AI anything..."
+              value={input}
               variant="ghost"
             />
           )}

@@ -1,5 +1,4 @@
 import { createRouteHandler, createUploadthing } from 'uploadthing/next';
-
 import { type AnyFileRoute, type FileRouter } from 'uploadthing/types';
 
 const f = createUploadthing();
@@ -12,12 +11,12 @@ const ourFileRouter = {
     .onUploadComplete(({ file }) => {
       return {
         file: {
+          customId: file.customId,
           key: file.key,
+          lastModified: file.lastModified,
           name: file.name,
           size: file.size,
           type: file.type,
-          customId: file.customId,
-          lastModified: file.lastModified,
         },
       };
     }),

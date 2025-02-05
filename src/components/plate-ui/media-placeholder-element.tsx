@@ -1,5 +1,8 @@
 'use client';
 
+import { useUploadFile } from '@/lib/uploadthing';
+import { cn } from '@udecode/cn';
+import type { TPlaceholderElement } from '@udecode/plate-media';
 import {
   AudioPlugin,
   FilePlugin,
@@ -13,13 +16,7 @@ import { useEditorPlugin, withHOC, withRef } from '@udecode/plate/react';
 import { AudioLines, FileUp, Film, ImageIcon } from 'lucide-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
-
-import type { TPlaceholderElement } from '@udecode/plate-media';
-
-import { cn } from '@udecode/cn';
 import { useFilePicker } from 'use-file-picker';
-
-import { useUploadFile } from '@/lib/uploadthing';
 
 import { PlateElement } from './plate-element';
 import { Spinner } from './spinner';
@@ -32,6 +29,11 @@ const CONTENT: Record<
     icon: ReactNode;
   }
 > = {
+  [AudioPlugin.key]: {
+    accept: ['audio/*'],
+    content: 'Add an audio file',
+    icon: <AudioLines />,
+  },
   [FilePlugin.key]: {
     accept: ['*'],
     content: 'Add a file',
@@ -41,11 +43,6 @@ const CONTENT: Record<
     accept: ['image/*'],
     content: 'Add an image',
     icon: <ImageIcon />,
-  },
-  [AudioPlugin.key]: {
-    accept: ['audio/*'],
-    content: 'Add an audio file',
-    icon: <AudioLines />,
   },
   [VideoPlugin.key]: {
     accept: ['video/*'],
@@ -104,14 +101,14 @@ export const MediaPlaceholderElement = withHOC(
           editor.tf.removeNodes({ at: path });
 
           const node = {
-            initialWidth: imageRef.current?.width,
             children: [{ text: '' }],
             initialHeight: imageRef.current?.height,
+            initialWidth: imageRef.current?.width,
+            isUpload: true,
             name: element.mediaType === FilePlugin.key ? uploadedFile.name : '',
+            placeholderId: element.id as string,
             type: element.mediaType!,
             url: uploadedFile.url,
-            isUpload: true,
-            placeholderId: element.id as string,
           };
 
           editor.tf.insertNodes(node, { at: path });
@@ -120,7 +117,6 @@ export const MediaPlaceholderElement = withHOC(
         });
 
         api.placeholder.removeUploadingFile(element.id as string);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [uploadedFile, element.id]);
 
       // React dev mode will call useEffect twice
@@ -138,12 +134,10 @@ export const MediaPlaceholderElement = withHOC(
         if (!currentFiles) return;
 
         replaceCurrentPlaceholder(currentFiles);
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [isReplaced]);
 
       return (
-        <PlateElement ref={ref} className={cn(className, 'my-1')} {...props}>
+        <PlateElement className={cn(className, 'my-1')} ref={ref} {...props}>
           {(!loading || !isImage) && (
             <div
               className={cn(
@@ -176,9 +170,9 @@ export const MediaPlaceholderElement = withHOC(
 
           {isImage && loading && (
             <ImageProgress
-              progress={progress}
               file={uploadingFile}
               imageRef={imageRef}
+              progress={progress}
             />
           )}
 
@@ -241,9 +235,9 @@ export function ImageProgress({
   return (
     <div className={cn('relative', className)} contentEditable={false}>
       <img
-        ref={imageRef}
-        className="h-auto w-full rounded-sm object-cover"
         alt={file.name}
+        className="h-auto w-full rounded-sm object-cover"
+        ref={imageRef}
         src={objectUrl}
       />
       {progress < 100 && (

@@ -1,6 +1,7 @@
 'use client';
 
 import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
+import { isUrl } from '@udecode/plate';
 import {
   AudioPlugin,
   FilePlugin,
@@ -16,8 +17,6 @@ import {
   LinkIcon,
 } from 'lucide-react';
 import React, { useCallback, useState } from 'react';
-
-import { isUrl } from '@udecode/plate';
 import { toast } from 'sonner';
 import { useFilePicker } from 'use-file-picker';
 
@@ -55,28 +54,28 @@ const MEDIA_CONFIG: Record<
     tooltip: string;
   }
 > = {
+  [AudioPlugin.key]: {
+    accept: ['audio/*'],
+    icon: <AudioLinesIcon className="size-4" />,
+    title: 'Insert Audio',
+    tooltip: 'Audio',
+  },
   [FilePlugin.key]: {
     accept: ['*'],
-    title: 'Insert File',
     icon: <FileUpIcon className="size-4" />,
+    title: 'Insert File',
     tooltip: 'File',
   },
   [ImagePlugin.key]: {
     accept: ['image/*'],
-    title: 'Insert Image',
     icon: <ImageIcon className="size-4" />,
+    title: 'Insert Image',
     tooltip: 'Image',
-  },
-  [AudioPlugin.key]: {
-    accept: ['audio/*'],
-    title: 'Insert Audio',
-    icon: <AudioLinesIcon className="size-4" />,
-    tooltip: 'Audio',
   },
   [VideoPlugin.key]: {
     accept: ['video/*'],
-    title: 'Insert Video',
     icon: <FilmIcon className="size-4" />,
+    title: 'Insert Video',
     tooltip: 'Video',
   },
 };
@@ -124,9 +123,9 @@ export function MediaToolbarButton({
           </DropdownMenuTrigger>
 
           <DropdownMenuContent
-            onClick={(e) => e.stopPropagation()}
             align="start"
             alignOffset={-32}
+            onClick={(e) => e.stopPropagation()}
           >
             <DropdownMenuGroup>
               <DropdownMenuItem onSelect={() => openFilePicker()}>
@@ -161,9 +160,9 @@ export function MediaToolbarButton({
 }
 
 function MediaUrlDialogContent({
-  setOpen,
   currentConfig,
   nodeType,
+  setOpen,
 }: {
   setOpen: (value: boolean) => void;
   currentConfig: (typeof MEDIA_CONFIG)[string];
@@ -192,17 +191,17 @@ function MediaUrlDialogContent({
 
       <AlertDialogDescription className="group relative w-full">
         <FloatingInput
-          id="url"
-          className="w-full"
-          value={url}
           autoFocus
+          className="w-full"
+          id="url"
+          label="URL"
           onChange={(e) => setUrl(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter') embedMedia();
           }}
-          label="URL"
           placeholder=""
           type="url"
+          value={url}
         />
       </AlertDialogDescription>
 

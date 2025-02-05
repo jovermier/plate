@@ -1,13 +1,11 @@
 'use client';
 
+import { cn, withRef } from '@udecode/cn';
+import type { TEquationElement } from '@udecode/plate-math';
 import { useEquationElement } from '@udecode/plate-math/react';
 import { useElement, useSelected } from '@udecode/plate/react';
 import { RadicalIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
-
-import type { TEquationElement } from '@udecode/plate-math';
-
-import { cn, withRef } from '@udecode/cn';
 
 import { EquationPopoverContent } from './equation-popover';
 import { PlateElement } from './plate-element';
@@ -24,25 +22,25 @@ export const InlineEquationElement = withRef<typeof PlateElement>(
       element,
       katexRef: katexRef,
       options: {
-        fleqn: false,
-        strict: 'warn',
-        trust: false,
         displayMode: true,
         errorColor: '#cc0000',
+        fleqn: false,
         leqno: false,
         macros: { '\\f': '#1f(#2)' },
         output: 'htmlAndMathml',
+        strict: 'warn',
         throwOnError: false,
+        trust: false,
       },
     });
 
     return (
       <PlateElement
-        ref={ref}
         className={cn(
           'inline-block select-none rounded-sm [&_.katex-display]:my-0',
           className
         )}
+        ref={ref}
         {...props}
       >
         <Popover modal={false} onOpenChange={setOpen} open={open}>
@@ -59,11 +57,11 @@ export const InlineEquationElement = withRef<typeof PlateElement>(
               contentEditable={false}
             >
               <span
-                ref={katexRef}
                 className={cn(
                   element.texExpression.length === 0 && 'hidden',
                   'font-mono leading-none'
                 )}
+                ref={katexRef}
               />
               {element.texExpression.length === 0 && (
                 <span>
@@ -76,10 +74,10 @@ export const InlineEquationElement = withRef<typeof PlateElement>(
 
           <EquationPopoverContent
             className="my-auto"
+            isInline
             open={open}
             placeholder="E = mc^2"
             setOpen={setOpen}
-            isInline
           />
         </Popover>
 

@@ -1,10 +1,42 @@
 'use client';
 
+import { BlockquoteElementStatic } from '@/components/plate-ui/blockquote-element-static';
+import { CodeBlockElementStatic } from '@/components/plate-ui/code-block-element-static';
+import { CodeLeafStatic } from '@/components/plate-ui/code-leaf-static';
+import { CodeLineElementStatic } from '@/components/plate-ui/code-line-element-static';
+import { CodeSyntaxLeafStatic } from '@/components/plate-ui/code-syntax-leaf-static';
+import { ColumnElementStatic } from '@/components/plate-ui/column-element-static';
+import { ColumnGroupElementStatic } from '@/components/plate-ui/column-group-element-static';
+import { CommentLeafStatic } from '@/components/plate-ui/comment-leaf-static';
+import { DateElementStatic } from '@/components/plate-ui/date-element-static';
+import { HeadingElementStatic } from '@/components/plate-ui/heading-element-static';
+import { HighlightLeafStatic } from '@/components/plate-ui/highlight-leaf-static';
+import { HrElementStatic } from '@/components/plate-ui/hr-element-static';
+import { ImageElementStatic } from '@/components/plate-ui/image-element-static';
+import {
+  FireLiComponent,
+  FireMarker,
+} from '@/components/plate-ui/indent-fire-marker';
+import {
+  TodoLiStatic,
+  TodoMarkerStatic,
+} from '@/components/plate-ui/indent-todo-marker-static';
+import { KbdLeafStatic } from '@/components/plate-ui/kbd-leaf-static';
+import { LinkElementStatic } from '@/components/plate-ui/link-element-static';
+import { MediaAudioElementStatic } from '@/components/plate-ui/media-audio-element-static';
+import { MediaFileElementStatic } from '@/components/plate-ui/media-file-element-static';
+import { MediaVideoElementStatic } from '@/components/plate-ui/media-video-element-static';
+import { MentionElementStatic } from '@/components/plate-ui/mention-element-static';
+import { ParagraphElementStatic } from '@/components/plate-ui/paragraph-element-static';
+import {
+  TableCellElementStatic,
+  TableCellHeaderStaticElement,
+} from '@/components/plate-ui/table-cell-element-static';
+import { TableElementStatic } from '@/components/plate-ui/table-element-static';
+import { TableRowElementStatic } from '@/components/plate-ui/table-row-element-static';
+import { TocElementStatic } from '@/components/plate-ui/toc-element-static';
+import { ToggleElementStatic } from '@/components/plate-ui/toggle-element-static';
 import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
-import { useEditorRef } from '@udecode/plate/react';
-import { ArrowDownToLineIcon } from 'lucide-react';
-import React from 'react';
-
 import { withProps } from '@udecode/cn';
 import {
   BaseParagraphPlugin,
@@ -68,44 +100,10 @@ import {
   BaseTableRowPlugin,
 } from '@udecode/plate-table';
 import { BaseTogglePlugin } from '@udecode/plate-toggle';
+import { useEditorRef } from '@udecode/plate/react';
+import { ArrowDownToLineIcon } from 'lucide-react';
 import Prism from 'prismjs';
-
-import { BlockquoteElementStatic } from '@/components/plate-ui/blockquote-element-static';
-import { CodeBlockElementStatic } from '@/components/plate-ui/code-block-element-static';
-import { CodeLeafStatic } from '@/components/plate-ui/code-leaf-static';
-import { CodeLineElementStatic } from '@/components/plate-ui/code-line-element-static';
-import { CodeSyntaxLeafStatic } from '@/components/plate-ui/code-syntax-leaf-static';
-import { ColumnElementStatic } from '@/components/plate-ui/column-element-static';
-import { ColumnGroupElementStatic } from '@/components/plate-ui/column-group-element-static';
-import { CommentLeafStatic } from '@/components/plate-ui/comment-leaf-static';
-import { DateElementStatic } from '@/components/plate-ui/date-element-static';
-import { HeadingElementStatic } from '@/components/plate-ui/heading-element-static';
-import { HighlightLeafStatic } from '@/components/plate-ui/highlight-leaf-static';
-import { HrElementStatic } from '@/components/plate-ui/hr-element-static';
-import { ImageElementStatic } from '@/components/plate-ui/image-element-static';
-import {
-  FireLiComponent,
-  FireMarker,
-} from '@/components/plate-ui/indent-fire-marker';
-import {
-  TodoLiStatic,
-  TodoMarkerStatic,
-} from '@/components/plate-ui/indent-todo-marker-static';
-import { KbdLeafStatic } from '@/components/plate-ui/kbd-leaf-static';
-import { LinkElementStatic } from '@/components/plate-ui/link-element-static';
-import { MediaAudioElementStatic } from '@/components/plate-ui/media-audio-element-static';
-import { MediaFileElementStatic } from '@/components/plate-ui/media-file-element-static';
-import { MediaVideoElementStatic } from '@/components/plate-ui/media-video-element-static';
-import { MentionElementStatic } from '@/components/plate-ui/mention-element-static';
-import { ParagraphElementStatic } from '@/components/plate-ui/paragraph-element-static';
-import {
-  TableCellElementStatic,
-  TableCellHeaderStaticElement,
-} from '@/components/plate-ui/table-cell-element-static';
-import { TableElementStatic } from '@/components/plate-ui/table-element-static';
-import { TableRowElementStatic } from '@/components/plate-ui/table-row-element-static';
-import { TocElementStatic } from '@/components/plate-ui/toc-element-static';
-import { ToggleElementStatic } from '@/components/plate-ui/toggle-element-static';
+import React from 'react';
 
 import {
   DropdownMenu,
@@ -142,9 +140,9 @@ export function ExportToolbarButton({ children, ...props }: DropdownMenuProps) {
   };
 
   const downloadFile = ({
+    content,
     filename,
     isHtml = false,
-    content,
   }: {
     filename: string;
     content: string;
@@ -169,48 +167,28 @@ export function ExportToolbarButton({ children, ...props }: DropdownMenuProps) {
     const pdfDoc = await PDFLib.PDFDocument.create();
     const page = pdfDoc.addPage([canvas.width, canvas.height]);
     const imageEmbed = await pdfDoc.embedPng(canvas.toDataURL('PNG'));
-    const { width, height } = imageEmbed.scale(1);
+    const { height, width } = imageEmbed.scale(1);
     page.drawImage(imageEmbed, {
-      width,
       height,
+      width,
       x: 0,
       y: 0,
     });
     const pdfBase64 = await pdfDoc.saveAsBase64({ dataUri: true });
 
-    downloadFile({ filename: 'plate.pdf', content: pdfBase64 });
+    downloadFile({ content: pdfBase64, filename: 'plate.pdf' });
   };
 
   const exportToImage = async () => {
     const canvas = await getCanvas();
     downloadFile({
-      filename: 'plate.png',
       content: canvas.toDataURL('image/png'),
+      filename: 'plate.png',
     });
   };
 
   const exportToHtml = async () => {
     const components = {
-      [BaseDatePlugin.key]: DateElementStatic,
-      [BaseFilePlugin.key]: MediaFileElementStatic,
-      [BaseHighlightPlugin.key]: HighlightLeafStatic,
-      [BaseImagePlugin.key]: ImageElementStatic,
-      [BaseItalicPlugin.key]: withProps(SlateLeaf, { as: 'em' }),
-      [BaseKbdPlugin.key]: KbdLeafStatic,
-      [BaseLinkPlugin.key]: LinkElementStatic,
-      [BaseParagraphPlugin.key]: ParagraphElementStatic,
-      [BaseSubscriptPlugin.key]: withProps(SlateLeaf, { as: 'sub' }),
-      [BaseSuperscriptPlugin.key]: withProps(SlateLeaf, { as: 'sup' }),
-      [BaseTableCellHeaderPlugin.key]: TableCellHeaderStaticElement,
-      [BaseTableCellPlugin.key]: TableCellElementStatic,
-      [BaseTablePlugin.key]: TableElementStatic,
-      [BaseUnderlinePlugin.key]: withProps(SlateLeaf, { as: 'u' }),
-      [HEADING_KEYS.h1]: withProps(HeadingElementStatic, { variant: 'h1' }),
-      [HEADING_KEYS.h2]: withProps(HeadingElementStatic, { variant: 'h2' }),
-      [HEADING_KEYS.h3]: withProps(HeadingElementStatic, { variant: 'h3' }),
-      [HEADING_KEYS.h4]: withProps(HeadingElementStatic, { variant: 'h4' }),
-      [HEADING_KEYS.h5]: withProps(HeadingElementStatic, { variant: 'h5' }),
-      [HEADING_KEYS.h6]: withProps(HeadingElementStatic, { variant: 'h6' }),
       [BaseAudioPlugin.key]: MediaAudioElementStatic,
       [BaseBlockquotePlugin.key]: BlockquoteElementStatic,
       [BaseBoldPlugin.key]: withProps(SlateLeaf, { as: 'strong' }),
@@ -221,16 +199,36 @@ export function ExportToolbarButton({ children, ...props }: DropdownMenuProps) {
       [BaseColumnItemPlugin.key]: ColumnElementStatic,
       [BaseColumnPlugin.key]: ColumnGroupElementStatic,
       [BaseCommentsPlugin.key]: CommentLeafStatic,
+      [BaseDatePlugin.key]: DateElementStatic,
       [BaseEquationPlugin.key]: EquationElementStatic,
+      [BaseFilePlugin.key]: MediaFileElementStatic,
+      [BaseHighlightPlugin.key]: HighlightLeafStatic,
       [BaseHorizontalRulePlugin.key]: HrElementStatic,
+      [BaseImagePlugin.key]: ImageElementStatic,
       [BaseInlineEquationPlugin.key]: InlineEquationElementStatic,
+      [BaseItalicPlugin.key]: withProps(SlateLeaf, { as: 'em' }),
+      [BaseKbdPlugin.key]: KbdLeafStatic,
+      [BaseLinkPlugin.key]: LinkElementStatic,
       // [BaseMediaEmbedPlugin.key]: MediaEmbedElementStatic,
       [BaseMentionPlugin.key]: MentionElementStatic,
+      [BaseParagraphPlugin.key]: ParagraphElementStatic,
       [BaseStrikethroughPlugin.key]: withProps(SlateLeaf, { as: 'del' }),
+      [BaseSubscriptPlugin.key]: withProps(SlateLeaf, { as: 'sub' }),
+      [BaseSuperscriptPlugin.key]: withProps(SlateLeaf, { as: 'sup' }),
+      [BaseTableCellHeaderPlugin.key]: TableCellHeaderStaticElement,
+      [BaseTableCellPlugin.key]: TableCellElementStatic,
+      [BaseTablePlugin.key]: TableElementStatic,
       [BaseTableRowPlugin.key]: TableRowElementStatic,
       [BaseTocPlugin.key]: TocElementStatic,
       [BaseTogglePlugin.key]: ToggleElementStatic,
+      [BaseUnderlinePlugin.key]: withProps(SlateLeaf, { as: 'u' }),
       [BaseVideoPlugin.key]: MediaVideoElementStatic,
+      [HEADING_KEYS.h1]: withProps(HeadingElementStatic, { variant: 'h1' }),
+      [HEADING_KEYS.h2]: withProps(HeadingElementStatic, { variant: 'h2' }),
+      [HEADING_KEYS.h3]: withProps(HeadingElementStatic, { variant: 'h3' }),
+      [HEADING_KEYS.h4]: withProps(HeadingElementStatic, { variant: 'h4' }),
+      [HEADING_KEYS.h5]: withProps(HeadingElementStatic, { variant: 'h5' }),
+      [HEADING_KEYS.h6]: withProps(HeadingElementStatic, { variant: 'h6' }),
     };
 
     const editorStatic = createSlateEditor({
@@ -281,14 +279,14 @@ export function ExportToolbarButton({ children, ...props }: DropdownMenuProps) {
           options: {
             listStyleTypes: {
               fire: {
-                type: 'fire',
                 liComponent: FireLiComponent,
                 markerComponent: FireMarker,
+                type: 'fire',
               },
               todo: {
-                type: 'todo',
                 liComponent: TodoLiStatic,
                 markerComponent: TodoMarkerStatic,
+                type: 'todo',
               },
             },
           },
@@ -360,13 +358,13 @@ export function ExportToolbarButton({ children, ...props }: DropdownMenuProps) {
       </body>
     </html>`;
 
-    downloadFile({ filename: 'plate.html', isHtml: true, content: html });
+    downloadFile({ content: html, filename: 'plate.html', isHtml: true });
   };
 
   return (
     <DropdownMenu modal={false} {...openState} {...props}>
       <DropdownMenuTrigger asChild>
-        <ToolbarButton isDropdown tooltip="Export" pressed={openState.open}>
+        <ToolbarButton isDropdown pressed={openState.open} tooltip="Export">
           <ArrowDownToLineIcon className="size-4" />
         </ToolbarButton>
       </DropdownMenuTrigger>

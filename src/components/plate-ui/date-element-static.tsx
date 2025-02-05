@@ -1,9 +1,7 @@
-import React from 'react';
-
-import type { SlateElementProps } from '@udecode/plate';
-
 import { cn } from '@udecode/cn';
+import type { SlateElementProps } from '@udecode/plate';
 import { SlateElement } from '@udecode/plate';
+import React from 'react';
 
 export function DateElementStatic({
   children,
@@ -39,8 +37,8 @@ export function DateElementStatic({
 
             return elementDate.toLocaleDateString(undefined, {
               day: 'numeric',
-              year: 'numeric',
               month: 'long',
+              year: 'numeric',
             });
           })()
         ) : (

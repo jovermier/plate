@@ -1,5 +1,7 @@
 'use client';
 
+import { ImagePreview } from '@/components/plate-ui/image-preview';
+import { MediaUploadToast } from '@/components/plate-ui/media-upload-toast';
 import { CaptionPlugin } from '@udecode/plate-caption/react';
 import {
   AudioPlugin,
@@ -10,13 +12,10 @@ import {
   VideoPlugin,
 } from '@udecode/plate-media/react';
 
-import { ImagePreview } from '@/components/plate-ui/image-preview';
-import { MediaUploadToast } from '@/components/plate-ui/media-upload-toast';
-
 export const mediaPlugins = [
   ImagePlugin.extend({
-    render: { afterEditable: ImagePreview },
     options: { disableUploadInsert: true },
+    render: { afterEditable: ImagePreview },
   }),
   MediaEmbedPlugin,
   VideoPlugin,
@@ -34,7 +33,7 @@ export const mediaPlugins = [
     },
   }),
   PlaceholderPlugin.configure({
-    render: { afterEditable: MediaUploadToast },
     options: { disableEmptyPlaceholder: true },
+    render: { afterEditable: MediaUploadToast },
   }),
 ] as const;

@@ -1,12 +1,18 @@
 'use client';
 
+import {
+  insertBlock,
+  insertInlineElement,
+} from '@/components/editor/transforms';
 import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react';
 import { CodeBlockPlugin } from '@udecode/plate-code-block/react';
 import { DatePlugin } from '@udecode/plate-date/react';
 import { ExcalidrawPlugin } from '@udecode/plate-excalidraw/react';
+import { HEADING_KEYS } from '@udecode/plate-heading';
 import { TocPlugin } from '@udecode/plate-heading/react';
 import { HorizontalRulePlugin } from '@udecode/plate-horizontal-rule/react';
+import { INDENT_LIST_KEYS, ListStyleType } from '@udecode/plate-indent-list';
 import { LinkPlugin } from '@udecode/plate-link/react';
 import {
   EquationPlugin,
@@ -16,8 +22,8 @@ import { ImagePlugin, MediaEmbedPlugin } from '@udecode/plate-media/react';
 import { TablePlugin } from '@udecode/plate-table/react';
 import { TogglePlugin } from '@udecode/plate-toggle/react';
 import {
-  type PlateEditor,
   ParagraphPlugin,
+  type PlateEditor,
   useEditorRef,
 } from '@udecode/plate/react';
 import {
@@ -45,14 +51,6 @@ import {
 } from 'lucide-react';
 import React from 'react';
 
-import { HEADING_KEYS } from '@udecode/plate-heading';
-import { INDENT_LIST_KEYS, ListStyleType } from '@udecode/plate-indent-list';
-
-import {
-  insertBlock,
-  insertInlineElement,
-} from '@/components/editor/transforms';
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -69,55 +67,56 @@ type Group = {
 };
 
 interface Item {
+  focusEditor?: boolean;
   icon: React.ReactNode;
+  label?: string;
   onSelect: (editor: PlateEditor, value: string) => void;
   value: string;
-  focusEditor?: boolean;
-  label?: string;
 }
 
 const groups: Group[] = [
   {
+    group: 'Basic blocks',
     items: [
       {
+        icon: <PilcrowIcon />,
         label: 'Paragraph',
         value: ParagraphPlugin.key,
-        icon: <PilcrowIcon />,
       },
       {
+        icon: <Heading1Icon />,
         label: 'Heading 1',
         value: HEADING_KEYS.h1,
-        icon: <Heading1Icon />,
       },
       {
+        icon: <Heading2Icon />,
         label: 'Heading 2',
         value: HEADING_KEYS.h2,
-        icon: <Heading2Icon />,
       },
       {
+        icon: <Heading3Icon />,
         label: 'Heading 3',
         value: HEADING_KEYS.h3,
-        icon: <Heading3Icon />,
       },
       {
+        icon: <TableIcon />,
         label: 'Table',
         value: TablePlugin.key,
-        icon: <TableIcon />,
       },
       {
+        icon: <FileCodeIcon />,
         label: 'Code',
         value: CodeBlockPlugin.key,
-        icon: <FileCodeIcon />,
       },
       {
+        icon: <QuoteIcon />,
         label: 'Quote',
         value: BlockquotePlugin.key,
-        icon: <QuoteIcon />,
       },
       {
+        icon: <MinusIcon />,
         label: 'Divider',
         value: HorizontalRulePlugin.key,
-        icon: <MinusIcon />,
       },
     ].map((item) => ({
       ...item,
@@ -125,29 +124,29 @@ const groups: Group[] = [
         insertBlock(editor, value);
       },
     })),
-    group: 'Basic blocks',
   },
   {
+    group: 'Lists',
     items: [
       {
+        icon: <ListIcon />,
         label: 'Bulleted list',
         value: ListStyleType.Disc,
-        icon: <ListIcon />,
       },
       {
+        icon: <ListOrderedIcon />,
         label: 'Numbered list',
         value: ListStyleType.Decimal,
-        icon: <ListOrderedIcon />,
       },
       {
+        icon: <SquareIcon />,
         label: 'To-do list',
         value: INDENT_LIST_KEYS.todo,
-        icon: <SquareIcon />,
       },
       {
+        icon: <ChevronRightIcon />,
         label: 'Toggle list',
         value: TogglePlugin.key,
-        icon: <ChevronRightIcon />,
       },
     ].map((item) => ({
       ...item,
@@ -155,24 +154,24 @@ const groups: Group[] = [
         insertBlock(editor, value);
       },
     })),
-    group: 'Lists',
   },
   {
+    group: 'Media',
     items: [
       {
+        icon: <ImageIcon />,
         label: 'Image',
         value: ImagePlugin.key,
-        icon: <ImageIcon />,
       },
       {
+        icon: <FilmIcon />,
         label: 'Embed',
         value: MediaEmbedPlugin.key,
-        icon: <FilmIcon />,
       },
       {
+        icon: <PenToolIcon />,
         label: 'Excalidraw',
         value: ExcalidrawPlugin.key,
-        icon: <PenToolIcon />,
       },
     ].map((item) => ({
       ...item,
@@ -180,25 +179,25 @@ const groups: Group[] = [
         insertBlock(editor, value);
       },
     })),
-    group: 'Media',
   },
   {
+    group: 'Advanced blocks',
     items: [
       {
+        icon: <TableOfContentsIcon />,
         label: 'Table of contents',
         value: TocPlugin.key,
-        icon: <TableOfContentsIcon />,
       },
       {
+        icon: <Columns3Icon />,
         label: '3 columns',
         value: 'action_three_columns',
-        icon: <Columns3Icon />,
       },
       {
-        label: 'Equation',
-        value: EquationPlugin.key,
         focusEditor: false,
         icon: <RadicalIcon />,
+        label: 'Equation',
+        value: EquationPlugin.key,
       },
     ].map((item) => ({
       ...item,
@@ -206,26 +205,26 @@ const groups: Group[] = [
         insertBlock(editor, value);
       },
     })),
-    group: 'Advanced blocks',
   },
   {
+    group: 'Inline',
     items: [
       {
+        icon: <Link2Icon />,
         label: 'Link',
         value: LinkPlugin.key,
-        icon: <Link2Icon />,
       },
       {
-        label: 'Date',
-        value: DatePlugin.key,
         focusEditor: true,
         icon: <CalendarIcon />,
+        label: 'Date',
+        value: DatePlugin.key,
       },
       {
-        label: 'Inline Equation',
-        value: InlineEquationPlugin.key,
         focusEditor: false,
         icon: <RadicalIcon />,
+        label: 'Inline Equation',
+        value: InlineEquationPlugin.key,
       },
     ].map((item) => ({
       ...item,
@@ -233,7 +232,6 @@ const groups: Group[] = [
         insertInlineElement(editor, value);
       },
     })),
-    group: 'Inline',
   },
 ];
 
@@ -244,21 +242,21 @@ export function InsertDropdownMenu(props: DropdownMenuProps) {
   return (
     <DropdownMenu modal={false} {...openState} {...props}>
       <DropdownMenuTrigger asChild>
-        <ToolbarButton isDropdown tooltip="Insert" pressed={openState.open}>
+        <ToolbarButton isDropdown pressed={openState.open} tooltip="Insert">
           <PlusIcon />
         </ToolbarButton>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent
-        className="flex max-h-[500px] min-w-0 flex-col overflow-y-auto"
         align="start"
+        className="flex max-h-[500px] min-w-0 flex-col overflow-y-auto"
       >
-        {groups.map(({ items: nestedItems, group }) => (
+        {groups.map(({ group, items: nestedItems }) => (
           <DropdownMenuGroup key={group} label={group}>
-            {nestedItems.map(({ label, value, icon, onSelect }) => (
+            {nestedItems.map(({ icon, label, onSelect, value }) => (
               <DropdownMenuItem
-                key={value}
                 className="min-w-[180px]"
+                key={value}
                 onSelect={() => {
                   onSelect(editor, value);
                   editor.tf.focus();

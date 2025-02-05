@@ -1,19 +1,17 @@
 'use client';
 
-import { BlockquotePlugin } from '@udecode/plate-block-quote/react';
-import { CodeBlockPlugin } from '@udecode/plate-code-block/react';
-import { IndentListPlugin } from '@udecode/plate-indent-list/react';
-import { IndentPlugin } from '@udecode/plate-indent/react';
-import { TogglePlugin } from '@udecode/plate-toggle/react';
-import { ParagraphPlugin } from '@udecode/plate/react';
-
-import { HEADING_LEVELS } from '@udecode/plate-heading';
-
 import {
   FireLiComponent,
   FireMarker,
 } from '@/components/plate-ui/indent-fire-marker';
 import { TodoLi, TodoMarker } from '@/components/plate-ui/indent-todo-marker';
+import { BlockquotePlugin } from '@udecode/plate-block-quote/react';
+import { CodeBlockPlugin } from '@udecode/plate-code-block/react';
+import { HEADING_LEVELS } from '@udecode/plate-heading';
+import { IndentListPlugin } from '@udecode/plate-indent-list/react';
+import { IndentPlugin } from '@udecode/plate-indent/react';
+import { TogglePlugin } from '@udecode/plate-toggle/react';
+import { ParagraphPlugin } from '@udecode/plate/react';
 
 export const indentListPlugins = [
   IndentPlugin.extend({
@@ -40,14 +38,14 @@ export const indentListPlugins = [
     options: {
       listStyleTypes: {
         fire: {
-          type: 'fire',
           liComponent: FireLiComponent,
           markerComponent: FireMarker,
+          type: 'fire',
         },
         todo: {
-          type: 'todo',
           liComponent: TodoLi,
           markerComponent: TodoMarker,
+          type: 'todo',
         },
       },
     },

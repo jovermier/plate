@@ -1,11 +1,9 @@
 'use client';
 
-import { AIChatPlugin, AIPlugin } from '@udecode/plate-ai/react';
-import React from 'react';
-
-import { MarkdownPlugin } from '@udecode/plate-markdown';
-
 import { AIMenu } from '@/components/plate-ui/ai-menu';
+import { AIChatPlugin, AIPlugin } from '@udecode/plate-ai/react';
+import { MarkdownPlugin } from '@udecode/plate-markdown';
+import React from 'react';
 
 import { cursorOverlayPlugin } from './cursor-overlay-plugin';
 
@@ -82,12 +80,12 @@ NEVER write <Block> or <Selection>.
 {prompt} about <Selection>`;
 
 export const PROMPT_TEMPLATES = {
+  systemBlockSelecting,
   systemDefault,
   systemSelecting,
+  userBlockSelecting,
   userDefault,
   userSelecting,
-  systemBlockSelecting,
-  userBlockSelecting,
 };
 
 export const aiPlugins = [
@@ -95,22 +93,22 @@ export const aiPlugins = [
   MarkdownPlugin.configure({ options: { indentList: true } }),
   AIPlugin,
   AIChatPlugin.configure({
-    render: { afterEditable: () => <AIMenu /> },
     options: {
-      systemTemplate: ({ isSelecting, isBlockSelecting }) => {
-        return isBlockSelecting
-          ? PROMPT_TEMPLATES.systemBlockSelecting
-          : isSelecting
-            ? PROMPT_TEMPLATES.systemSelecting
-            : PROMPT_TEMPLATES.systemDefault;
-      },
-      promptTemplate: ({ isSelecting, isBlockSelecting }) => {
+      promptTemplate: ({ isBlockSelecting, isSelecting }) => {
         return isBlockSelecting
           ? PROMPT_TEMPLATES.userBlockSelecting
           : isSelecting
             ? PROMPT_TEMPLATES.userSelecting
             : PROMPT_TEMPLATES.userDefault;
       },
+      systemTemplate: ({ isBlockSelecting, isSelecting }) => {
+        return isBlockSelecting
+          ? PROMPT_TEMPLATES.systemBlockSelecting
+          : isSelecting
+            ? PROMPT_TEMPLATES.systemSelecting
+            : PROMPT_TEMPLATES.systemDefault;
+      },
     },
+    render: { afterEditable: () => <AIMenu /> },
   }),
 ] as const;

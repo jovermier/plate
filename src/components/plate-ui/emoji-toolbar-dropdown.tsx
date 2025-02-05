@@ -12,9 +12,9 @@ type EmojiToolbarDropdownProps = {
 
 export function EmojiToolbarDropdown({
   children,
+  control,
   isOpen,
   setIsOpen,
-  control,
 }: EmojiToolbarDropdownProps) {
   return (
     <Popover.Root onOpenChange={setIsOpen} open={isOpen}>

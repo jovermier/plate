@@ -1,11 +1,10 @@
 'use client';
 
 import * as ToolbarPrimitive from '@radix-ui/react-toolbar';
+import { cn, withCn, withVariants } from '@udecode/cn';
+import { cva, type VariantProps } from 'class-variance-authority';
 import { ChevronDown } from 'lucide-react';
 import * as React from 'react';
-
-import { cn, withCn, withVariants } from '@udecode/cn';
-import { type VariantProps, cva } from 'class-variance-authority';
 
 import { Separator } from './separator';
 import { withTooltip } from './tooltip';
@@ -93,17 +92,16 @@ const ToolbarButton = withTooltip(
       VariantProps<typeof toolbarButtonVariants>
   >(
     (
-      { children, className, pressed, size, variant, isDropdown, ...props },
+      { children, className, isDropdown, pressed, size, variant, ...props },
       ref
     ) => {
       return typeof pressed === 'boolean' ? (
         <ToolbarToggleGroup
           disabled={props.disabled}
-          value="single"
           type="single"
+          value="single"
         >
           <ToolbarToggleItem
-            ref={ref}
             className={cn(
               toolbarButtonVariants({
                 size,
@@ -112,6 +110,7 @@ const ToolbarButton = withTooltip(
               isDropdown && 'justify-between gap-1 pr-1',
               className
             )}
+            ref={ref}
             value={pressed ? 'single' : ''}
             {...props}
           >
@@ -134,7 +133,6 @@ const ToolbarButton = withTooltip(
         </ToolbarToggleGroup>
       ) : (
         <ToolbarPrimitive.Button
-          ref={ref}
           className={cn(
             toolbarButtonVariants({
               size,
@@ -143,6 +141,7 @@ const ToolbarButton = withTooltip(
             isDropdown && 'pr-1',
             className
           )}
+          ref={ref}
           {...props}
         >
           {children}
@@ -161,8 +160,8 @@ export const ToolbarSplitButton = React.forwardRef<
 >(({ children, className, ...props }, ref) => {
   return (
     <ToolbarButton
-      ref={ref}
       className={cn('group flex gap-0 px-0 hover:bg-transparent', className)}
+      ref={ref}
       {...props}
     >
       {children}
@@ -177,7 +176,6 @@ export const ToolbarSplitButtonPrimary = withTooltip(
   >(({ children, className, size, variant, ...props }, ref) => {
     return (
       <span
-        ref={ref}
         className={cn(
           toolbarButtonVariants({
             size,
@@ -187,6 +185,7 @@ export const ToolbarSplitButtonPrimary = withTooltip(
           'group-data-[pressed=true]:bg-accent group-data-[pressed=true]:text-accent-foreground',
           className
         )}
+        ref={ref}
         {...props}
       >
         {children}
@@ -202,7 +201,6 @@ export const ToolbarSplitButtonSecondary = React.forwardRef<
 >(({ className, size, variant, ...props }, ref) => {
   return (
     <span
-      ref={ref}
       className={cn(
         dropdownArrowVariants({
           size,
@@ -212,6 +210,7 @@ export const ToolbarSplitButtonSecondary = React.forwardRef<
         className
       )}
       onClick={(e) => e.stopPropagation()}
+      ref={ref}
       role="button"
       {...props}
     >
@@ -234,12 +233,12 @@ export const ToolbarGroup = React.forwardRef<
 >(({ children, className }, ref) => {
   return (
     <div
-      ref={ref}
       className={cn(
         'group/toolbar-group',
         'relative hidden has-[button]:flex',
         className
       )}
+      ref={ref}
     >
       <div className="flex items-center">{children}</div>
 

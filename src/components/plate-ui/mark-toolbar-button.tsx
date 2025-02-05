@@ -1,12 +1,11 @@
 'use client';
 
+import { withRef } from '@udecode/cn';
 import {
   useMarkToolbarButton,
   useMarkToolbarButtonState,
 } from '@udecode/plate/react';
 import React from 'react';
-
-import { withRef } from '@udecode/cn';
 
 import { ToolbarButton } from './toolbar';
 

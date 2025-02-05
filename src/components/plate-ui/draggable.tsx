@@ -1,8 +1,13 @@
 'use client';
 
+import { STRUCTURAL_TYPES } from '@/components/editor/transforms';
+import { cn } from '@udecode/cn';
+import { isType } from '@udecode/plate';
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react';
 import { CodeBlockPlugin } from '@udecode/plate-code-block/react';
+import { useDraggable, useDropLine } from '@udecode/plate-dnd';
 import { ExcalidrawPlugin } from '@udecode/plate-excalidraw/react';
+import { HEADING_KEYS } from '@udecode/plate-heading';
 import { ColumnItemPlugin, ColumnPlugin } from '@udecode/plate-layout/react';
 import {
   ImagePlugin,
@@ -17,9 +22,9 @@ import {
 } from '@udecode/plate-table/react';
 import { TogglePlugin } from '@udecode/plate-toggle/react';
 import {
-  type PlateRenderElementProps,
   MemoizedChildren,
   ParagraphPlugin,
+  type PlateRenderElementProps,
   RenderNodeWrapper,
   useEditorPlugin,
   useEditorRef,
@@ -29,13 +34,6 @@ import {
 import { useReadOnly, useSelected } from '@udecode/plate/react';
 import { GripVertical } from 'lucide-react';
 import React, { useMemo } from 'react';
-
-import { cn } from '@udecode/cn';
-import { isType } from '@udecode/plate';
-import { useDraggable, useDropLine } from '@udecode/plate-dnd';
-import { HEADING_KEYS } from '@udecode/plate-heading';
-
-import { STRUCTURAL_TYPES } from '@/components/editor/transforms';
 
 import {
   Tooltip,
@@ -52,9 +50,9 @@ const UNDRAGGABLE_KEYS = [
 ];
 
 export const DraggableAboveNodes: RenderNodeWrapper = ({
+  editor,
   element,
   path,
-  editor,
 }) => {
   const readOnly = useReadOnly();
 
@@ -101,20 +99,20 @@ export const Draggable = React.forwardRef<
   HTMLDivElement,
   PlateRenderElementProps
 >(({ className, ...props }, ref) => {
-  const { children, element, path, editor } = props;
-  const { isDragging, previewRef, handleRef } = useDraggable({ element });
+  const { children, editor, element, path } = props;
+  const { handleRef, isDragging, previewRef } = useDraggable({ element });
 
   const isInColumn = path.length === 3;
   const isInTable = path.length === 4;
 
   return (
     <div
-      ref={ref}
       className={cn(
         'relative',
         isDragging && 'opacity-50',
         STRUCTURAL_TYPES.includes(element.type) ? 'group/structural' : 'group'
       )}
+      ref={ref}
     >
       <Gutter>
         <div
@@ -139,14 +137,14 @@ export const Draggable = React.forwardRef<
               isInColumn && 'mr-1.5'
             )}
           >
-            <div ref={handleRef} className="size-4">
+            <div className="size-4" ref={handleRef}>
               <DragHandle />
             </div>
           </div>
         </div>
       </Gutter>
 
-      <div ref={previewRef} className="slate-blockWrapper">
+      <div className="slate-blockWrapper" ref={previewRef}>
         <MemoizedChildren>{children}</MemoizedChildren>
 
         <DropLine />
@@ -172,7 +170,6 @@ const Gutter = React.forwardRef<
 
   return (
     <div
-      ref={ref}
       className={cn(
         'slate-gutterLeft',
         'absolute -top-px z-50 flex h-full -translate-x-full cursor-text hover:opacity-100 sm:opacity-0',
@@ -204,6 +201,7 @@ const Gutter = React.forwardRef<
         className
       )}
       contentEditable={false}
+      ref={ref}
       {...props}
     >
       {children}

@@ -1,11 +1,9 @@
-import React from 'react';
-
+import { cn } from '@udecode/cn';
 import type { SlateElementProps } from '@udecode/plate';
+import { NodeApi, SlateElement } from '@udecode/plate';
 import type { TCaptionElement } from '@udecode/plate-caption';
 import type { TImageElement } from '@udecode/plate-media';
-
-import { cn } from '@udecode/cn';
-import { NodeApi, SlateElement } from '@udecode/plate';
+import React from 'react';
 
 export function ImageElementStatic({
   children,
@@ -14,10 +12,10 @@ export function ImageElementStatic({
   ...props
 }: SlateElementProps) {
   const {
-    width,
     align = 'center',
-    url,
     caption,
+    url,
+    width,
   } = props.element as TImageElement &
     TCaptionElement & {
       width: number;
@@ -35,11 +33,11 @@ export function ImageElementStatic({
           style={{ textAlign: align }}
         >
           <img
+            alt=""
             className={cn(
               'w-full max-w-full cursor-default object-cover px-0',
               'rounded-sm'
             )}
-            alt=""
             src={url}
             {...nodeProps}
           />

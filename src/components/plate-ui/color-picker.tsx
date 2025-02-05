@@ -1,9 +1,8 @@
 'use client';
 
+import { cn } from '@udecode/cn';
 import { EraserIcon } from 'lucide-react';
 import React from 'react';
-
-import { cn } from '@udecode/cn';
 
 import { ColorDropdownMenuItems, TColor } from './color-dropdown-menu-items';
 import { ColorCustom } from './colors-custom';
@@ -34,7 +33,7 @@ export const ColorPickerContent = React.forwardRef<
     ref
   ) => {
     return (
-      <div ref={ref} className={cn('flex flex-col', className)} {...props}>
+      <div className={cn('flex flex-col', className)} ref={ref} {...props}>
         <DropdownMenuGroup label="Custom Colors">
           <ColorCustom
             className="px-2"

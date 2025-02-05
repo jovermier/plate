@@ -1,13 +1,10 @@
 'use client';
 
-import { CopilotPlugin } from '@udecode/plate-ai/react';
-
-import type { TElement } from '@udecode/plate';
-
-import { faker } from '@faker-js/faker';
-import { serializeMdNodes, stripMarkdown } from '@udecode/plate-markdown';
-
 import { GhostText } from '@/components/plate-ui/ghost-text';
+import { faker } from '@faker-js/faker';
+import type { TElement } from '@udecode/plate';
+import { CopilotPlugin } from '@udecode/plate-ai/react';
+import { serializeMdNodes, stripMarkdown } from '@udecode/plate-markdown';
 
 export const copilotPlugins = [
   CopilotPlugin.configure(({ api }) => ({
