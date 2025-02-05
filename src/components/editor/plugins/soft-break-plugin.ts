@@ -14,7 +14,6 @@ export const softBreakPlugin = SoftBreakPlugin.configure({
     rules: [
       { hotkey: 'shift+enter' },
       {
-        hotkey: 'enter',
         query: {
           allow: [
             CodeBlockPlugin.key,
@@ -24,6 +23,7 @@ export const softBreakPlugin = SoftBreakPlugin.configure({
             CalloutPlugin.key,
           ],
         },
+        hotkey: 'enter',
       },
     ],
   },

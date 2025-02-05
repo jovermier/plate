@@ -29,9 +29,9 @@ export const mediaResizeHandleVariants = cva(
 const resizeHandleVariants = cva(cn('absolute z-40'), {
   variants: {
     direction: {
-      bottom: 'w-full cursor-row-resize',
       left: 'h-full cursor-col-resize',
       right: 'h-full cursor-col-resize',
+      bottom: 'w-full cursor-row-resize',
       top: 'w-full cursor-row-resize',
     },
   },
@@ -53,8 +53,8 @@ export const ResizeHandle = withRef<typeof ResizeHandlePrimitive>(
     return (
       <ResizeHandleVariants
         ref={ref}
-        data-resizing={state.isResizing}
         direction={options?.direction}
+        data-resizing={state.isResizing}
         {...resizeHandle.props}
         {...props}
       />

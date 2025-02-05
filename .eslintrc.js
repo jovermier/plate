@@ -10,19 +10,12 @@ module.exports = {
     'plugin:tailwindcss/recommended',
     'plugin:perfectionist/recommended-natural-legacy',
   ],
-  overrides: [
-    {
-      files: ['*.ts', '*.tsx'],
-      parser: '@typescript-eslint/parser',
-    },
-  ],
   plugins: ['tailwindcss', 'unused-imports', 'perfectionist', 'prettier'],
-  root: true,
   rules: {
-    '@next/next/no-html-link-for-pages': 'off',
+    'react/jsx-key': 'off',
     'prettier/prettier': ['warn', { ...prettierConfig }],
     'react/display-name': 'off',
-    'react/jsx-key': 'off',
+    '@next/next/no-html-link-for-pages': 'off',
     'react/no-unescaped-entities': 'off',
     'tailwindcss/classnames-order': 'off',
     'tailwindcss/no-custom-classname': 'off',
@@ -31,9 +24,9 @@ module.exports = {
       'warn',
       {
         args: 'none',
+        vars: 'all',
         argsIgnorePattern: '^_',
         ignoreRestSiblings: true,
-        vars: 'all',
         varsIgnorePattern: '^_',
       },
     ],
@@ -44,19 +37,16 @@ module.exports = {
       'perfectionist/sort-array-includes': [
         'warn',
         {
+          type: 'natural',
           groupKind: 'literals-first',
           ignoreCase: false,
-          type: 'natural',
         },
       ],
 
-      'perfectionist/sort-astro-attributes': [
-        'warn',
-        { ignoreCase: false, type: 'natural' },
-      ],
       'perfectionist/sort-classes': [
         'warn',
         {
+          type: 'natural',
           groups: [
             'index-signature',
             'static-property',
@@ -73,25 +63,25 @@ module.exports = {
             'unknown',
           ],
           ignoreCase: false,
-          type: 'natural',
         },
       ],
       'perfectionist/sort-enums': [
         'warn',
         {
+          type: 'natural',
           ignoreCase: false,
           sortByValue: true,
-          type: 'natural',
         },
       ],
       'perfectionist/sort-exports': [
         'warn',
-        { ignoreCase: false, type: 'natural' },
+        { type: 'natural', ignoreCase: false },
       ],
       'perfectionist/sort-imports': [
-        // 'off',
         'warn',
         {
+          internalPattern: ['^@/.*'],
+          type: 'natural',
           customGroups: {
             type: {
               next: 'next',
@@ -116,13 +106,12 @@ module.exports = {
             'unknown',
           ],
           ignoreCase: false,
-          internalPattern: ['@/**'],
-          type: 'natural',
         },
       ],
       'perfectionist/sort-interfaces': [
         'warn',
         {
+          type: 'natural',
           customGroups: {
             key: ['key', 'keys'],
             id: ['id', '_id'],
@@ -130,7 +119,6 @@ module.exports = {
           groupKind: 'required-first',
           groups: ['key', 'id', 'multiline', 'unknown'],
           ignoreCase: false,
-          type: 'natural',
         },
       ],
       // breaking: ordering matters
@@ -138,6 +126,7 @@ module.exports = {
       'perfectionist/sort-jsx-props': [
         'warn',
         {
+          type: 'natural',
           customGroups: {
             key: ['key', 'keys'],
             id: ['id', 'name', 'testId', 'data-testid'],
@@ -151,7 +140,6 @@ module.exports = {
             ],
             callback: ['on*', 'handle*'],
             className: ['className', 'class', 'style'],
-            control: ['asChild', 'as'],
             data: ['data-*', 'aria-*'],
             ref: ['ref', 'innerRef'],
             state: [
@@ -168,6 +156,7 @@ module.exports = {
               'loading',
             ],
             variant: ['variant', 'size', 'orientation', 'color'],
+            control: ['asChild', 'as'],
           },
           groups: [
             'id',
@@ -184,25 +173,25 @@ module.exports = {
             'shorthand',
           ],
           ignoreCase: false,
-          type: 'natural',
         },
       ],
       'perfectionist/sort-maps': [
         'warn',
-        { ignoreCase: false, type: 'natural' },
+        { type: 'natural', ignoreCase: false },
       ],
       'perfectionist/sort-named-exports': [
         'warn',
-        { groupKind: 'types-first', ignoreCase: false, type: 'natural' },
+        { type: 'natural', groupKind: 'types-first', ignoreCase: false },
       ],
       // 'perfectionist/sort-named-imports': ['off'],
       'perfectionist/sort-named-imports': [
         'warn',
-        { groupKind: 'types-first', ignoreCase: false, type: 'natural' },
+        { type: 'natural', groupKind: 'types-first', ignoreCase: false },
       ],
       'perfectionist/sort-object-types': [
         'warn',
         {
+          type: 'natural',
           customGroups: {
             key: ['key', 'keys'],
             id: ['id', '_id'],
@@ -211,12 +200,12 @@ module.exports = {
           groupKind: 'required-first',
           groups: ['key', 'id', 'multiline', 'unknown', 'callback'],
           ignoreCase: false,
-          type: 'natural',
         },
       ],
       'perfectionist/sort-objects': [
         'warn',
         {
+          type: 'natural',
           customGroups: {
             key: ['key', 'keys'],
             id: ['id', '_id'],
@@ -224,26 +213,26 @@ module.exports = {
           },
           groups: ['key', 'id', 'unknown', 'callback'],
           ignoreCase: false,
-          type: 'natural',
         },
       ],
       'perfectionist/sort-sets': [
         'warn',
         {
-          ignoreCase: false,
           type: 'natural',
+          ignoreCase: false,
         },
       ],
       'perfectionist/sort-switch-case': [
         'warn',
         {
-          ignoreCase: false,
           type: 'natural',
+          ignoreCase: false,
         },
       ],
       'perfectionist/sort-union-types': [
         'warn',
         {
+          type: 'natural',
           groups: [
             'conditional',
             'function',
@@ -259,14 +248,13 @@ module.exports = {
             'unknown',
           ],
           ignoreCase: false,
-          type: 'natural',
         },
       ],
       'perfectionist/sort-variable-declarations': [
         'warn',
         {
-          ignoreCase: false,
           type: 'natural',
+          ignoreCase: false,
         },
       ],
       'react/jsx-sort-props': 'off',
@@ -283,4 +271,11 @@ module.exports = {
       config: path.join(__dirname, './tailwind.config.js'),
     },
   },
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      parser: '@typescript-eslint/parser',
+    },
+  ],
+  root: true,
 };

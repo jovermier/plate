@@ -1,19 +1,14 @@
 'use client';
 
-import React from 'react';
-
 import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
-
+import { BlockquotePlugin } from '@udecode/plate-block-quote/react';
+import { CodeBlockPlugin } from '@udecode/plate-code-block/react';
+import { TogglePlugin } from '@udecode/plate-toggle/react';
 import {
   ParagraphPlugin,
   useEditorRef,
   useSelectionFragmentProp,
 } from '@udecode/plate/react';
-import { BlockquotePlugin } from '@udecode/plate-block-quote/react';
-import { CodeBlockPlugin } from '@udecode/plate-code-block/react';
-import { HEADING_KEYS } from '@udecode/plate-heading';
-import { INDENT_LIST_KEYS, ListStyleType } from '@udecode/plate-indent-list';
-import { TogglePlugin } from '@udecode/plate-toggle/react';
 import {
   ChevronRightIcon,
   Columns3Icon,
@@ -27,11 +22,15 @@ import {
   QuoteIcon,
   SquareIcon,
 } from 'lucide-react';
+import React from 'react';
+
+import { HEADING_KEYS } from '@udecode/plate-heading';
+import { INDENT_LIST_KEYS, ListStyleType } from '@udecode/plate-indent-list';
 
 import {
-  STRUCTURAL_TYPES,
   getBlockType,
   setBlockType,
+  STRUCTURAL_TYPES,
 } from '@/components/editor/transforms';
 
 import {
@@ -46,69 +45,69 @@ import { ToolbarButton } from './toolbar';
 
 const turnIntoItems = [
   {
-    icon: <PilcrowIcon />,
-    keywords: ['paragraph'],
     label: 'Text',
     value: ParagraphPlugin.key,
+    icon: <PilcrowIcon />,
+    keywords: ['paragraph'],
   },
   {
-    icon: <Heading1Icon />,
-    keywords: ['title', 'h1'],
     label: 'Heading 1',
     value: HEADING_KEYS.h1,
+    icon: <Heading1Icon />,
+    keywords: ['title', 'h1'],
   },
   {
-    icon: <Heading2Icon />,
-    keywords: ['subtitle', 'h2'],
     label: 'Heading 2',
     value: HEADING_KEYS.h2,
+    icon: <Heading2Icon />,
+    keywords: ['subtitle', 'h2'],
   },
   {
-    icon: <Heading3Icon />,
-    keywords: ['subtitle', 'h3'],
     label: 'Heading 3',
     value: HEADING_KEYS.h3,
+    icon: <Heading3Icon />,
+    keywords: ['subtitle', 'h3'],
   },
   {
-    icon: <ListIcon />,
-    keywords: ['unordered', 'ul', '-'],
     label: 'Bulleted list',
     value: ListStyleType.Disc,
+    icon: <ListIcon />,
+    keywords: ['unordered', 'ul', '-'],
   },
   {
-    icon: <ListOrderedIcon />,
-    keywords: ['ordered', 'ol', '1'],
     label: 'Numbered list',
     value: ListStyleType.Decimal,
+    icon: <ListOrderedIcon />,
+    keywords: ['ordered', 'ol', '1'],
   },
   {
-    icon: <SquareIcon />,
-    keywords: ['checklist', 'task', 'checkbox', '[]'],
     label: 'To-do list',
     value: INDENT_LIST_KEYS.todo,
+    icon: <SquareIcon />,
+    keywords: ['checklist', 'task', 'checkbox', '[]'],
   },
   {
-    icon: <ChevronRightIcon />,
-    keywords: ['collapsible', 'expandable'],
     label: 'Toggle list',
     value: TogglePlugin.key,
+    icon: <ChevronRightIcon />,
+    keywords: ['collapsible', 'expandable'],
   },
   {
-    icon: <FileCodeIcon />,
-    keywords: ['```'],
     label: 'Code',
     value: CodeBlockPlugin.key,
+    icon: <FileCodeIcon />,
+    keywords: ['```'],
   },
   {
-    icon: <QuoteIcon />,
-    keywords: ['citation', 'blockquote', '>'],
     label: 'Quote',
     value: BlockquotePlugin.key,
+    icon: <QuoteIcon />,
+    keywords: ['citation', 'blockquote', '>'],
   },
   {
-    icon: <Columns3Icon />,
     label: '3 columns',
     value: 'action_three_columns',
+    icon: <Columns3Icon />,
   },
 ];
 
@@ -118,8 +117,8 @@ export function TurnIntoDropdownMenu(props: DropdownMenuProps) {
 
   const value = useSelectionFragmentProp({
     defaultValue: ParagraphPlugin.key,
-    getProp: (node) => getBlockType(node as any),
     structuralTypes: STRUCTURAL_TYPES,
+    getProp: (node) => getBlockType(node as any),
   });
   const selectedItem = React.useMemo(
     () =>
@@ -132,7 +131,7 @@ export function TurnIntoDropdownMenu(props: DropdownMenuProps) {
   return (
     <DropdownMenu modal={false} {...openState} {...props}>
       <DropdownMenuTrigger asChild>
-        <ToolbarButton pressed={openState.open} tooltip="Turn into" isDropdown>
+        <ToolbarButton isDropdown tooltip="Turn into" pressed={openState.open}>
           {selectedItem.label}
         </ToolbarButton>
       </DropdownMenuTrigger>
@@ -152,7 +151,7 @@ export function TurnIntoDropdownMenu(props: DropdownMenuProps) {
           }}
           label="Turn into"
         >
-          {turnIntoItems.map(({ icon, label, value: itemValue }) => (
+          {turnIntoItems.map(({ label, value: itemValue, icon }) => (
             <DropdownMenuRadioItem
               key={itemValue}
               className="min-w-[180px]"

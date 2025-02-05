@@ -1,12 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
-
 import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
-
-import { cn } from '@udecode/cn';
-import { useEditorPlugin, useEditorSelector } from '@udecode/plate/react';
 import { TablePlugin, useTableMergeState } from '@udecode/plate-table/react';
+import { useEditorPlugin, useEditorSelector } from '@udecode/plate/react';
 import {
   ArrowDown,
   ArrowLeft,
@@ -19,6 +15,9 @@ import {
   Ungroup,
   XIcon,
 } from 'lucide-react';
+import React, { useState } from 'react';
+
+import { cn } from '@udecode/cn';
 
 import {
   DropdownMenu,
@@ -39,14 +38,14 @@ export function TableDropdownMenu(props: DropdownMenuProps) {
     []
   );
 
-  const { editor, tf } = useEditorPlugin(TablePlugin);
+  const { tf, editor } = useEditorPlugin(TablePlugin);
   const openState = useOpenState();
   const mergeState = useTableMergeState();
 
   return (
     <DropdownMenu modal={false} {...openState} {...props}>
       <DropdownMenuTrigger asChild>
-        <ToolbarButton pressed={openState.open} tooltip="Table" isDropdown>
+        <ToolbarButton isDropdown tooltip="Table" pressed={openState.open}>
           <Table />
         </ToolbarButton>
       </DropdownMenuTrigger>
@@ -199,7 +198,7 @@ export function TableDropdownMenu(props: DropdownMenuProps) {
 }
 
 export function TablePicker() {
-  const { editor, tf } = useEditorPlugin(TablePlugin);
+  const { tf, editor } = useEditorPlugin(TablePlugin);
 
   const [tablePicker, setTablePicker] = useState({
     grid: Array.from({ length: 8 }, () => Array.from({ length: 8 }).fill(0)),

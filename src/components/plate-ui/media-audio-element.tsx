@@ -1,10 +1,10 @@
 'use client';
 
+import { useMediaState } from '@udecode/plate-media/react';
+import { withHOC } from '@udecode/plate/react';
 import React from 'react';
 
 import { cn, withRef } from '@udecode/cn';
-import { withHOC } from '@udecode/plate/react';
-import { useMediaState } from '@udecode/plate-media/react';
 import { ResizableProvider } from '@udecode/plate-resizable';
 
 import { Caption, CaptionTextarea } from './caption';
@@ -23,7 +23,7 @@ export const MediaAudioElement = withHOC(
             contentEditable={false}
           >
             <div className="h-16">
-              <audio className="size-full" src={unsafeUrl} controls />
+              <audio className="size-full" controls src={unsafeUrl} />
             </div>
 
             <Caption style={{ width: '100%' }} align={align}>

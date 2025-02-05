@@ -13,8 +13,8 @@ export const FireMarker = (
       <span
         className="select-none"
         style={{ left: -26, position: 'absolute', top: -1 }}
-        data-plate-prevent-deserialization
         contentEditable={false}
+        data-plate-prevent-deserialization
       >
         {(element as TIndentElement).indent % 2 === 0 ? '🔥' : '🚀'}
       </span>

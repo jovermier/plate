@@ -1,3 +1,4 @@
+import { RadicalIcon } from 'lucide-react';
 import React from 'react';
 
 import type { TEquationElement } from '@udecode/plate-math';
@@ -5,7 +6,6 @@ import type { TEquationElement } from '@udecode/plate-math';
 import { cn } from '@udecode/cn';
 import { type SlateElementProps, SlateElement } from '@udecode/plate';
 import { getEquationHtml } from '@udecode/plate-math';
-import { RadicalIcon } from 'lucide-react';
 
 export function EquationElementStatic({
   children,
@@ -17,15 +17,15 @@ export function EquationElementStatic({
   const html = getEquationHtml({
     element,
     options: {
+      fleqn: false,
+      strict: 'warn',
+      trust: false,
       displayMode: true,
       errorColor: '#cc0000',
-      fleqn: false,
       leqno: false,
       macros: { '\\f': '#1f(#2)' },
       output: 'htmlAndMathml',
-      strict: 'warn',
       throwOnError: false,
-      trust: false,
     },
   });
 

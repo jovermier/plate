@@ -1,19 +1,19 @@
 'use client';
 
-import React from 'react';
-
-import { cn } from '@udecode/cn';
-import { RangeApi } from '@udecode/plate';
 import {
   type CursorData,
   type CursorOverlayState,
   useCursorOverlay,
 } from '@udecode/plate-selection/react';
+import React from 'react';
+
+import { cn } from '@udecode/cn';
+import { RangeApi } from '@udecode/plate';
 
 export function Cursor({
   id,
-  caretPosition,
   data,
+  caretPosition,
   selection,
   selectionRects,
 }: CursorOverlayState<CursorData>) {

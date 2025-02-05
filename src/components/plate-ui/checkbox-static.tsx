@@ -1,7 +1,7 @@
+import { Check } from 'lucide-react';
 import * as React from 'react';
 
 import { cn } from '@udecode/cn';
-import { Check } from 'lucide-react';
 
 export function CheckboxStatic({
   className,

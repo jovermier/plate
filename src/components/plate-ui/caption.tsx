@@ -1,17 +1,18 @@
 'use client';
 
 import {
-  cn,
-  createPrimitiveComponent,
-  withCn,
-  withVariants,
-} from '@udecode/cn';
-import {
   Caption as CaptionPrimitive,
   CaptionTextarea as CaptionTextareaPrimitive,
   useCaptionButton,
   useCaptionButtonState,
 } from '@udecode/plate-caption/react';
+
+import {
+  cn,
+  createPrimitiveComponent,
+  withCn,
+  withVariants,
+} from '@udecode/cn';
 import { cva } from 'class-variance-authority';
 
 import { Button } from './button';

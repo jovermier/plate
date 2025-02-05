@@ -1,15 +1,13 @@
 'use client';
 
-import React from 'react';
-
 import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
-
 import {
   useEditorReadOnly,
   useEditorRef,
   usePlateStore,
 } from '@udecode/plate/react';
 import { Eye, Pen } from 'lucide-react';
+import React from 'react';
 
 import {
   DropdownMenu,
@@ -50,9 +48,9 @@ export function ModeDropdownMenu(props: DropdownMenuProps) {
     <DropdownMenu modal={false} {...openState} {...props}>
       <DropdownMenuTrigger asChild>
         <ToolbarButton
-          pressed={openState.open}
-          tooltip="Editing mode"
           isDropdown
+          tooltip="Editing mode"
+          pressed={openState.open}
         >
           {item[value]}
         </ToolbarButton>

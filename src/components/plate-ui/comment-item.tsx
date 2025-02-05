@@ -1,13 +1,13 @@
 'use client';
 
-import React from 'react';
-
-import { useEditorPlugin } from '@udecode/plate/react';
 import {
   CommentProvider,
   CommentsPlugin,
   useCommentItemContentState,
 } from '@udecode/plate-comments/react';
+import { useEditorPlugin } from '@udecode/plate/react';
+import React from 'react';
+
 import { formatDistance } from 'date-fns';
 
 import { CommentAvatar } from './comment-avatar';
@@ -19,14 +19,27 @@ type PlateCommentProps = {
   commentId: string;
 };
 
+export function CommentItem({ commentId }: PlateCommentProps) {
+  const { useOption } = useEditorPlugin(CommentsPlugin);
+  const comment = useOption('commentById', commentId);
+
+  if (!comment) return null;
+
+  return (
+    <CommentProvider id={commentId} key={commentId}>
+      <CommentItemContent />
+    </CommentProvider>
+  );
+}
+
 function CommentItemContent() {
   const {
+    editingValue,
+    user,
     comment,
     commentText,
-    editingValue,
     isMyComment,
     isReplyComment,
-    user,
   } = useCommentItemContentState();
 
   return (
@@ -57,18 +70,5 @@ function CommentItemContent() {
         )}
       </div>
     </div>
-  );
-}
-
-export function CommentItem({ commentId }: PlateCommentProps) {
-  const { useOption } = useEditorPlugin(CommentsPlugin);
-  const comment = useOption('commentById', commentId);
-
-  if (!comment) return null;
-
-  return (
-    <CommentProvider id={commentId} key={commentId}>
-      <CommentItemContent />
-    </CommentProvider>
   );
 }

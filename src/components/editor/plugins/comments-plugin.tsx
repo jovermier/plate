@@ -1,8 +1,8 @@
 'use client';
 
-import type { TComment } from '@udecode/plate-comments';
-
 import { CommentsPlugin } from '@udecode/plate-comments/react';
+
+import type { TComment } from '@udecode/plate-comments';
 
 import { CommentsPopover } from '@/components/plate-ui/comments-popover';
 
@@ -24,9 +24,9 @@ const commentsData: Record<string, TComment> = {
   3: {
     id: '3',
     createdAt: 1_663_453_740_180,
-    isResolved: true,
     userId: '1',
     value: [{ children: [{ text: 'This is a resolved comment.' }], type: 'p' }],
+    isResolved: true,
   },
   4: {
     id: '4',
@@ -45,8 +45,8 @@ const commentsData: Record<string, TComment> = {
 };
 
 export const commentsPlugin = CommentsPlugin.configure({
+  render: { afterEditable: () => <CommentsPopover /> },
   options: {
-    comments: commentsData,
     myUserId: '1',
     users: {
       1: {
@@ -60,6 +60,6 @@ export const commentsPlugin = CommentsPlugin.configure({
         name: '12joan',
       },
     },
+    comments: commentsData,
   },
-  render: { afterEditable: () => <CommentsPopover /> },
 });

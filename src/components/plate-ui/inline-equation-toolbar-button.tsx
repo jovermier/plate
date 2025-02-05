@@ -1,8 +1,9 @@
 'use client';
 
 import { useEditorRef, withRef } from '@udecode/plate/react';
-import { insertInlineEquation } from '@udecode/plate-math';
 import { RadicalIcon } from 'lucide-react';
+
+import { insertInlineEquation } from '@udecode/plate-math';
 
 import { ToolbarButton } from './toolbar';
 

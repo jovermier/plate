@@ -29,13 +29,13 @@ export function EmojiPickerSearchAndClear({
       {searchValue && (
         <Button
           size="icon"
-          variant="ghost"
           className={cn(
             'absolute right-0.5 top-1/2 flex size-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border-none bg-transparent text-popover-foreground hover:bg-transparent'
           )}
           onClick={clearSearch}
-          title={i18n.clear}
           aria-label="Clear"
+          title={i18n.clear}
+          variant="ghost"
           type="button"
         >
           {emojiSearchIcons.delete}

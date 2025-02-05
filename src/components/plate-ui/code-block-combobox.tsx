@@ -1,14 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
-
-import { cn } from '@udecode/cn';
 import {
   useCodeBlockCombobox,
   useCodeBlockComboboxState,
 } from '@udecode/plate-code-block/react';
 import { Check, ChevronsUpDown } from 'lucide-react';
+import React, { useState } from 'react';
 
+import { cn } from '@udecode/cn';
 // Prism must be imported before all language files
 import Prism from 'prismjs';
 
@@ -31,10 +30,8 @@ import 'prismjs/components/prism-cpp.js';
 import 'prismjs/components/prism-csharp.js';
 import 'prismjs/components/prism-css.js';
 import 'prismjs/components/prism-dart.js';
-
 // import 'prismjs/components/prism-django.js';
 import 'prismjs/components/prism-docker.js';
-
 // import 'prismjs/components/prism-ejs.js';
 import 'prismjs/components/prism-erlang.js';
 import 'prismjs/components/prism-git.js';
@@ -55,7 +52,6 @@ import 'prismjs/components/prism-matlab.js';
 import 'prismjs/components/prism-mermaid.js';
 import 'prismjs/components/prism-objectivec.js';
 import 'prismjs/components/prism-perl.js';
-
 // import 'prismjs/components/prism-php.js';
 import 'prismjs/components/prism-powershell.js';
 import 'prismjs/components/prism-properties.js';
@@ -150,14 +146,14 @@ export function CodeBlockCombobox() {
   );
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover onOpenChange={setOpen} open={open}>
       <PopoverTrigger asChild>
         <Button
           size="xs"
-          variant="ghost"
           className="h-5 justify-between px-1 text-xs"
-          aria-expanded={open}
           role="combobox"
+          aria-expanded={open}
+          variant="ghost"
         >
           {state.value
             ? languages.find((language) => language.value === state.value)

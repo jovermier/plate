@@ -15,10 +15,10 @@ export function TableCellElementStatic({
 }: SlateElementProps<TTableCellElement> & {
   isHeader?: boolean;
 }) {
-  const { editor, element } = props;
+  const { element, editor } = props;
   const { api } = editor.getPlugin(BaseTablePlugin);
 
-  const { minHeight, width } = api.table.getCellSize({ element });
+  const { width, minHeight } = api.table.getCellSize({ element });
   const borders = api.table.getCellBorders({ element });
 
   return (
@@ -43,9 +43,9 @@ export function TableCellElementStatic({
       )}
       style={
         {
-          '--cellBackground': element.background,
           maxWidth: width || 240,
           minWidth: width || 120,
+          '--cellBackground': element.background,
           ...style,
         } as React.CSSProperties
       }

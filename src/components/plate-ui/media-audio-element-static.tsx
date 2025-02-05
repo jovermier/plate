@@ -17,7 +17,7 @@ export function MediaAudioElementStatic({
     <SlateElement className={cn(className, 'mb-1')} {...props}>
       <figure className="group relative cursor-default">
         <div className="h-16">
-          <audio className="size-full" src={url} controls />
+          <audio className="size-full" controls src={url} />
         </div>
       </figure>
       {children}

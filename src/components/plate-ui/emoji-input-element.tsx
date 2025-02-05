@@ -1,11 +1,11 @@
 'use client';
 
+import { EmojiPlugin } from '@udecode/plate-emoji/react';
+import { useEditorPlugin } from '@udecode/plate/react';
 import React, { useMemo, useState } from 'react';
 
 import { withRef } from '@udecode/cn';
-import { useEditorPlugin } from '@udecode/plate/react';
 import { EmojiInlineIndexSearch, insertEmoji } from '@udecode/plate-emoji';
-import { EmojiPlugin } from '@udecode/plate-emoji/react';
 
 import { useDebounce } from '@/hooks/use-debounce';
 
@@ -21,7 +21,7 @@ import { PlateElement } from './plate-element';
 
 export const EmojiInputElement = withRef<typeof PlateElement>(
   ({ className, ...props }, ref) => {
-    const { children, editor, element } = props;
+    const { children, element, editor } = props;
     const { useOption } = useEditorPlugin(EmojiPlugin);
     const data = useOption('data')!;
     const [value, setValue] = useState('');
@@ -45,12 +45,12 @@ export const EmojiInputElement = withRef<typeof PlateElement>(
         {...props}
       >
         <InlineCombobox
+          hideWhenNoValue
           value={value}
           element={element}
           filter={false}
           setValue={setValue}
           trigger=":"
-          hideWhenNoValue
         >
           <InlineComboboxInput />
 

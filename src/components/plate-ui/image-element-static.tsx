@@ -14,10 +14,10 @@ export function ImageElementStatic({
   ...props
 }: SlateElementProps) {
   const {
-    align = 'center',
-    caption,
-    url,
     width,
+    align = 'center',
+    url,
+    caption,
   } = props.element as TImageElement &
     TCaptionElement & {
       width: number;

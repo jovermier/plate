@@ -1,12 +1,14 @@
 'use client';
 
-import React from 'react';
-
 import type * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
-import type { TTableElement } from '@udecode/plate-table';
-
 import { PopoverAnchor } from '@radix-ui/react-popover';
-import { cn, withRef } from '@udecode/cn';
+import {
+  TablePlugin,
+  TableProvider,
+  useTableBordersDropdownMenuContentState,
+  useTableElement,
+  useTableMergeState,
+} from '@udecode/plate-table/react';
 import {
   useEditorPlugin,
   useEditorSelector,
@@ -16,13 +18,6 @@ import {
   useSelected,
   withHOC,
 } from '@udecode/plate/react';
-import {
-  TablePlugin,
-  TableProvider,
-  useTableBordersDropdownMenuContentState,
-  useTableElement,
-  useTableMergeState,
-} from '@udecode/plate-table/react';
 import {
   ArrowDown,
   ArrowLeft,
@@ -34,6 +29,11 @@ import {
   Trash2Icon,
   XIcon,
 } from 'lucide-react';
+import React from 'react';
+
+import type { TTableElement } from '@udecode/plate-table';
+
+import { cn, withRef } from '@udecode/cn';
 
 import {
   DropdownMenu,
@@ -108,7 +108,7 @@ export const TableFloatingToolbar = withRef<typeof PopoverContent>(
     const { canMerge, canSplit } = useTableMergeState();
 
     return (
-      <Popover open={canMerge || canSplit || collapsed} modal={false}>
+      <Popover modal={false} open={canMerge || canSplit || collapsed}>
         <PopoverAnchor asChild>{children}</PopoverAnchor>
         <PopoverContent
           ref={ref}
@@ -248,11 +248,11 @@ export const TableBordersDropdownMenuContent = withRef<
 
   return (
     <DropdownMenuContent
+      side="right"
+      sideOffset={0}
       ref={ref}
       className={cn('min-w-[220px]')}
       align="start"
-      side="right"
-      sideOffset={0}
       {...props}
     >
       <DropdownMenuGroup>

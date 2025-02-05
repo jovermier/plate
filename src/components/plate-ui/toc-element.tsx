@@ -1,10 +1,11 @@
 'use client';
 
-import { cn, withRef } from '@udecode/cn';
 import {
   useTocElement,
   useTocElementState,
 } from '@udecode/plate-heading/react';
+
+import { cn, withRef } from '@udecode/cn';
 import { cva } from 'class-variance-authority';
 
 import { Button } from './button';
@@ -38,12 +39,12 @@ export const TocElement = withRef<typeof PlateElement>(
             headingList.map((item) => (
               <Button
                 key={item.id}
-                variant="ghost"
                 className={cn(
                   headingItemVariants({ depth: item.depth as any })
                 )}
                 onClick={(e) => btnProps.onClick(e, item, 'smooth')}
                 aria-current
+                variant="ghost"
               >
                 {item.title}
               </Button>

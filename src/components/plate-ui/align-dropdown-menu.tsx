@@ -1,9 +1,6 @@
 'use client';
 
-import React from 'react';
-
 import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
-
 import {
   useAlignDropdownMenu,
   useAlignDropdownMenuState,
@@ -14,6 +11,7 @@ import {
   AlignLeftIcon,
   AlignRightIcon,
 } from 'lucide-react';
+import React from 'react';
 
 import {
   DropdownMenu,
@@ -27,20 +25,20 @@ import { ToolbarButton } from './toolbar';
 
 const items = [
   {
-    icon: AlignLeftIcon,
     value: 'left',
+    icon: AlignLeftIcon,
   },
   {
-    icon: AlignCenterIcon,
     value: 'center',
+    icon: AlignCenterIcon,
   },
   {
-    icon: AlignRightIcon,
     value: 'right',
+    icon: AlignRightIcon,
   },
   {
-    icon: AlignJustifyIcon,
     value: 'justify',
+    icon: AlignJustifyIcon,
   },
 ];
 
@@ -56,15 +54,15 @@ export function AlignDropdownMenu({ children, ...props }: DropdownMenuProps) {
   return (
     <DropdownMenu modal={false} {...openState} {...props}>
       <DropdownMenuTrigger asChild>
-        <ToolbarButton pressed={openState.open} tooltip="Align" isDropdown>
+        <ToolbarButton isDropdown tooltip="Align" pressed={openState.open}>
           <IconValue />
         </ToolbarButton>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="min-w-0" align="start">
         <DropdownMenuRadioGroup {...radioGroupProps}>
-          {items.map(({ icon: Icon, value: itemValue }) => (
-            <DropdownMenuRadioItem key={itemValue} value={itemValue} hideIcon>
+          {items.map(({ value: itemValue, icon: Icon }) => (
+            <DropdownMenuRadioItem hideIcon key={itemValue} value={itemValue}>
               <Icon />
             </DropdownMenuRadioItem>
           ))}

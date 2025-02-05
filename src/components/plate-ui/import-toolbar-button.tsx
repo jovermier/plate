@@ -1,12 +1,11 @@
 'use client';
 
-import React from 'react';
-
 import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
-
-import { getEditorDOMFromHtmlString } from '@udecode/plate';
 import { useEditorRef } from '@udecode/plate/react';
 import { ArrowUpToLineIcon } from 'lucide-react';
+import React from 'react';
+
+import { getEditorDOMFromHtmlString } from '@udecode/plate';
 import { useFilePicker } from 'use-file-picker';
 
 import {
@@ -32,8 +31,8 @@ export function ImportToolbarButton({ children, ...props }: DropdownMenuProps) {
       const editorNode = getEditorDOMFromHtmlString(text);
 
       const nodes = editor.api.html.deserialize({
-        collapseWhiteSpace: false,
         element: editorNode,
+        collapseWhiteSpace: false,
       });
 
       editor.tf.insertNodes(nodes);
@@ -43,7 +42,7 @@ export function ImportToolbarButton({ children, ...props }: DropdownMenuProps) {
   return (
     <DropdownMenu modal={false} {...openState} {...props}>
       <DropdownMenuTrigger asChild>
-        <ToolbarButton pressed={openState.open} tooltip="Import" isDropdown>
+        <ToolbarButton isDropdown tooltip="Import" pressed={openState.open}>
           <ArrowUpToLineIcon className="size-4" />
         </ToolbarButton>
       </DropdownMenuTrigger>

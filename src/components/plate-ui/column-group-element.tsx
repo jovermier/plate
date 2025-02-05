@@ -1,17 +1,17 @@
 'use client';
 
-import React from 'react';
-
-import { cn, withRef } from '@udecode/cn';
+import { useDebouncePopoverOpen } from '@udecode/plate-layout/react';
 import {
   useEditorRef,
   useElement,
   useReadOnly,
   useRemoveNodeButton,
 } from '@udecode/plate/react';
-import { type TColumnElement, setColumns } from '@udecode/plate-layout';
-import { useDebouncePopoverOpen } from '@udecode/plate-layout/react';
 import { type LucideProps, Trash2Icon } from 'lucide-react';
+import React from 'react';
+
+import { cn, withRef } from '@udecode/cn';
+import { type TColumnElement, setColumns } from '@udecode/plate-layout';
 
 import { Button } from './button';
 import { PlateElement } from './plate-element';
@@ -41,61 +41,61 @@ export function ColumnFloatingToolbar({ children }: React.PropsWithChildren) {
 
   const onColumnChange = (widths: string[]) => {
     setColumns(editor, {
-      at: element,
       widths,
+      at: element,
     });
   };
 
   if (readOnly) return <>{children}</>;
 
   return (
-    <Popover open={isOpen} modal={false}>
+    <Popover modal={false} open={isOpen}>
       <PopoverAnchor>{children}</PopoverAnchor>
       <PopoverContent
+        side="top"
+        sideOffset={10}
         className="w-auto p-1"
         onOpenAutoFocus={(e) => e.preventDefault()}
         align="center"
-        side="top"
-        sideOffset={10}
       >
         <div className="box-content flex items-center [&_svg]:size-4 [&_svg]:text-muted-foreground">
           <Button
             size="icon"
-            variant="ghost"
             onClick={() => onColumnChange(['50%', '50%'])}
+            variant="ghost"
           >
             <DoubleColumnOutlined />
           </Button>
           <Button
             size="icon"
-            variant="ghost"
             onClick={() => onColumnChange(['33%', '33%', '33%'])}
+            variant="ghost"
           >
             <ThreeColumnOutlined />
           </Button>
           <Button
             size="icon"
-            variant="ghost"
             onClick={() => onColumnChange(['70%', '30%'])}
+            variant="ghost"
           >
             <RightSideDoubleColumnOutlined />
           </Button>
           <Button
             size="icon"
-            variant="ghost"
             onClick={() => onColumnChange(['30%', '70%'])}
+            variant="ghost"
           >
             <LeftSideDoubleColumnOutlined />
           </Button>
           <Button
             size="icon"
-            variant="ghost"
             onClick={() => onColumnChange(['25%', '50%', '25%'])}
+            variant="ghost"
           >
             <DoubleSideDoubleColumnOutlined />
           </Button>
 
-          <Separator orientation="vertical" className="mx-1 h-6" />
+          <Separator className="mx-1 h-6" orientation="vertical" />
           <Button size="icon" variant="ghost" {...buttonProps}>
             <Trash2Icon />
           </Button>
@@ -107,10 +107,10 @@ export function ColumnFloatingToolbar({ children }: React.PropsWithChildren) {
 
 const DoubleColumnOutlined = (props: LucideProps) => (
   <svg
+    width="16"
+    viewBox="0 0 16 16"
     fill="none"
     height="16"
-    viewBox="0 0 16 16"
-    width="16"
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
@@ -125,10 +125,10 @@ const DoubleColumnOutlined = (props: LucideProps) => (
 
 const ThreeColumnOutlined = (props: LucideProps) => (
   <svg
+    width="16"
+    viewBox="0 0 16 16"
     fill="none"
     height="16"
-    viewBox="0 0 16 16"
-    width="16"
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
@@ -143,10 +143,10 @@ const ThreeColumnOutlined = (props: LucideProps) => (
 
 const RightSideDoubleColumnOutlined = (props: LucideProps) => (
   <svg
+    width="16"
+    viewBox="0 0 16 16"
     fill="none"
     height="16"
-    viewBox="0 0 16 16"
-    width="16"
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
@@ -161,10 +161,10 @@ const RightSideDoubleColumnOutlined = (props: LucideProps) => (
 
 const LeftSideDoubleColumnOutlined = (props: LucideProps) => (
   <svg
+    width="16"
+    viewBox="0 0 16 16"
     fill="none"
     height="16"
-    viewBox="0 0 16 16"
-    width="16"
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
@@ -179,10 +179,10 @@ const LeftSideDoubleColumnOutlined = (props: LucideProps) => (
 
 const DoubleSideDoubleColumnOutlined = (props: LucideProps) => (
   <svg
+    width="16"
+    viewBox="0 0 16 16"
     fill="none"
     height="16"
-    viewBox="0 0 16 16"
-    width="16"
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >

@@ -13,10 +13,10 @@ export function MediaVideoElementStatic({
   ...props
 }: SlateElementProps) {
   const {
-    align = 'center',
-    caption,
-    url,
     width,
+    align = 'center',
+    url,
+    caption,
   } = props.element as TVideoElement &
     TCaptionElement & {
       width: number;
@@ -31,8 +31,8 @@ export function MediaVideoElementStatic({
         >
           <video
             className={cn('w-full max-w-full object-cover px-0', 'rounded-sm')}
-            src={url}
             controls
+            src={url}
           />
           {caption && <figcaption>{NodeApi.string(caption[0])}</figcaption>}
         </figure>

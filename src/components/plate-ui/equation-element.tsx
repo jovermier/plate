@@ -1,13 +1,13 @@
 'use client';
 
+import { useEquationElement } from '@udecode/plate-math/react';
+import { useElement, useSelected } from '@udecode/plate/react';
+import { RadicalIcon } from 'lucide-react';
 import React, { useRef, useState } from 'react';
 
 import type { TEquationElement } from '@udecode/plate-math';
 
 import { cn, withRef } from '@udecode/cn';
-import { useElement, useSelected } from '@udecode/plate/react';
-import { useEquationElement } from '@udecode/plate-math/react';
-import { RadicalIcon } from 'lucide-react';
 
 import { EquationPopoverContent } from './equation-popover';
 import { PlateElement } from './plate-element';
@@ -25,21 +25,21 @@ export const EquationElement = withRef<typeof PlateElement>(
       element,
       katexRef: katexRef,
       options: {
+        fleqn: false,
+        strict: 'warn',
+        trust: false,
         displayMode: true,
         errorColor: '#cc0000',
-        fleqn: false,
         leqno: false,
         macros: { '\\f': '#1f(#2)' },
         output: 'htmlAndMathml',
-        strict: 'warn',
         throwOnError: false,
-        trust: false,
       },
     });
 
     return (
       <PlateElement ref={ref} className={cn('my-1', className)} {...props}>
-        <Popover open={open} onOpenChange={setOpen} modal={false}>
+        <Popover modal={false} onOpenChange={setOpen} open={open}>
           <PopoverTrigger asChild>
             <div
               className={cn(
@@ -48,9 +48,9 @@ export const EquationElement = withRef<typeof PlateElement>(
                   ? 'bg-muted p-3 pr-9'
                   : 'px-2 py-1'
               )}
-              data-selected={selected}
               contentEditable={false}
               role="button"
+              data-selected={selected}
             >
               {element.texExpression.length > 0 ? (
                 <span ref={katexRef} />

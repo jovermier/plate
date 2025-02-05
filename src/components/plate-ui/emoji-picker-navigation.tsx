@@ -1,5 +1,6 @@
-import type { EmojiCategoryList } from '@udecode/plate-emoji';
 import type { UseEmojiPickerType } from '@udecode/plate-emoji/react';
+
+import type { EmojiCategoryList } from '@udecode/plate-emoji';
 
 import { cn } from '@udecode/cn';
 
@@ -37,9 +38,9 @@ export type EmojiPickerNavigationProps = {
 // };
 
 export function EmojiPickerNavigation({
+  i18n,
   emojiLibrary,
   focusedCategory,
-  i18n,
   icons,
   onClick,
 }: EmojiPickerNavigationProps) {
@@ -64,7 +65,6 @@ export function EmojiPickerNavigation({
                 <TooltipTrigger asChild>
                   <Button
                     size="sm"
-                    variant="ghost"
                     className={cn(
                       'h-fit rounded-full fill-current p-1.5 text-muted-foreground hover:bg-muted hover:text-muted-foreground',
                       id === focusedCategory &&
@@ -74,6 +74,7 @@ export function EmojiPickerNavigation({
                       onClick(id);
                     }}
                     aria-label={i18n.categories[id]}
+                    variant="ghost"
                     type="button"
                   >
                     <span className="inline-flex size-5 items-center justify-center">

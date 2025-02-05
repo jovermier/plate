@@ -1,13 +1,13 @@
 'use client';
 
+import { useEquationElement } from '@udecode/plate-math/react';
+import { useElement, useSelected } from '@udecode/plate/react';
+import { RadicalIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
 
 import type { TEquationElement } from '@udecode/plate-math';
 
 import { cn, withRef } from '@udecode/cn';
-import { useElement, useSelected } from '@udecode/plate/react';
-import { useEquationElement } from '@udecode/plate-math/react';
-import { RadicalIcon } from 'lucide-react';
 
 import { EquationPopoverContent } from './equation-popover';
 import { PlateElement } from './plate-element';
@@ -24,15 +24,15 @@ export const InlineEquationElement = withRef<typeof PlateElement>(
       element,
       katexRef: katexRef,
       options: {
+        fleqn: false,
+        strict: 'warn',
+        trust: false,
         displayMode: true,
         errorColor: '#cc0000',
-        fleqn: false,
         leqno: false,
         macros: { '\\f': '#1f(#2)' },
         output: 'htmlAndMathml',
-        strict: 'warn',
         throwOnError: false,
-        trust: false,
       },
     });
 
@@ -45,7 +45,7 @@ export const InlineEquationElement = withRef<typeof PlateElement>(
         )}
         {...props}
       >
-        <Popover open={open} onOpenChange={setOpen} modal={false}>
+        <Popover modal={false} onOpenChange={setOpen} open={open}>
           <PopoverTrigger asChild>
             <div
               className={cn(

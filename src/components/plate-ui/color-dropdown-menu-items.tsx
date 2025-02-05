@@ -1,11 +1,10 @@
 'use client';
 
+import type { DropdownMenuItemProps } from '@radix-ui/react-dropdown-menu';
+import { Check } from 'lucide-react';
 import React from 'react';
 
-import type { DropdownMenuItemProps } from '@radix-ui/react-dropdown-menu';
-
 import { cn } from '@udecode/cn';
-import { Check } from 'lucide-react';
 
 import { buttonVariants } from './button';
 import { DropdownMenuItem } from './dropdown-menu';
@@ -17,26 +16,32 @@ import {
 } from './tooltip';
 
 export type TColor = {
-  isBrightColor: boolean;
   name: string;
   value: string;
+  isBrightColor: boolean;
 };
 
 type ColorDropdownMenuItemProps = {
-  isBrightColor: boolean;
   isSelected: boolean;
-  updateColor: (color: string) => void;
   value: string;
+  isBrightColor: boolean;
+  updateColor: (color: string) => void;
   name?: string;
 } & DropdownMenuItemProps;
 
+type ColorDropdownMenuItemsProps = {
+  colors: TColor[];
+  updateColor: (color: string) => void;
+  color?: string;
+} & React.HTMLAttributes<HTMLDivElement>;
+
 export function ColorDropdownMenuItem({
   className,
-  isBrightColor,
   isSelected,
   name,
-  updateColor,
   value,
+  isBrightColor,
+  updateColor,
   ...props
 }: ColorDropdownMenuItemProps) {
   const content = (
@@ -72,12 +77,6 @@ export function ColorDropdownMenuItem({
   );
 }
 
-type ColorDropdownMenuItemsProps = {
-  colors: TColor[];
-  updateColor: (color: string) => void;
-  color?: string;
-} & React.HTMLAttributes<HTMLDivElement>;
-
 export function ColorDropdownMenuItems({
   className,
   color,
@@ -94,14 +93,14 @@ export function ColorDropdownMenuItems({
       {...props}
     >
       <TooltipProvider>
-        {colors.map(({ isBrightColor, name, value }) => (
+        {colors.map(({ name, value, isBrightColor }) => (
           <ColorDropdownMenuItem
             name={name}
             key={name ?? value}
             value={value}
             isBrightColor={isBrightColor}
-            isSelected={color === value}
             updateColor={updateColor}
+            isSelected={color === value}
           />
         ))}
         {props.children}

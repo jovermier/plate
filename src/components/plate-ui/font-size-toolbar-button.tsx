@@ -1,15 +1,15 @@
 'use client';
 
+import { FontSizePlugin } from '@udecode/plate-font/react';
+import { useEditorPlugin, useEditorSelector } from '@udecode/plate/react';
+import { Minus, Plus } from 'lucide-react';
 import { useState } from 'react';
 
 import type { TElement } from '@udecode/plate';
 
 import { cn } from '@udecode/cn';
-import { useEditorPlugin, useEditorSelector } from '@udecode/plate/react';
 import { toUnitLess } from '@udecode/plate-font';
-import { FontSizePlugin } from '@udecode/plate-font/react';
 import { HEADING_KEYS } from '@udecode/plate-heading';
-import { Minus, Plus } from 'lucide-react';
 
 import { Popover, PopoverContent, PopoverTrigger } from './popover';
 import { ToolbarButton } from './toolbar';
@@ -89,13 +89,14 @@ export function FontSizeToolbarButton() {
         <Minus />
       </ToolbarButton>
 
-      <Popover open={isFocused} modal={false}>
+      <Popover modal={false} open={isFocused}>
         <PopoverTrigger asChild>
           <input
             className={cn(
               'h-full w-10 shrink-0 bg-transparent px-1 text-center text-sm hover:bg-muted'
             )}
             value={displayValue}
+            data-plate-focus="true"
             onBlur={() => {
               setIsFocused(false);
               handleInputChange();
@@ -111,7 +112,6 @@ export function FontSizeToolbarButton() {
                 handleInputChange();
               }
             }}
-            data-plate-focus="true"
             type="text"
           />
         </PopoverTrigger>

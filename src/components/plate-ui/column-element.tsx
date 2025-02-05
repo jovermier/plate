@@ -1,15 +1,15 @@
 'use client';
 
+import { useReadOnly, withHOC } from '@udecode/plate/react';
+import { GripHorizontal } from 'lucide-react';
 import React from 'react';
 
 import type { TColumnElement } from '@udecode/plate-layout';
 
 import { cn, useComposedRef, withRef } from '@udecode/cn';
 import { PathApi } from '@udecode/plate';
-import { useReadOnly, withHOC } from '@udecode/plate/react';
 import { useDraggable, useDropLine } from '@udecode/plate-dnd';
 import { ResizableProvider } from '@udecode/plate-resizable';
-import { GripHorizontal } from 'lucide-react';
 
 import { Button } from './button';
 import { PlateElement } from './plate-element';
@@ -28,14 +28,14 @@ export const ColumnElement = withHOC(
     const { width } = props.element as TColumnElement;
 
     const { isDragging, previewRef, handleRef } = useDraggable({
+      element: props.element,
+      type: 'column',
       canDropNode: ({ dragEntry, dropEntry }) =>
         PathApi.equals(
           PathApi.parent(dragEntry[1]),
           PathApi.parent(dropEntry[1])
         ),
-      element: props.element,
       orientation: 'horizontal',
-      type: 'column',
     });
 
     return (
@@ -80,7 +80,7 @@ const ColumnDragHandle = React.memo(() => {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button size="none" variant="ghost" className="h-5 px-1">
+          <Button size="none" className="h-5 px-1" variant="ghost">
             <GripHorizontal
               className="size-4 text-muted-foreground"
               onClick={(event) => {

@@ -1,11 +1,11 @@
 'use client';
 
+import * as ToolbarPrimitive from '@radix-ui/react-toolbar';
+import { ChevronDown } from 'lucide-react';
 import * as React from 'react';
 
-import * as ToolbarPrimitive from '@radix-ui/react-toolbar';
-import { cn, withCn, withRef, withVariants } from '@udecode/cn';
+import { cn, withCn, withVariants } from '@udecode/cn';
 import { type VariantProps, cva } from 'class-variance-authority';
-import { ChevronDown } from 'lucide-react';
 
 import { Separator } from './separator';
 import { withTooltip } from './tooltip';
@@ -84,8 +84,8 @@ const ToolbarButton = withTooltip(
   React.forwardRef<
     React.ElementRef<typeof ToolbarToggleItem>,
     {
-      isDropdown?: boolean;
       pressed?: boolean;
+      isDropdown?: boolean;
     } & Omit<
       React.ComponentPropsWithoutRef<typeof ToolbarToggleItem>,
       'asChild' | 'value'
@@ -93,7 +93,7 @@ const ToolbarButton = withTooltip(
       VariantProps<typeof toolbarButtonVariants>
   >(
     (
-      { children, className, isDropdown, pressed, size, variant, ...props },
+      { children, className, pressed, size, variant, isDropdown, ...props },
       ref
     ) => {
       return typeof pressed === 'boolean' ? (
@@ -228,7 +228,10 @@ export const ToolbarToggleItem = withVariants(
   ['variant', 'size']
 );
 
-export const ToolbarGroup = withRef<'div'>(({ children, className }, ref) => {
+export const ToolbarGroup = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ children, className }, ref) => {
   return (
     <div
       ref={ref}

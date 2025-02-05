@@ -1,37 +1,16 @@
 'use client';
 
-import type { PlateEditor } from '@udecode/plate/react';
-
-import {
-  type NodeEntry,
-  type Path,
-  type TElement,
-  PathApi,
-} from '@udecode/plate';
-import { insertCallout } from '@udecode/plate-callout';
 import { CalloutPlugin } from '@udecode/plate-callout/react';
-import { insertCodeBlock } from '@udecode/plate-code-block';
 import { CodeBlockPlugin } from '@udecode/plate-code-block/react';
-import { insertDate } from '@udecode/plate-date';
 import { DatePlugin } from '@udecode/plate-date/react';
-import { insertToc } from '@udecode/plate-heading';
 import { TocPlugin } from '@udecode/plate-heading/react';
-import { INDENT_LIST_KEYS, ListStyleType } from '@udecode/plate-indent-list';
 import { IndentListPlugin } from '@udecode/plate-indent-list/react';
-import { insertColumnGroup, toggleColumnGroup } from '@udecode/plate-layout';
 import { ColumnItemPlugin, ColumnPlugin } from '@udecode/plate-layout/react';
 import { LinkPlugin, triggerFloatingLink } from '@udecode/plate-link/react';
-import { insertEquation, insertInlineEquation } from '@udecode/plate-math';
 import {
   EquationPlugin,
   InlineEquationPlugin,
 } from '@udecode/plate-math/react';
-import {
-  insertAudioPlaceholder,
-  insertFilePlaceholder,
-  insertMedia,
-  insertVideoPlaceholder,
-} from '@udecode/plate-media';
 import {
   AudioPlugin,
   FilePlugin,
@@ -44,6 +23,27 @@ import {
   TablePlugin,
   TableRowPlugin,
 } from '@udecode/plate-table/react';
+import type { PlateEditor } from '@udecode/plate/react';
+
+import {
+  type NodeEntry,
+  type Path,
+  type TElement,
+  PathApi,
+} from '@udecode/plate';
+import { insertCallout } from '@udecode/plate-callout';
+import { insertCodeBlock } from '@udecode/plate-code-block';
+import { insertDate } from '@udecode/plate-date';
+import { insertToc } from '@udecode/plate-heading';
+import { INDENT_LIST_KEYS, ListStyleType } from '@udecode/plate-indent-list';
+import { insertColumnGroup, toggleColumnGroup } from '@udecode/plate-layout';
+import { insertEquation, insertInlineEquation } from '@udecode/plate-math';
+import {
+  insertAudioPlaceholder,
+  insertFilePlaceholder,
+  insertMedia,
+  insertVideoPlaceholder,
+} from '@udecode/plate-media';
 
 export const STRUCTURAL_TYPES: string[] = [
   ColumnPlugin.key,
@@ -69,22 +69,12 @@ const insertBlockMap: Record<
   string,
   (editor: PlateEditor, type: string) => void
 > = {
-  [ACTION_THREE_COLUMNS]: (editor) =>
-    insertColumnGroup(editor, { columns: 3, select: true }),
-  [AudioPlugin.key]: (editor) =>
-    insertAudioPlaceholder(editor, { select: true }),
-  [CalloutPlugin.key]: (editor) => insertCallout(editor, { select: true }),
-  [CodeBlockPlugin.key]: (editor) => insertCodeBlock(editor, { select: true }),
-  [EquationPlugin.key]: (editor) => insertEquation(editor, { select: true }),
   [FilePlugin.key]: (editor) => insertFilePlaceholder(editor, { select: true }),
-  [INDENT_LIST_KEYS.todo]: insertList,
   [ImagePlugin.key]: (editor) =>
     insertMedia(editor, {
       select: true,
       type: ImagePlugin.key,
     }),
-  [ListStyleType.Decimal]: insertList,
-  [ListStyleType.Disc]: insertList,
   [MediaEmbedPlugin.key]: (editor) =>
     insertMedia(editor, {
       select: true,
@@ -92,6 +82,16 @@ const insertBlockMap: Record<
     }),
   [TablePlugin.key]: (editor) =>
     editor.getTransforms(TablePlugin).insert.table({}, { select: true }),
+  [ACTION_THREE_COLUMNS]: (editor) =>
+    insertColumnGroup(editor, { select: true, columns: 3 }),
+  [ListStyleType.Decimal]: insertList,
+  [ListStyleType.Disc]: insertList,
+  [AudioPlugin.key]: (editor) =>
+    insertAudioPlaceholder(editor, { select: true }),
+  [CalloutPlugin.key]: (editor) => insertCallout(editor, { select: true }),
+  [CodeBlockPlugin.key]: (editor) => insertCodeBlock(editor, { select: true }),
+  [EquationPlugin.key]: (editor) => insertEquation(editor, { select: true }),
+  [INDENT_LIST_KEYS.todo]: insertList,
   [TocPlugin.key]: (editor) => insertToc(editor, { select: true }),
   [VideoPlugin.key]: (editor) =>
     insertVideoPlaceholder(editor, { select: true }),
@@ -102,9 +102,9 @@ const insertInlineMap: Record<
   (editor: PlateEditor, type: string) => void
 > = {
   [DatePlugin.key]: (editor) => insertDate(editor, { select: true }),
+  [LinkPlugin.key]: (editor) => triggerFloatingLink(editor, { focused: true }),
   [InlineEquationPlugin.key]: (editor) =>
     insertInlineEquation(editor, '', { select: true }),
-  [LinkPlugin.key]: (editor) => triggerFloatingLink(editor, { focused: true }),
 };
 
 export const insertBlock = (editor: PlateEditor, type: string) => {
@@ -153,9 +153,9 @@ const setBlockMap: Record<
   (editor: PlateEditor, type: string, entry: NodeEntry<TElement>) => void
 > = {
   [ACTION_THREE_COLUMNS]: (editor) => toggleColumnGroup(editor, { columns: 3 }),
-  [INDENT_LIST_KEYS.todo]: setList,
   [ListStyleType.Decimal]: setList,
   [ListStyleType.Disc]: setList,
+  [INDENT_LIST_KEYS.todo]: setList,
 };
 
 export const setBlockType = (

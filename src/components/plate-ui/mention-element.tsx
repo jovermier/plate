@@ -1,12 +1,12 @@
 'use client';
 
+import { useFocused, useReadOnly, useSelected } from '@udecode/plate/react';
 import React from 'react';
 
 import type { TMentionElement } from '@udecode/plate-mention';
 
 import { cn, withRef } from '@udecode/cn';
-import { IS_APPLE, getHandler } from '@udecode/plate';
-import { useFocused, useReadOnly, useSelected } from '@udecode/plate/react';
+import { getHandler, IS_APPLE } from '@udecode/plate';
 
 import { useMounted } from '@/hooks/use-mounted';
 
@@ -37,9 +37,9 @@ export const MentionElement = withRef<
         element.children[0].italic === true && 'italic',
         element.children[0].underline === true && 'underline'
       )}
+      contentEditable={false}
       onClick={getHandler(onClick, element)}
       data-slate-value={element.value}
-      contentEditable={false}
       draggable
       {...props}
     >

@@ -1,15 +1,5 @@
 'use client';
 
-import React from 'react';
-
-import type { TTableCellElement } from '@udecode/plate-table';
-
-import { cn, withProps, withRef } from '@udecode/cn';
-import {
-  useEditorPlugin,
-  useElementSelector,
-  useReadOnly,
-} from '@udecode/plate/react';
 import { useBlockSelected } from '@udecode/plate-selection/react';
 import {
   TablePlugin,
@@ -17,6 +7,16 @@ import {
   useTableCellElement,
   useTableCellElementResizable,
 } from '@udecode/plate-table/react';
+import {
+  useEditorPlugin,
+  useElementSelector,
+  useReadOnly,
+} from '@udecode/plate/react';
+import React from 'react';
+
+import type { TTableCellElement } from '@udecode/plate-table';
+
+import { cn, withProps, withRef } from '@udecode/cn';
 import { cva } from 'class-variance-authority';
 
 import { blockSelectionVariants } from './block-selection';
@@ -39,17 +39,17 @@ export const TableCellElement = withRef<
   const isSelectingRow = useBlockSelected(rowId);
 
   const {
+    width,
+    isSelectingCell,
+    minHeight,
+    selected,
     borders,
     colIndex,
     colSpan,
-    isSelectingCell,
-    minHeight,
     rowIndex,
-    selected,
-    width,
   } = useTableCellElement();
 
-  const { bottomProps, hiddenLeft, leftProps, rightProps } =
+  const { hiddenLeft, bottomProps, leftProps, rightProps } =
     useTableCellElementResizable({
       colIndex,
       colSpan,
@@ -81,9 +81,9 @@ export const TableCellElement = withRef<
       )}
       style={
         {
-          '--cellBackground': element.background,
           maxWidth: width || 240,
           minWidth: width || 120,
+          '--cellBackground': element.background,
           ...style,
         } as React.CSSProperties
       }

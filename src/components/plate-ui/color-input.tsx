@@ -1,14 +1,14 @@
 'use client';
 
+import { useColorInput } from '@udecode/plate-font/react';
+import { useComposedRef } from '@udecode/plate/react';
 import React from 'react';
 
 import { cn, withRef } from '@udecode/cn';
-import { useComposedRef } from '@udecode/plate/react';
-import { useColorInput } from '@udecode/plate-font/react';
 
 export const ColorInput = withRef<'input'>(
   ({ children, className, value = '#000000', ...props }, ref) => {
-    const { childProps, inputRef } = useColorInput();
+    const { inputRef, childProps } = useColorInput();
 
     return (
       <div className="flex flex-col items-center">

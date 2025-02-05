@@ -1,3 +1,4 @@
+import { FileUp } from 'lucide-react';
 import React from 'react';
 
 import type { SlateElementProps } from '@udecode/plate';
@@ -5,7 +6,6 @@ import type { TFileElement } from '@udecode/plate-media';
 
 import { cn } from '@udecode/cn';
 import { SlateElement } from '@udecode/plate';
-import { FileUp } from 'lucide-react';
 
 export const MediaFileElementStatic = ({
   children,
@@ -17,12 +17,12 @@ export const MediaFileElementStatic = ({
   return (
     <SlateElement className={cn(className, 'my-px rounded-sm')} {...props}>
       <a
+        href={url}
         className="group relative m-0 flex cursor-pointer items-center rounded px-0.5 py-[3px] hover:bg-muted"
         contentEditable={false}
         download={name}
-        href={url}
-        rel="noopener noreferrer"
         role="button"
+        rel="noopener noreferrer"
         target="_blank"
       >
         <div className="flex items-center gap-1 p-1">

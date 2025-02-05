@@ -1,7 +1,3 @@
-import type React from 'react';
-
-import type { EmojiCategoryList } from '@udecode/plate-emoji';
-
 import {
   AppleIcon,
   ClockIcon,
@@ -15,6 +11,9 @@ import {
   StarIcon,
   XIcon,
 } from 'lucide-react';
+import type React from 'react';
+
+import type { EmojiCategoryList } from '@udecode/plate-emoji';
 
 export const emojiCategoryIcons: Record<
   EmojiCategoryList,
@@ -26,13 +25,13 @@ export const emojiCategoryIcons: Record<
   activity: {
     outline: (
       <svg
+        strokeWidth="2"
         className="size-full"
-        fill="none"
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth="2"
         viewBox="0 0 24 24"
+        fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <circle cx="12" cy="12" r="10" />
@@ -43,13 +42,13 @@ export const emojiCategoryIcons: Record<
     ),
     solid: (
       <svg
+        strokeWidth="2"
         className="size-full"
-        fill="none"
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth="2"
         viewBox="0 0 24 24"
+        fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <circle cx="12" cy="12" r="10" />
@@ -60,19 +59,9 @@ export const emojiCategoryIcons: Record<
     ),
   },
 
-  custom: {
-    outline: <StarIcon className="size-full" />,
-    solid: <StarIcon className="size-full" />,
-  },
-
   flags: {
     outline: <FlagIcon className="size-full" />,
     solid: <FlagIcon className="size-full" />,
-  },
-
-  foods: {
-    outline: <AppleIcon className="size-full" />,
-    solid: <AppleIcon className="size-full" />,
   },
 
   frequent: {
@@ -85,6 +74,21 @@ export const emojiCategoryIcons: Record<
     solid: <LeafIcon className="size-full" />,
   },
 
+  places: {
+    outline: <CompassIcon className="size-full" />,
+    solid: <CompassIcon className="size-full" />,
+  },
+
+  custom: {
+    outline: <StarIcon className="size-full" />,
+    solid: <StarIcon className="size-full" />,
+  },
+
+  foods: {
+    outline: <AppleIcon className="size-full" />,
+    solid: <AppleIcon className="size-full" />,
+  },
+
   objects: {
     outline: <LightbulbIcon className="size-full" />,
     solid: <LightbulbIcon className="size-full" />,
@@ -93,11 +97,6 @@ export const emojiCategoryIcons: Record<
   people: {
     outline: <SmileIcon className="size-full" />,
     solid: <SmileIcon className="size-full" />,
-  },
-
-  places: {
-    outline: <CompassIcon className="size-full" />,
-    solid: <CompassIcon className="size-full" />,
   },
 
   symbols: {

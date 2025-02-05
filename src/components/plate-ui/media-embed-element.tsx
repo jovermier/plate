@@ -1,22 +1,22 @@
 'use client';
 
+import { MediaEmbedPlugin, useMediaState } from '@udecode/plate-media/react';
+import { withHOC } from '@udecode/plate/react';
 import React from 'react';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import { Tweet } from 'react-tweet';
 
 import { cn, withRef } from '@udecode/cn';
-import { withHOC } from '@udecode/plate/react';
 import { parseTwitterUrl, parseVideoUrl } from '@udecode/plate-media';
-import { MediaEmbedPlugin, useMediaState } from '@udecode/plate-media/react';
 import { ResizableProvider, useResizableStore } from '@udecode/plate-resizable';
 
 import { Caption, CaptionTextarea } from './caption';
 import { MediaPopover } from './media-popover';
 import { PlateElement } from './plate-element';
 import {
+  mediaResizeHandleVariants,
   Resizable,
   ResizeHandle,
-  mediaResizeHandleVariants,
 } from './resizable';
 
 export const MediaEmbedElement = withHOC(
@@ -25,12 +25,12 @@ export const MediaEmbedElement = withHOC(
     const {
       align = 'center',
       embed,
-      focused,
       isTweet,
-      isVideo,
-      isYoutube,
       readOnly,
       selected,
+      focused,
+      isVideo,
+      isYoutube,
     } = useMediaState({
       urlParsers: [parseTwitterUrl, parseVideoUrl],
     });
@@ -45,12 +45,12 @@ export const MediaEmbedElement = withHOC(
             contentEditable={false}
           >
             <Resizable
-              align={align}
               options={{
-                align,
                 maxWidth: isTweet ? 550 : '100%',
                 minWidth: isTweet ? 300 : 100,
+                align,
               }}
+              align={align}
             >
               <ResizeHandle
                 className={mediaResizeHandleVariants({ direction: 'left' })}
@@ -61,7 +61,6 @@ export const MediaEmbedElement = withHOC(
                 isYoutube ? (
                   <LiteYouTubeEmbed
                     id={embed!.id!}
-                    title="youtube"
                     wrapperClass={cn(
                       'rounded-sm',
                       focused && selected && 'ring-2 ring-ring ring-offset-2',
@@ -79,6 +78,7 @@ export const MediaEmbedElement = withHOC(
                       '[&.lyt-activated]:before:pointer-events-none [&.lyt-activated]:before:opacity-0',
                       '[&.lyt-activated_>_.lty-playbtn]:pointer-events-none [&.lyt-activated_>_.lty-playbtn]:!opacity-0'
                     )}
+                    title="youtube"
                   />
                 ) : (
                   <div
@@ -95,9 +95,9 @@ export const MediaEmbedElement = withHOC(
                         isVideo && 'border-0',
                         focused && selected && 'ring-2 ring-ring ring-offset-2'
                       )}
+                      allowFullScreen
                       title="embed"
                       src={embed!.url}
-                      allowFullScreen
                     />
                   </div>
                 )

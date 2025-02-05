@@ -1,17 +1,17 @@
 'use client';
 
-import React from 'react';
-
 import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
+import { useEditorRef } from '@udecode/plate/react';
+import { ArrowDownToLineIcon } from 'lucide-react';
+import React from 'react';
 
 import { withProps } from '@udecode/cn';
 import {
   BaseParagraphPlugin,
-  SlateLeaf,
   createSlateEditor,
   serializeHtml,
+  SlateLeaf,
 } from '@udecode/plate';
-import { useEditorRef } from '@udecode/plate/react';
 import { BaseAlignPlugin } from '@udecode/plate-alignment';
 import {
   BaseBoldPlugin,
@@ -68,7 +68,6 @@ import {
   BaseTableRowPlugin,
 } from '@udecode/plate-table';
 import { BaseTogglePlugin } from '@udecode/plate-toggle';
-import { ArrowDownToLineIcon } from 'lucide-react';
 import Prism from 'prismjs';
 
 import { BlockquoteElementStatic } from '@/components/plate-ui/blockquote-element-static';
@@ -143,12 +142,12 @@ export function ExportToolbarButton({ children, ...props }: DropdownMenuProps) {
   };
 
   const downloadFile = ({
-    content,
     filename,
     isHtml = false,
+    content,
   }: {
-    content: string;
     filename: string;
+    content: string;
     isHtml?: boolean;
   }) => {
     const element = document.createElement('a');
@@ -170,28 +169,48 @@ export function ExportToolbarButton({ children, ...props }: DropdownMenuProps) {
     const pdfDoc = await PDFLib.PDFDocument.create();
     const page = pdfDoc.addPage([canvas.width, canvas.height]);
     const imageEmbed = await pdfDoc.embedPng(canvas.toDataURL('PNG'));
-    const { height, width } = imageEmbed.scale(1);
+    const { width, height } = imageEmbed.scale(1);
     page.drawImage(imageEmbed, {
-      height,
       width,
+      height,
       x: 0,
       y: 0,
     });
     const pdfBase64 = await pdfDoc.saveAsBase64({ dataUri: true });
 
-    downloadFile({ content: pdfBase64, filename: 'plate.pdf' });
+    downloadFile({ filename: 'plate.pdf', content: pdfBase64 });
   };
 
   const exportToImage = async () => {
     const canvas = await getCanvas();
     downloadFile({
-      content: canvas.toDataURL('image/png'),
       filename: 'plate.png',
+      content: canvas.toDataURL('image/png'),
     });
   };
 
   const exportToHtml = async () => {
     const components = {
+      [BaseDatePlugin.key]: DateElementStatic,
+      [BaseFilePlugin.key]: MediaFileElementStatic,
+      [BaseHighlightPlugin.key]: HighlightLeafStatic,
+      [BaseImagePlugin.key]: ImageElementStatic,
+      [BaseItalicPlugin.key]: withProps(SlateLeaf, { as: 'em' }),
+      [BaseKbdPlugin.key]: KbdLeafStatic,
+      [BaseLinkPlugin.key]: LinkElementStatic,
+      [BaseParagraphPlugin.key]: ParagraphElementStatic,
+      [BaseSubscriptPlugin.key]: withProps(SlateLeaf, { as: 'sub' }),
+      [BaseSuperscriptPlugin.key]: withProps(SlateLeaf, { as: 'sup' }),
+      [BaseTableCellHeaderPlugin.key]: TableCellHeaderStaticElement,
+      [BaseTableCellPlugin.key]: TableCellElementStatic,
+      [BaseTablePlugin.key]: TableElementStatic,
+      [BaseUnderlinePlugin.key]: withProps(SlateLeaf, { as: 'u' }),
+      [HEADING_KEYS.h1]: withProps(HeadingElementStatic, { variant: 'h1' }),
+      [HEADING_KEYS.h2]: withProps(HeadingElementStatic, { variant: 'h2' }),
+      [HEADING_KEYS.h3]: withProps(HeadingElementStatic, { variant: 'h3' }),
+      [HEADING_KEYS.h4]: withProps(HeadingElementStatic, { variant: 'h4' }),
+      [HEADING_KEYS.h5]: withProps(HeadingElementStatic, { variant: 'h5' }),
+      [HEADING_KEYS.h6]: withProps(HeadingElementStatic, { variant: 'h6' }),
       [BaseAudioPlugin.key]: MediaAudioElementStatic,
       [BaseBlockquotePlugin.key]: BlockquoteElementStatic,
       [BaseBoldPlugin.key]: withProps(SlateLeaf, { as: 'strong' }),
@@ -202,36 +221,16 @@ export function ExportToolbarButton({ children, ...props }: DropdownMenuProps) {
       [BaseColumnItemPlugin.key]: ColumnElementStatic,
       [BaseColumnPlugin.key]: ColumnGroupElementStatic,
       [BaseCommentsPlugin.key]: CommentLeafStatic,
-      [BaseDatePlugin.key]: DateElementStatic,
       [BaseEquationPlugin.key]: EquationElementStatic,
-      [BaseFilePlugin.key]: MediaFileElementStatic,
-      [BaseHighlightPlugin.key]: HighlightLeafStatic,
       [BaseHorizontalRulePlugin.key]: HrElementStatic,
-      [BaseImagePlugin.key]: ImageElementStatic,
       [BaseInlineEquationPlugin.key]: InlineEquationElementStatic,
-      [BaseItalicPlugin.key]: withProps(SlateLeaf, { as: 'em' }),
-      [BaseKbdPlugin.key]: KbdLeafStatic,
-      [BaseLinkPlugin.key]: LinkElementStatic,
       // [BaseMediaEmbedPlugin.key]: MediaEmbedElementStatic,
       [BaseMentionPlugin.key]: MentionElementStatic,
-      [BaseParagraphPlugin.key]: ParagraphElementStatic,
       [BaseStrikethroughPlugin.key]: withProps(SlateLeaf, { as: 'del' }),
-      [BaseSubscriptPlugin.key]: withProps(SlateLeaf, { as: 'sub' }),
-      [BaseSuperscriptPlugin.key]: withProps(SlateLeaf, { as: 'sup' }),
-      [BaseTableCellHeaderPlugin.key]: TableCellHeaderStaticElement,
-      [BaseTableCellPlugin.key]: TableCellElementStatic,
-      [BaseTablePlugin.key]: TableElementStatic,
       [BaseTableRowPlugin.key]: TableRowElementStatic,
       [BaseTocPlugin.key]: TocElementStatic,
       [BaseTogglePlugin.key]: ToggleElementStatic,
-      [BaseUnderlinePlugin.key]: withProps(SlateLeaf, { as: 'u' }),
       [BaseVideoPlugin.key]: MediaVideoElementStatic,
-      [HEADING_KEYS.h1]: withProps(HeadingElementStatic, { variant: 'h1' }),
-      [HEADING_KEYS.h2]: withProps(HeadingElementStatic, { variant: 'h2' }),
-      [HEADING_KEYS.h3]: withProps(HeadingElementStatic, { variant: 'h3' }),
-      [HEADING_KEYS.h4]: withProps(HeadingElementStatic, { variant: 'h4' }),
-      [HEADING_KEYS.h5]: withProps(HeadingElementStatic, { variant: 'h5' }),
-      [HEADING_KEYS.h6]: withProps(HeadingElementStatic, { variant: 'h6' }),
     };
 
     const editorStatic = createSlateEditor({
@@ -282,14 +281,14 @@ export function ExportToolbarButton({ children, ...props }: DropdownMenuProps) {
           options: {
             listStyleTypes: {
               fire: {
+                type: 'fire',
                 liComponent: FireLiComponent,
                 markerComponent: FireMarker,
-                type: 'fire',
               },
               todo: {
+                type: 'todo',
                 liComponent: TodoLiStatic,
                 markerComponent: TodoMarkerStatic,
-                type: 'todo',
               },
             },
           },
@@ -361,13 +360,13 @@ export function ExportToolbarButton({ children, ...props }: DropdownMenuProps) {
       </body>
     </html>`;
 
-    downloadFile({ content: html, filename: 'plate.html', isHtml: true });
+    downloadFile({ filename: 'plate.html', isHtml: true, content: html });
   };
 
   return (
     <DropdownMenu modal={false} {...openState} {...props}>
       <DropdownMenuTrigger asChild>
-        <ToolbarButton pressed={openState.open} tooltip="Export" isDropdown>
+        <ToolbarButton isDropdown tooltip="Export" pressed={openState.open}>
           <ArrowDownToLineIcon className="size-4" />
         </ToolbarButton>
       </DropdownMenuTrigger>

@@ -1,9 +1,9 @@
 'use client';
 
+import { PlateElement, useSelected } from '@udecode/plate/react';
 import React from 'react';
 
 import { cn, withRef } from '@udecode/cn';
-import { PlateElement, useSelected } from '@udecode/plate/react';
 
 export const TableRowElement = withRef<typeof PlateElement>(
   ({ children, className, ...props }, ref) => {

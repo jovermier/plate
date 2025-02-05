@@ -1,11 +1,11 @@
 'use client';
 
+import { useAIChatEditor } from '@udecode/plate-ai/react';
+import { usePlateEditor } from '@udecode/plate/react';
 import React, { memo } from 'react';
 
 import { withProps } from '@udecode/cn';
 import { BaseParagraphPlugin, SlateLeaf } from '@udecode/plate';
-import { usePlateEditor } from '@udecode/plate/react';
-import { useAIChatEditor } from '@udecode/plate-ai/react';
 import {
   BaseBoldPlugin,
   BaseCodePlugin,
@@ -43,6 +43,13 @@ import { LinkElementStatic } from './link-element-static';
 import { ParagraphElementStatic } from './paragraph-element-static';
 
 const components = {
+  [BaseItalicPlugin.key]: withProps(SlateLeaf, { as: 'em' }),
+  [BaseLinkPlugin.key]: LinkElementStatic,
+  [BaseParagraphPlugin.key]: ParagraphElementStatic,
+  [BaseUnderlinePlugin.key]: withProps(SlateLeaf, { as: 'u' }),
+  [HEADING_KEYS.h1]: withProps(HeadingElementStatic, { variant: 'h1' }),
+  [HEADING_KEYS.h2]: withProps(HeadingElementStatic, { variant: 'h2' }),
+  [HEADING_KEYS.h3]: withProps(HeadingElementStatic, { variant: 'h3' }),
   [BaseBlockquotePlugin.key]: BlockquoteElementStatic,
   [BaseBoldPlugin.key]: withProps(SlateLeaf, { as: 'strong' }),
   [BaseCodeBlockPlugin.key]: CodeBlockElementStatic,
@@ -50,14 +57,7 @@ const components = {
   [BaseCodePlugin.key]: CodeLeafStatic,
   [BaseCodeSyntaxPlugin.key]: CodeSyntaxLeafStatic,
   [BaseHorizontalRulePlugin.key]: HrElementStatic,
-  [BaseItalicPlugin.key]: withProps(SlateLeaf, { as: 'em' }),
-  [BaseLinkPlugin.key]: LinkElementStatic,
-  [BaseParagraphPlugin.key]: ParagraphElementStatic,
   [BaseStrikethroughPlugin.key]: withProps(SlateLeaf, { as: 's' }),
-  [BaseUnderlinePlugin.key]: withProps(SlateLeaf, { as: 'u' }),
-  [HEADING_KEYS.h1]: withProps(HeadingElementStatic, { variant: 'h1' }),
-  [HEADING_KEYS.h2]: withProps(HeadingElementStatic, { variant: 'h2' }),
-  [HEADING_KEYS.h3]: withProps(HeadingElementStatic, { variant: 'h3' }),
 };
 
 const plugins = [
@@ -86,9 +86,9 @@ const plugins = [
     options: {
       listStyleTypes: {
         todo: {
+          type: 'todo',
           liComponent: TodoLiStatic,
           markerComponent: TodoMarkerStatic,
-          type: 'todo',
         },
       },
     },
@@ -104,6 +104,6 @@ export const AIChatEditor = memo(({ content }: { content: string }) => {
   useAIChatEditor(aiEditor, content);
 
   return (
-    <EditorStatic variant="aiChat" components={components} editor={aiEditor} />
+    <EditorStatic components={components} editor={aiEditor} variant="aiChat" />
   );
 });

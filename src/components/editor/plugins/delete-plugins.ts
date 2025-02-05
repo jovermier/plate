@@ -8,6 +8,7 @@ import {
   MediaEmbedPlugin,
   VideoPlugin,
 } from '@udecode/plate-media/react';
+
 import { DeletePlugin, SelectOnBackspacePlugin } from '@udecode/plate-select';
 
 export const deletePlugins = [

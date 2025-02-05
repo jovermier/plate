@@ -1,17 +1,13 @@
 'use client';
 
-import React, { useCallback, useState } from 'react';
-
 import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
-
-import { isUrl } from '@udecode/plate';
-import { useEditorRef } from '@udecode/plate/react';
 import {
   AudioPlugin,
   FilePlugin,
   ImagePlugin,
   VideoPlugin,
 } from '@udecode/plate-media/react';
+import { useEditorRef } from '@udecode/plate/react';
 import {
   AudioLinesIcon,
   FileUpIcon,
@@ -19,6 +15,9 @@ import {
   ImageIcon,
   LinkIcon,
 } from 'lucide-react';
+import React, { useCallback, useState } from 'react';
+
+import { isUrl } from '@udecode/plate';
 import { toast } from 'sonner';
 import { useFilePicker } from 'use-file-picker';
 
@@ -51,33 +50,33 @@ const MEDIA_CONFIG: Record<
   string,
   {
     accept: string[];
-    icon: React.ReactNode;
     title: string;
+    icon: React.ReactNode;
     tooltip: string;
   }
 > = {
-  [AudioPlugin.key]: {
-    accept: ['audio/*'],
-    icon: <AudioLinesIcon className="size-4" />,
-    title: 'Insert Audio',
-    tooltip: 'Audio',
-  },
   [FilePlugin.key]: {
     accept: ['*'],
-    icon: <FileUpIcon className="size-4" />,
     title: 'Insert File',
+    icon: <FileUpIcon className="size-4" />,
     tooltip: 'File',
   },
   [ImagePlugin.key]: {
     accept: ['image/*'],
-    icon: <ImageIcon className="size-4" />,
     title: 'Insert Image',
+    icon: <ImageIcon className="size-4" />,
     tooltip: 'Image',
+  },
+  [AudioPlugin.key]: {
+    accept: ['audio/*'],
+    title: 'Insert Audio',
+    icon: <AudioLinesIcon className="size-4" />,
+    tooltip: 'Audio',
   },
   [VideoPlugin.key]: {
     accept: ['video/*'],
-    icon: <FilmIcon className="size-4" />,
     title: 'Insert Video',
+    icon: <FilmIcon className="size-4" />,
     tooltip: 'Video',
   },
 };
@@ -144,10 +143,10 @@ export function MediaToolbarButton({
       </ToolbarSplitButton>
 
       <AlertDialog
-        open={dialogOpen}
         onOpenChange={(value) => {
           setDialogOpen(value);
         }}
+        open={dialogOpen}
       >
         <AlertDialogContent className="gap-6">
           <MediaUrlDialogContent
@@ -162,13 +161,13 @@ export function MediaToolbarButton({
 }
 
 function MediaUrlDialogContent({
+  setOpen,
   currentConfig,
   nodeType,
-  setOpen,
 }: {
+  setOpen: (value: boolean) => void;
   currentConfig: (typeof MEDIA_CONFIG)[string];
   nodeType: string;
-  setOpen: (value: boolean) => void;
 }) {
   const editor = useEditorRef();
   const [url, setUrl] = useState('');
@@ -196,6 +195,7 @@ function MediaUrlDialogContent({
           id="url"
           className="w-full"
           value={url}
+          autoFocus
           onChange={(e) => setUrl(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter') embedMedia();
@@ -203,7 +203,6 @@ function MediaUrlDialogContent({
           label="URL"
           placeholder=""
           type="url"
-          autoFocus
         />
       </AlertDialogDescription>
 

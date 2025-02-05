@@ -1,5 +1,24 @@
 'use client';
 
+import {
+  type ComboboxItemProps,
+  Combobox,
+  ComboboxGroup,
+  ComboboxGroupLabel,
+  ComboboxItem,
+  ComboboxPopover,
+  ComboboxProvider,
+  ComboboxRow,
+  Portal,
+  useComboboxContext,
+  useComboboxStore,
+} from '@ariakit/react';
+import {
+  type UseComboboxInputResult,
+  useComboboxInput,
+  useHTMLInputCursorState,
+} from '@udecode/plate-combobox/react';
+import { useComposedRef, useEditorRef } from '@udecode/plate/react';
 import React, {
   type HTMLAttributes,
   type ReactNode,
@@ -16,31 +35,12 @@ import React, {
 
 import type { PointRef, TElement } from '@udecode/plate';
 
-import {
-  type ComboboxItemProps,
-  Combobox,
-  ComboboxGroup,
-  ComboboxGroupLabel,
-  ComboboxItem,
-  ComboboxPopover,
-  ComboboxProvider,
-  ComboboxRow,
-  Portal,
-  useComboboxContext,
-  useComboboxStore,
-} from '@ariakit/react';
 import { cn, withCn } from '@udecode/cn';
-import { useComposedRef, useEditorRef } from '@udecode/plate/react';
 import { filterWords } from '@udecode/plate-combobox';
-import {
-  type UseComboboxInputResult,
-  useComboboxInput,
-  useHTMLInputCursorState,
-} from '@udecode/plate-combobox/react';
 import { cva } from 'class-variance-authority';
 
 type FilterFn = (
-  item: { value: string; group?: string; keywords?: string[]; label?: string },
+  item: { value: string; label?: string; group?: string; keywords?: string[] },
   search: string
 ) => boolean;
 
@@ -59,7 +59,7 @@ const InlineComboboxContext = createContext<InlineComboboxContextValue>(
 );
 
 export const defaultFilter: FilterFn = (
-  { group, keywords = [], label, value },
+  { label, value, group, keywords = [] },
   search
 ) => {
   const uniqueTerms = new Set(
@@ -75,8 +75,8 @@ interface InlineComboboxProps {
   children: ReactNode;
   element: TElement;
   trigger: string;
-  filter?: FilterFn | false;
   hideWhenNoValue?: boolean;
+  filter?: FilterFn | false;
   setValue?: (value: string) => void;
   showTrigger?: boolean;
   value?: string;
@@ -86,14 +86,14 @@ const InlineCombobox = ({
   children,
   element,
   filter = defaultFilter,
-  hideWhenNoValue = false,
   setValue: setValueProp,
-  showTrigger = true,
   trigger,
   value: valueProp,
+  hideWhenNoValue = false,
+  showTrigger = true,
 }: InlineComboboxProps) => {
   const editor = useEditorRef();
-  const inputRef = React.useRef<HTMLInputElement>(null);
+  const inputRef = React.useRef<HTMLInputElement>(null!);
   const cursorState = useHTMLInputCursorState(inputRef);
 
   const [valueState, setValueState] = useState('');
@@ -136,8 +136,8 @@ const InlineCombobox = ({
 
   const { props: inputProps, removeInput } = useComboboxInput({
     cancelInputOnBlur: false,
-    cursorState,
     ref: inputRef,
+    cursorState,
     onCancelInput: (cause) => {
       if (cause !== 'backspace') {
         editor.tf.insertText(trigger + value, {
@@ -158,12 +158,12 @@ const InlineCombobox = ({
   const contextValue: InlineComboboxContextValue = useMemo(
     () => ({
       filter,
-      inputProps,
       inputRef,
-      removeInput,
       setHasEmpty,
-      showTrigger,
       trigger,
+      inputProps,
+      removeInput,
+      showTrigger,
     }),
     [
       trigger,
@@ -216,10 +216,10 @@ const InlineComboboxInput = forwardRef<
   HTMLAttributes<HTMLInputElement>
 >(({ className, ...props }, propRef) => {
   const {
-    inputProps,
     inputRef: contextRef,
-    showTrigger,
     trigger,
+    inputProps,
+    showTrigger,
   } = useContext(InlineComboboxContext);
 
   const store = useComboboxContext()!;
@@ -240,8 +240,8 @@ const InlineComboboxInput = forwardRef<
 
       <span className="relative min-h-[1lh]">
         <span
-          className="invisible overflow-hidden text-nowrap"
           aria-hidden="true"
+          className="invisible overflow-hidden text-nowrap"
         >
           {value || '\u200B'}
         </span>
@@ -298,19 +298,19 @@ const comboboxItemVariants = cva(
 );
 
 export type InlineComboboxItemProps = {
+  label?: string;
   focusEditor?: boolean;
   group?: string;
   keywords?: string[];
-  label?: string;
 } & ComboboxItemProps &
   Required<Pick<ComboboxItemProps, 'value'>>;
 
 const InlineComboboxItem = ({
   className,
+  label,
   focusEditor = true,
   group,
   keywords,
-  label,
   onClick,
   ...props
 }: InlineComboboxItemProps) => {
@@ -325,7 +325,7 @@ const InlineComboboxItem = ({
 
   const visible = useMemo(
     () =>
-      !filter || filter({ group, keywords, label, value }, search as string),
+      !filter || filter({ label, value, group, keywords }, search as string),
     [filter, group, keywords, label, value, search]
   );
 

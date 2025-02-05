@@ -1,14 +1,5 @@
 'use client';
 
-import React from 'react';
-
-import { cn } from '@udecode/cn';
-import { useFormInputProps } from '@udecode/plate/react';
-import {
-  type UseVirtualFloatingOptions,
-  flip,
-  offset,
-} from '@udecode/plate-floating';
 import {
   type LinkFloatingToolbarState,
   FloatingLinkUrlInput,
@@ -18,7 +9,16 @@ import {
   useFloatingLinkInsert,
   useFloatingLinkInsertState,
 } from '@udecode/plate-link/react';
+import { useFormInputProps } from '@udecode/plate/react';
 import { ExternalLink, Link, Text, Unlink } from 'lucide-react';
+import React from 'react';
+
+import { cn } from '@udecode/cn';
+import {
+  type UseVirtualFloatingOptions,
+  flip,
+  offset,
+} from '@udecode/plate-floating';
 
 import { buttonVariants } from './button';
 import { inputVariants } from './input';
@@ -50,8 +50,8 @@ export function LinkFloatingToolbar({ state }: LinkFloatingToolbarProps) {
   });
   const {
     hidden,
-    props: insertProps,
     ref: insertRef,
+    props: insertProps,
     textInputProps,
   } = useFloatingLinkInsert(insertState);
 
@@ -63,9 +63,9 @@ export function LinkFloatingToolbar({ state }: LinkFloatingToolbarProps) {
     },
   });
   const {
+    ref: editRef,
     editButtonProps,
     props: editProps,
-    ref: editRef,
     unlinkButtonProps,
   } = useFloatingLinkEdit(editState);
   const inputProps = useFormInputProps({
@@ -83,8 +83,8 @@ export function LinkFloatingToolbar({ state }: LinkFloatingToolbarProps) {
 
         <FloatingLinkUrlInput
           className={inputVariants({ h: 'sm', variant: 'ghost' })}
-          placeholder="Paste link"
           data-plate-focus
+          placeholder="Paste link"
         />
       </div>
       <Separator className="my-1" />
@@ -94,8 +94,8 @@ export function LinkFloatingToolbar({ state }: LinkFloatingToolbarProps) {
         </div>
         <input
           className={inputVariants({ h: 'sm', variant: 'ghost' })}
-          placeholder="Text to display"
           data-plate-focus
+          placeholder="Text to display"
           {...textInputProps}
         />
       </div>

@@ -1,14 +1,14 @@
 'use client';
 
-import React from 'react';
-
-import { cn, withRef } from '@udecode/cn';
 import {
   useComposedRef,
   useEditorId,
   useEditorRef,
   useEventEditorSelectors,
 } from '@udecode/plate/react';
+import React from 'react';
+
+import { cn, withRef } from '@udecode/cn';
 import {
   type FloatingToolbarState,
   flip,
@@ -57,8 +57,8 @@ export const FloatingToolbar = withRef<
   const {
     clickOutsideRef,
     hidden,
-    props: rootProps,
     ref: floatingRef,
+    props: rootProps,
   } = useFloatingToolbar(floatingToolbarState);
 
   const ref = useComposedRef<HTMLDivElement>(componentRef, floatingRef);

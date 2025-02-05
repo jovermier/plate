@@ -1,8 +1,8 @@
 'use client';
 
-import * as React from 'react';
-
 import type { DialogProps } from '@radix-ui/react-dialog';
+import { Search } from 'lucide-react';
+import * as React from 'react';
 
 import { Command as CommandPrimitive } from '@udecode/cmdk';
 import {
@@ -13,7 +13,6 @@ import {
   withVariants,
 } from '@udecode/cn';
 import { cva } from 'class-variance-authority';
-import { Search } from 'lucide-react';
 
 import { Dialog, DialogContent, DialogTitle } from './dialog';
 import { inputVariants } from './input';
@@ -26,8 +25,8 @@ const commandVariants = cva(
     },
     variants: {
       variant: {
-        combobox: 'overflow-visible bg-transparent has-[[data-readonly]]:w-fit',
         default: 'overflow-hidden',
+        combobox: 'overflow-visible bg-transparent has-[[data-readonly]]:w-fit',
       },
     },
   }

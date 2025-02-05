@@ -1,8 +1,5 @@
 'use client';
 
-import React from 'react';
-
-import { useEditorReadOnly } from '@udecode/plate/react';
 import {
   BoldPlugin,
   CodePlugin,
@@ -21,6 +18,7 @@ import {
   ImagePlugin,
   VideoPlugin,
 } from '@udecode/plate-media/react';
+import { useEditorReadOnly } from '@udecode/plate/react';
 import {
   ArrowUpToLineIcon,
   BaselineIcon,
@@ -33,6 +31,7 @@ import {
   UnderlineIcon,
   WandSparklesIcon,
 } from 'lucide-react';
+import React from 'react';
 
 import { MoreDropdownMenu } from '@/components/plate-ui/more-dropdown-menu';
 

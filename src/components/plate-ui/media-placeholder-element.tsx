@@ -1,22 +1,22 @@
 'use client';
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import type { ReactNode } from 'react';
-
-import type { TPlaceholderElement } from '@udecode/plate-media';
-
-import { cn } from '@udecode/cn';
-import { useEditorPlugin, withHOC, withRef } from '@udecode/plate/react';
 import {
   AudioPlugin,
   FilePlugin,
   ImagePlugin,
   PlaceholderPlugin,
   PlaceholderProvider,
-  VideoPlugin,
   updateUploadHistory,
+  VideoPlugin,
 } from '@udecode/plate-media/react';
+import { useEditorPlugin, withHOC, withRef } from '@udecode/plate/react';
 import { AudioLines, FileUp, Film, ImageIcon } from 'lucide-react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import type { ReactNode } from 'react';
+
+import type { TPlaceholderElement } from '@udecode/plate-media';
+
+import { cn } from '@udecode/cn';
 import { useFilePicker } from 'use-file-picker';
 
 import { useUploadFile } from '@/lib/uploadthing';
@@ -32,11 +32,6 @@ const CONTENT: Record<
     icon: ReactNode;
   }
 > = {
-  [AudioPlugin.key]: {
-    accept: ['audio/*'],
-    content: 'Add an audio file',
-    icon: <AudioLines />,
-  },
   [FilePlugin.key]: {
     accept: ['*'],
     content: 'Add a file',
@@ -46,6 +41,11 @@ const CONTENT: Record<
     accept: ['image/*'],
     content: 'Add an image',
     icon: <ImageIcon />,
+  },
+  [AudioPlugin.key]: {
+    accept: ['audio/*'],
+    content: 'Add an audio file',
+    icon: <AudioLines />,
   },
   [VideoPlugin.key]: {
     accept: ['video/*'],
@@ -63,7 +63,7 @@ export const MediaPlaceholderElement = withHOC(
 
       const { api } = useEditorPlugin(PlaceholderPlugin);
 
-      const { isUploading, progress, uploadFile, uploadedFile, uploadingFile } =
+      const { isUploading, progress, uploadedFile, uploadFile, uploadingFile } =
         useUploadFile();
 
       const loading = isUploading && uploadingFile;
@@ -72,7 +72,7 @@ export const MediaPlaceholderElement = withHOC(
 
       const isImage = element.mediaType === ImagePlugin.key;
 
-      const imageRef = useRef<HTMLImageElement>(null);
+      const imageRef = useRef<HTMLImageElement>(null!);
 
       const { openFilePicker } = useFilePicker({
         accept: currentContent.accept,
@@ -104,14 +104,14 @@ export const MediaPlaceholderElement = withHOC(
           editor.tf.removeNodes({ at: path });
 
           const node = {
+            initialWidth: imageRef.current?.width,
             children: [{ text: '' }],
             initialHeight: imageRef.current?.height,
-            initialWidth: imageRef.current?.width,
-            isUpload: true,
             name: element.mediaType === FilePlugin.key ? uploadedFile.name : '',
-            placeholderId: element.id as string,
             type: element.mediaType!,
             url: uploadedFile.url,
+            isUpload: true,
+            placeholderId: element.id as string,
           };
 
           editor.tf.insertNodes(node, { at: path });
@@ -149,8 +149,8 @@ export const MediaPlaceholderElement = withHOC(
               className={cn(
                 'flex cursor-pointer select-none items-center rounded-sm bg-muted p-3 pr-9 hover:bg-primary/10'
               )}
-              onClick={() => !loading && openFilePicker()}
               contentEditable={false}
+              onClick={() => !loading && openFilePicker()}
             >
               <div className="relative mr-3 flex text-muted-foreground/80 [&_svg]:size-6">
                 {currentContent.icon}
@@ -176,9 +176,9 @@ export const MediaPlaceholderElement = withHOC(
 
           {isImage && loading && (
             <ImageProgress
+              progress={progress}
               file={uploadingFile}
               imageRef={imageRef}
-              progress={progress}
             />
           )}
 
@@ -188,6 +188,29 @@ export const MediaPlaceholderElement = withHOC(
     }
   )
 );
+
+export function formatBytes(
+  bytes: number,
+  opts: {
+    decimals?: number;
+    sizeType?: 'accurate' | 'normal';
+  } = {}
+) {
+  const { decimals = 0, sizeType = 'normal' } = opts;
+
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+  const accurateSizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB'];
+
+  if (bytes === 0) return '0 Byte';
+
+  const i = Math.floor(Math.log(bytes) / Math.log(1024));
+
+  return `${(bytes / Math.pow(1024, i)).toFixed(decimals)} ${
+    sizeType === 'accurate'
+      ? (accurateSizes[i] ?? 'Bytest')
+      : (sizes[i] ?? 'Bytes')
+  }`;
+}
 
 export function ImageProgress({
   className,
@@ -233,27 +256,4 @@ export function ImageProgress({
       )}
     </div>
   );
-}
-
-export function formatBytes(
-  bytes: number,
-  opts: {
-    decimals?: number;
-    sizeType?: 'accurate' | 'normal';
-  } = {}
-) {
-  const { decimals = 0, sizeType = 'normal' } = opts;
-
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-  const accurateSizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB'];
-
-  if (bytes === 0) return '0 Byte';
-
-  const i = Math.floor(Math.log(bytes) / Math.log(1024));
-
-  return `${(bytes / Math.pow(1024, i)).toFixed(decimals)} ${
-    sizeType === 'accurate'
-      ? (accurateSizes[i] ?? 'Bytest')
-      : (sizes[i] ?? 'Bytes')
-  }`;
 }

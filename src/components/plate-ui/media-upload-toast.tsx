@@ -1,9 +1,9 @@
 'use client';
 
+import { PlaceholderPlugin, UploadErrorCode } from '@udecode/plate-media/react';
+import { useEditorRef } from '@udecode/plate/react';
 import { useEffect } from 'react';
 
-import { useEditorRef } from '@udecode/plate/react';
-import { PlaceholderPlugin, UploadErrorCode } from '@udecode/plate-media/react';
 import { toast } from 'sonner';
 
 export const useUploadErrorToast = () => {
@@ -14,7 +14,7 @@ export const useUploadErrorToast = () => {
   useEffect(() => {
     if (!uploadError) return;
 
-    const { code, data } = uploadError;
+    const { data, code } = uploadError;
 
     switch (code) {
       case UploadErrorCode.INVALID_FILE_SIZE: {

@@ -1,3 +1,4 @@
+import { generateReactHelpers } from '@uploadthing/react';
 import * as React from 'react';
 
 import type { OurFileRouter } from '@/app/api/uploadthing/route';
@@ -6,7 +7,6 @@ import type {
   UploadFilesOptions,
 } from 'uploadthing/types';
 
-import { generateReactHelpers } from '@uploadthing/react';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
@@ -14,7 +14,7 @@ export interface UploadedFile<T = unknown> extends ClientUploadedFileData<T> {}
 
 interface UseUploadFileProps
   extends Pick<
-    UploadFilesOptions<OurFileRouter, keyof OurFileRouter>,
+    UploadFilesOptions<OurFileRouter>,
     'headers' | 'onUploadBegin' | 'onUploadProgress' | 'skipPolling'
   > {
   onUploadComplete?: (file: UploadedFile) => void;
@@ -98,8 +98,8 @@ export function useUploadFile({
   return {
     isUploading,
     progress,
-    uploadFile: uploadThing,
     uploadedFile,
+    uploadFile: uploadThing,
     uploadingFile,
   };
 }

@@ -42,8 +42,8 @@ export function TocElementStatic({
           headingList.map((item) => (
             <Button
               key={item.title}
-              variant="ghost"
               className={cn(headingItemVariants({ depth: item.depth as any }))}
+              variant="ghost"
             >
               {item.title}
             </Button>

@@ -1,17 +1,17 @@
 'use client';
 
-import { useCallback, useState } from 'react';
-
-import { ParagraphPlugin, useEditorPlugin } from '@udecode/plate/react';
 import { AIChatPlugin } from '@udecode/plate-ai/react';
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react';
-import { HEADING_KEYS } from '@udecode/plate-heading';
 import { IndentListPlugin } from '@udecode/plate-indent-list/react';
 import {
   BLOCK_CONTEXT_MENU_ID,
   BlockMenuPlugin,
   BlockSelectionPlugin,
 } from '@udecode/plate-selection/react';
+import { ParagraphPlugin, useEditorPlugin } from '@udecode/plate/react';
+import { useCallback, useState } from 'react';
+
+import { HEADING_KEYS } from '@udecode/plate-heading';
 
 import { useIsTouchDevice } from '@/hooks/use-is-touch-device';
 
@@ -66,6 +66,7 @@ export function BlockContextMenu({ children }: { children: React.ReactNode }) {
 
   return (
     <ContextMenu
+      modal={false}
       onOpenChange={(open) => {
         if (!open) {
           // prevent unselect the block selection
@@ -74,7 +75,6 @@ export function BlockContextMenu({ children }: { children: React.ReactNode }) {
           }, 0);
         }
       }}
-      modal={false}
     >
       <ContextMenuTrigger
         asChild

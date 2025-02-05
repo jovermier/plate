@@ -39,8 +39,8 @@ export function DateElementStatic({
 
             return elementDate.toLocaleDateString(undefined, {
               day: 'numeric',
-              month: 'long',
               year: 'numeric',
+              month: 'long',
             });
           })()
         ) : (

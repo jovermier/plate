@@ -1,7 +1,8 @@
 'use client';
 
-import { cn, withRef } from '@udecode/cn';
 import { useReadOnly } from '@udecode/plate/react';
+
+import { cn, withRef } from '@udecode/cn';
 
 import { Calendar } from './calendar';
 import { PlateElement } from './plate-element';
@@ -9,7 +10,7 @@ import { Popover, PopoverContent, PopoverTrigger } from './popover';
 
 export const DateElement = withRef<typeof PlateElement>(
   ({ children, className, ...props }, ref) => {
-    const { editor, element } = props;
+    const { element, editor } = props;
 
     const readOnly = useReadOnly();
 
@@ -43,8 +44,8 @@ export const DateElement = withRef<typeof PlateElement>(
 
             return elementDate.toLocaleDateString(undefined, {
               day: 'numeric',
-              month: 'long',
               year: 'numeric',
+              month: 'long',
             });
           })()
         ) : (
@@ -69,6 +70,8 @@ export const DateElement = withRef<typeof PlateElement>(
           <PopoverContent className="w-auto p-0">
             <Calendar
               selected={new Date(element.date as string)}
+              initialFocus
+              mode="single"
               onSelect={(date) => {
                 if (!date) return;
 
@@ -77,8 +80,6 @@ export const DateElement = withRef<typeof PlateElement>(
                   { at: element }
                 );
               }}
-              mode="single"
-              initialFocus
             />
           </PopoverContent>
         </Popover>

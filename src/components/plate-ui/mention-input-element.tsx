@@ -19,7 +19,7 @@ const onSelectItem = getMentionOnSelectItem();
 
 export const MentionInputElement = withRef<typeof PlateElement>(
   ({ className, ...props }, ref) => {
-    const { children, editor, element } = props;
+    const { children, element, editor } = props;
     const [search, setSearch] = useState('');
 
     return (
@@ -32,9 +32,9 @@ export const MentionInputElement = withRef<typeof PlateElement>(
       >
         <InlineCombobox
           value={search}
+          showTrigger={false}
           element={element}
           setValue={setSearch}
-          showTrigger={false}
           trigger="@"
         >
           <span className="inline-block rounded-md bg-muted px-1.5 py-0.5 align-baseline text-sm ring-ring focus-within:ring-2">
